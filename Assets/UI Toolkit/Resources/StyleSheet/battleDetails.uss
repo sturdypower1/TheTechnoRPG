@@ -1,0 +1,94 @@
+.choice_selected {
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    flex-grow: 1;
+    margin-right: 3px;
+    margin-left: 3px;
+    border-left-color: rgb(113, 113, 113);
+    border-right-color: rgb(113, 113, 113);
+    border-top-color: rgb(113, 113, 113);
+    border-bottom-color: rgb(113, 113, 113);
+    background-color: rgb(67, 67, 67);
+}
+
+.choice_unselected {
+    flex-grow: 1;
+    border-left-color: rgb(48, 48, 48);
+    border-right-color: rgb(48, 48, 48);
+    border-top-color: rgb(48, 48, 48);
+    border-bottom-color: rgb(48, 48, 48);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    background-color: rgb(22, 22, 22);
+}
+
+.selected {
+    border-left-color: rgb(24, 24, 24);
+    border-right-color: rgb(24, 24, 24);
+    border-top-color: rgb(24, 24, 24);
+    border-bottom-color: rgb(24, 24, 24);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    background-color: rgb(46, 46, 46);
+    color: rgb(255, 255, 255);
+}
+
+.hovering {
+    border-left-color: rgb(24, 24, 24);
+    border-right-color: rgb(24, 24, 24);
+    border-top-color: rgb(24, 24, 24);
+    border-bottom-color: rgb(24, 24, 24);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    background-color: rgb(46, 46, 46);
+    color: rgb(255, 255, 255);
+}
+
+.skills_techno {
+}
+
+.skill_unselected {
+    -unity-font: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7');
+    color: rgb(142, 142, 142);
+}
+
+.skill_selected {
+    -unity-font: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7');
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.text {
+    color: rgb(229, 229, 229);
+}
+
+.selector {
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-left-color: rgb(41, 41, 41);
+    border-right-color: rgb(41, 41, 41);
+    border-top-color: rgb(41, 41, 41);
+    border-bottom-color: rgb(41, 41, 41);
+    border-top-width: 5px;
+}
+
+.title_background {
+    background-color: rgb(111, 111, 111);
+    padding-top: 5px;
+}
+
+.skill_desc {
+    font-size: 25px;
+    -unity-font-definition: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7 SDF');
+    color: rgb(255, 255, 255);
+}

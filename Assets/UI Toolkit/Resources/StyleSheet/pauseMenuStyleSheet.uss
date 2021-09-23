@@ -1,0 +1,64 @@
+.item_button {
+    font-size: 18px;
+    -unity-font: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7');
+    -unity-font-definition: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7 SDF');
+    color: rgb(149, 149, 149);
+    border-left-width: 5px;
+    border-top-width: 5px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.tab_unselected {
+    background-color: rgb(79, 79, 79);
+}
+
+.character_unselected {
+    background-color: rgba(38, 38, 38, 0.6);
+    border-left-color: rgb(34, 34, 34);
+    border-right-color: rgb(34, 34, 34);
+    border-top-color: rgb(34, 34, 34);
+    border-bottom-color: rgb(34, 34, 34);
+}
+
+.quick_menu {
+    background-color: rgb(36, 36, 36);
+    position: absolute;
+    border-left-color: rgb(41, 41, 41);
+    border-right-color: rgb(41, 41, 41);
+    border-top-color: rgb(41, 41, 41);
+    border-bottom-color: rgb(41, 41, 41);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
+.quickmenu_button {
+    width: 120px;
+    height: 28px;
+    border-left-color: rgb(17, 17, 17);
+    border-right-color: rgb(17, 17, 17);
+    border-top-color: rgb(17, 17, 17);
+    border-bottom-color: rgb(17, 17, 17);
+    border-left-width: 5px;
+    border-right-width: 5px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+    background-color: rgb(48, 48, 48);
+    font-size: 15px;
+    -unity-font: resource('Fonts & Materials/press-start-2p-font/PressStart2P-vaV7');
+    -unity-text-align: middle-center;
+    color: rgb(166, 166, 166);
+}
+
+.text {
+    color: rgb(245, 245, 245);
+}

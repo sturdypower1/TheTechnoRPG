@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="/Assets/UI Toolkit/Resources/StyleSheet/enemyDetails.uss" />
+    <ui:Button text="&#10;" display-tooltip-when-elided="true" name="Base" focusable="true" class="enemy_selector" style="align-items: center;">
+        <ui:Label text="Zombie" display-tooltip-when-elided="true" name="EnemyName" style="-unity-font: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7&apos;); font-size: 20px; color: rgb(255, 255, 255); -unity-text-align: upper-center; width: 100%; border-bottom-color: rgba(22, 22, 22, 255); border-bottom-width: 5px; padding-top: 5px; padding-bottom: 2px;" />
+        <ui:VisualElement name="EnemyPicture" style="background-image: url(&apos;/Assets/Art/spritesheets/zombie.png#zombie_0&apos;); width: 112px; height: 116px;" />
+        <ui:VisualElement name="EnemyHealth" />
+    </ui:Button>
+</ui:UXML>
