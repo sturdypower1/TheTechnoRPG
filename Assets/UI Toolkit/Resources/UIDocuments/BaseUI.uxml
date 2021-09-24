@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="SaveFile" />
+    <ui:Template name="SaveFile" src="SaveFile.uxml" />
     <Style src="/Assets/UI Toolkit/Resources/StyleSheet/BaseStartMenuStyle.uss" />
     <Style src="/Assets/UI Toolkit/Resources/StyleSheet/settingsStlyeSheet.uss" />
     <Style src="/Assets/UI Toolkit/Resources/StyleSheet/pauseMenuStyleSheet.uss" />
@@ -49,8 +49,8 @@
     </ui:VisualElement>
     <ui:VisualElement name="file_select" style="position: absolute; width: 100%; height: 100%; visibility: hidden; background-color: rgb(60, 60, 60); align-items: flex-start;">
         <ui:Button display-tooltip-when-elided="true" name="load_back_button" class="back_button" style="background-image: url(&apos;/Assets/Art/Icons/BackIcon.png#BackIcon&apos;); height: 86px; width: 92px;" />
-        <ui:Instance template="SaveFile" name="save_file1" style="height: 40%; width: 100%;" />
-        <ui:Instance template="SaveFile" name="save_file2" style="width: 100%; height: 40%;" />
+        <ui:Instance template="SaveFile" name="save_file1" style="flex-grow: 1; width: 100%; align-items: center;" />
+        <ui:Instance template="SaveFile" name="save_file2" style="flex-grow: 1; width: 100%; align-items: center;" />
     </ui:VisualElement>
     <ui:VisualElement name="settings_background" style="flex-shrink: 0; flex-grow: 1; background-color: rgb(58, 58, 58); visibility: hidden; position: absolute; width: 100%; height: 100%;">
         <ui:VisualElement style="height: 20%; flex-direction: row;">
@@ -217,8 +217,8 @@
     </ui:VisualElement>
     <ui:VisualElement name="overworld_file_select" style="position: absolute; width: 100%; height: 100%; visibility: hidden; background-color: rgba(60, 60, 60, 0.11); align-items: stretch;">
         <ui:Button text="&#10;" display-tooltip-when-elided="true" name="save_back_button" class="back_button" style="width: 106px; background-image: url(&apos;/Assets/Art/Icons/BackIcon.png#BackIcon&apos;); height: 97px;" />
-        <ui:Instance template="SaveFile" name="save_file1" style="flex-grow: 1;" />
-        <ui:Instance template="SaveFile" name="save_file2" style="flex-grow: 1;" />
+        <ui:Instance template="SaveFile" name="save_file2" style="position: relative; flex-grow: 1; align-items: center;" />
+        <ui:Instance template="SaveFile" name="save_file1" style="align-items: center; justify-content: space-between; flex-grow: 1;" />
     </ui:VisualElement>
     <ui:VisualElement name="losing_screen" style="position: absolute; width: 100%; height: 100%; align-items: center; visibility: hidden;">
         <ui:Button text="Technoblade Never Dies" display-tooltip-when-elided="true" name="continue" focusable="true" class="player_loss_button" style="color: rgb(171, 0, 0);" />
@@ -227,7 +227,7 @@
     <ui:VisualElement name="null_focus" tooltip="removes focus on objects that shouldn&apos;t have focus" focusable="true" style="width: 0; height: 0;" />
     <ui:Button text="&#10;" display-tooltip-when-elided="true" enable-rich-text="false" name="textbox" style="position: absolute; top: 0; height: 100%; width: 100%; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; flex-direction: row; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; visibility: hidden; background-color: rgba(228, 228, 228, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;">
         <ui:VisualElement name="CharacterImage" style="width: 350px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; min-width: 0; flex-shrink: 0; height: 350px; position: absolute; bottom: 139px;">
-            <ui:VisualElement name="character_base" style="flex-shrink: 0; flex-grow: 1; background-image: url(&apos;/Assets/Art/CharacterPortraits/eret_concerned_portrait.png#eret_concerned_portrait&apos;);" />
+            <ui:VisualElement name="character_base" style="flex-shrink: 0; flex-grow: 1; background-image: url(&apos;/Assets/Art/CharacterPortraits/eret_concerned_portrait.png&apos;);" />
             <ui:VisualElement name="character_eyes" style="position: absolute; width: 100%; height: 100%;" />
             <ui:VisualElement name="character_mouth" style="position: absolute; width: 100%; height: 100%;" />
         </ui:VisualElement>

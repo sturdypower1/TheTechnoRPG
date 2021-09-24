@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -256,6 +257,9 @@ public class UIManager : MonoBehaviour
     /// start the game
     /// </summary>
     public void StartButton(){
+        titleBackground.visible = false;
+        overworldOverlay.visible = true;
+        SceneManager.LoadSceneAsync("BeforeThePyramid");
     }
     /// <summary>
     /// open up the save ui to load a game

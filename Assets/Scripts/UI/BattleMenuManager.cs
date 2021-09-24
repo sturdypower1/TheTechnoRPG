@@ -33,17 +33,20 @@ public class BattleMenuManager : MonoBehaviour
     public VisualTreeAsset overHeadUITemplate;
     //need pause manager
     //need save and load manager
-
-    private void Start() {
+    private void Awake() {
         //singleton pattern
         if(instance == null){
             instance = this;
-            // set up the rest of the ui
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private void Start() {
+        // set up the rest of the ui
     }
 
     /// <summary>
