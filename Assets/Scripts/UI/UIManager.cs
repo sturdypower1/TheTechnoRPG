@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour
     public VisualElement root;
     public Button textBoxUI;
 
+    public Button interactiveButton;
+    public bool isInteractivePressed;
+
     //used to make sure things that shouldn't be focused aren't focused on
     [HideInInspector]
     VisualElement nullFocus;
@@ -190,7 +193,9 @@ public class UIManager : MonoBehaviour
             fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(1);
             fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer1.Q<Button>("background"), 1);
 
-            TemplateContainer fileContainer2 = overworldSaveFileSelect.Q<TemplateContainer>("save_file2");
+             interactiveButton = overworldOverlay.Q<Button>("interactive_item_check");
+
+        TemplateContainer fileContainer2 = overworldSaveFileSelect.Q<TemplateContainer>("save_file2");
             fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(2);
             fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer2.Q<Button>("background"), 2);
             overworldSaveFileSelect.Q<Button>("save_back_button").clicked += SaveBackButton;
@@ -201,7 +206,7 @@ public class UIManager : MonoBehaviour
                 titleBackground.visible = false;
                 overworldOverlay.visible = true;
             }
-        
+            
 
     }
 
@@ -209,6 +214,18 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         
+    }
+    private void FixedUpdate()
+    {
+        // disables the interactive button when there isn't any near by interactives
+        if (isInteractiveEnabled)
+        {
+            isInteractiveEnabled = false;
+        }
+        else
+        {
+            interactiveButton.SetEnabled(false);
+        }
     }
 
     /// <summary>
@@ -231,7 +248,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// set the volume
     /// </summary>
-    /// <param name="newVolume">the new volume</param>
+    /// <param name="newVolume">the new volume</param> 
     private void ChangeVolume(float newVolume){
         AudioListener.volume = newVolume;
     }
@@ -239,13 +256,15 @@ public class UIManager : MonoBehaviour
     /// interact with any close interactable object
     /// </summary>
     private void InteractButton(){
-
+        // check if it is in the overworld first
+        isInteractivePressed = true;
     }
     /// <summary>
     /// allows the interactable button to be enabled
     /// </summary>
     public void EnableInteractive(){
         isInteractiveEnabled = true;
+        interactiveButton.SetEnabled(true);
     }
     /// <summary>
     /// activate the pause menu, setting all the character values

@@ -6,6 +6,8 @@ public class Movement : MonoBehaviour
 {
     public Animator animator;
     public Rigidbody2D rigidbody2D;
+
+    public Direction Direction;
     /// <summary>
     /// the animation name for moving down
     /// </summary>
@@ -38,24 +40,43 @@ public class Movement : MonoBehaviour
         {
             if(direction.x > 0)
             {
+                animator.SetBool("IsWalking", true);
                 animator.Play(RightAnimationName);
+                Direction = Direction.Right;
             }
             else
             {
+                animator.SetBool("IsWalking", true);
                 animator.Play(LeftAnimationName);
+                Direction = Direction.Left;
             }
         }
-        else if(Mathf.Abs(direction.y) > Mathf.Abs(direction.x))
+        else if(Mathf.Abs(direction.y) > 0)
         {
             if(direction.y > 0)
             {
+                animator.SetBool("IsWalking", true);
                 animator.Play(UpAnimationName);
+                Direction = Direction.Up;
             }
             else
             {
+                animator.SetBool("IsWalking", true);
                 animator.Play(DownAnimationName);
+                Direction = Direction.Down;
             }
+        }
+        else
+        {
+            animator.SetBool("IsWalking", false);
         }
         rigidbody2D.velocity = direction* speed;
     }
+}
+public enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
 }
