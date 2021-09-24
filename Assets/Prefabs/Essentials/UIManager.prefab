@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6355940862000183343}
   - component: {fileID: 2019125666}
   - component: {fileID: 2019125670}
-  - component: {fileID: 8248290909549153926}
+  - component: {fileID: 1127634487}
   m_Layer: 5
   m_Name: UIManager
   m_TagString: Untagged
@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815b96d299d367d4c8e9516394a290fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIDoc: {fileID: 8248290909549153926}
+  UIDoc: {fileID: 0}
   isInteractiveEnabled: 0
-  isStartingOnTitle: 1
+  isStartingOnTitle: 0
 --- !u!114 &2019125670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkAsset: {fileID: 4900000, guid: f7e4ff60a0e749446886b3852ee8e001, type: 3}
---- !u!114 &8248290909549153926
+--- !u!114 &1127634487
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

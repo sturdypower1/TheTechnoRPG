@@ -56,7 +56,6 @@ public class Movement : MonoBehaviour
                 animator.Play(DownAnimationName);
             }
         }
-        rigidbody2D.velocity = direction * speed;
-
+        rigidbody2D.velocity = direction* speed;
     }
 }

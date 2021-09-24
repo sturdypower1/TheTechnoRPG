@@ -251,11 +251,7 @@ PrefabInstance:
     - target: {fileID: 2019125666, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
       propertyPath: UIDoc
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125666, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: isStartingOnTitle
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1127634487}
     - target: {fileID: 6355940862000183329, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -304,44 +300,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8248290909549153926, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
---- !u!1 &1127634486 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6355940862000183329, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
+--- !u!114 &1127634487 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1127634487, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
   m_PrefabInstance: {fileID: 1127634485}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1127634487
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1127634486}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f21c074d86024caca2a0034ce4f53f73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 706ef1adf9b8716ceb5cf7b0c6eef910, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: cb62f30224c9935b69b9ff5f8189f7ae, type: 3}
-  m_SortingOrder: 0
 --- !u!4 &1189179790 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4332425643559129221, guid: ef7a3692079831046b617225a8eb0325, type: 3}
   m_PrefabInstance: {fileID: 4332425644609888523}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1723660165 stripped
+--- !u!114 &1240235152 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6987406929570061815, guid: 8b22af2c8412c2f46ae96897dfbb8dab, type: 3}
-  m_PrefabInstance: {fileID: 544287850}
+  m_CorrespondingSourceObject: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+  m_PrefabInstance: {fileID: 4332425644609888523}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Script: {fileID: 11500000, guid: d5b39b8b97bf4ed40bc941d9f38acce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2325109509684981103
@@ -408,6 +393,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_AssetsPPU
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_UpscaleRT
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_PixelSnapping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_RefResolutionX
+      value: 1280
+      objectReference: {fileID: 0}
+    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_RefResolutionY
+      value: 720
+      objectReference: {fileID: 0}
     - target: {fileID: 2579191556705553632, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -456,9 +461,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 2579191556705553663, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: orthographic size
-      value: 2.8
+    - target: {fileID: 6131128183146010485, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_UpdateMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131128183146010485, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
+      propertyPath: m_BlendUpdateMethod
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
@@ -469,14 +478,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1240235151, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: m_Constraints
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: UpAnimationName
+      value: TechnobladeWalkUp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: DownAnimationName
+      value: TechnobladeWalkDown
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: LeftAnimationName
+      value: TechnobladeWalkLeft
+      objectReference: {fileID: 0}
+    - target: {fileID: 1240235152, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: RightAnimationName
+      value: TechnobladeWalkRight
+      objectReference: {fileID: 0}
     - target: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_Name
       value: Technoblade
       objectReference: {fileID: 0}
-    - target: {fileID: 4332425643559129220, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: m_UIInputModule
-      value: 
-      objectReference: {fileID: 1723660165}
     - target: {fileID: 4332425643559129221, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -521,6 +550,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4605097411875545085, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: movement
+      value: 
+      objectReference: {fileID: 1240235152}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef7a3692079831046b617225a8eb0325, type: 3}
 --- !u!1001 &4523106838965759638
