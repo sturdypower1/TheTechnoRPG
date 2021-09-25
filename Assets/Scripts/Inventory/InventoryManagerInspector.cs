@@ -16,6 +16,8 @@ public class InventoryManagerInspector : Editor
     private Type[] _armorInplementations;
     private int _armorInplementationsTypeIndex;
 
+    private Type[] _itemInplementations;
+
     InventoryManager _inventoryManager;
 
     private VisualElement _RootElement;
@@ -23,6 +25,7 @@ public class InventoryManagerInspector : Editor
 
     SerializedProperty _weaponListProperty;
     SerializedProperty _armorListProperty;
+    SerializedProperty _itemListProperty;
 
     private void OnEnable()
     {
@@ -51,10 +54,19 @@ public class InventoryManagerInspector : Editor
         armor.ArmorType = _armorInplementations[index].FullName;
         _inventoryManager.armors.Add(armor);
     }
+    public void AddItem()
+    {
+        DropdownField dropdownField = _RootElement.Q<DropdownField>("item_choices");
+        int index = dropdownField.index;
+        var item = (Item)Activator.CreateInstance(_itemInplementations[index]);
+        item.ItemType = _itemInplementations[index].FullName;
+        _inventoryManager.items.Add(item);
+    }
     public override VisualElement CreateInspectorGUI()
     {
         _weaponListProperty = serializedObject.FindProperty("weapons");
         _armorListProperty = serializedObject.FindProperty("armors");
+        _itemListProperty = serializedObject.FindProperty("items");
 
         _RootElement.Clear();
         
@@ -78,6 +90,15 @@ public class InventoryManagerInspector : Editor
         Button armorAddButton = _RootElement.Q<Button>("add_armor_button");
         armorAddButton.clicked += AddArmor;
 
+        DropdownField itemDropDownField = _RootElement.Q<DropdownField>("item_choices");
+        itemDropDownField.choices.Clear();
+
+        PropertyField itemsPropertyField = _RootElement.Q<PropertyField>("items_list");
+        itemsPropertyField.BindProperty(_itemListProperty);
+
+        Button itemAddButton = _RootElement.Q<Button>("add_item_button");
+        itemAddButton.clicked += AddItem;
+
         if (_weaponInplementations == null)
         {
             _weaponInplementations = GetImplementations<Weapon>().Where(impl => !impl.IsSubclassOf(typeof(UnityEngine.Object))).ToArray();
@@ -85,7 +106,7 @@ public class InventoryManagerInspector : Editor
         foreach(Type type in _weaponInplementations)
         {
             weaponDropDownField.choices.Add(type.FullName);
-            weaponDropDownField.RegisterCallback<ChangeEvent<string>>(e => UpdateType(weaponDropDownField));
+            //weaponDropDownField.RegisterCallback<ChangeEvent<string>>(e => UpdateType(weaponDropDownField));
         }
 
         if(_armorInplementations == null)
@@ -95,62 +116,24 @@ public class InventoryManagerInspector : Editor
         foreach(Type type in _armorInplementations)
         {
             armorDropDownField.choices.Add(type.FullName);
-            armorDropDownField.RegisterCallback<ChangeEvent<string>>(e => UpdateType(armorDropDownField));
+            //armorDropDownField.RegisterCallback<ChangeEvent<string>>(e => UpdateType(armorDropDownField));
         }
+        if(_itemInplementations == null)
+        {
+            _itemInplementations = GetImplementations<Item>().Where(impl => !impl.IsSubclassOf(typeof(UnityEngine.Object))).ToArray();
+        }
+        foreach(Type type in _itemInplementations)
+        {
+            itemDropDownField.choices.Add(type.FullName);
+        }
+
+        itemDropDownField.index = 0;
         weaponDropDownField.index = 0;
         armorDropDownField.index = 0;
         return _RootElement;
         
     }
 
-    public void UpdateType(DropdownField dropdownField)
-    {
-    }
-
-    /*
-    public override void OnInspectorGUI()
-    {
-        InventoryManager inventoryManager = target as InventoryManager;
-
-        if(inventoryManager == null)
-        {
-            return;
-        }
-        if(_weaponInplementations == null || GUILayout.Button("Refresh implementations"))
-        {
-            _weaponInplementations = GetImplementations<Weapon>().Where(impl => !impl.IsSubclassOf(typeof(UnityEngine.Object))).ToArray();
-        }
-        EditorGUILayout.LabelField($"Found{_weaponInplementations.Length} implementations");
-
-        _weaponInplementationsTypeIndex = EditorGUILayout.Popup(new GUIContent("WeaponImplementation"),
-           _weaponInplementationsTypeIndex, _weaponInplementations.Select(impl => impl.FullName).ToArray());
-
-        if (GUILayout.Button("Create instance"))
-        {
-            var weapon = (Weapon)Activator.CreateInstance(_weaponInplementations[_weaponInplementationsTypeIndex]);
-
-            inventoryManager.weapons.Add(weapon);
-            //.typeId = (PolyInteractiveData.TypeId)Enum.Parse(typeof(PolyInteractiveData.TypeId), _implementations[_implementationTypeIndex].FullName);
-        }
-
-        if(_armorInplementations == null || GUILayout.Button("Refresh implementations"))
-        {
-            _armorInplementations = GetImplementations<Armor>().Where(impl => !impl.IsSubclassOf(typeof(UnityEngine.Object))).ToArray();
-        }
-
-        _armorInplementationsTypeIndex = EditorGUILayout.Popup(new GUIContent("ArmorImplementation"),
-           _armorInplementationsTypeIndex, _armorInplementations.Select(impl => impl.FullName).ToArray());
-
-        if (GUILayout.Button("Create instance"))
-        {
-            var armor = (Armor)Activator.CreateInstance(_armorInplementations[_armorInplementationsTypeIndex]);
-
-            inventoryManager.armor.Add(armor);
-            //.typeId = (PolyInteractiveData.TypeId)Enum.Parse(typeof(PolyInteractiveData.TypeId), _implementations[_implementationTypeIndex].FullName);
-        }
-
-        base.OnInspectorGUI();
-    }*/
     private static Type[] GetImplementations<T>()
     {
         var types = AppDomain.CurrentDomain.GetAssemblies().SelectMany(assembly => assembly.GetTypes());

@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:PropertyField name="stats" />
+    <ui:DropdownField label="Select Weapon" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="weapon_choices" />
+    <uie:PropertyField name="equiped_weapon" />
+    <ui:DropdownField label="Select Armor" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="armor_choices" />
+    <uie:PropertyField name="equiped_armor" />
+    <ui:DropdownField label="Select Skill" index="-1" choices="System.Collections.Generic.List`1[System.String]" name="skill_choices" />
+    <ui:Button text="Add skill" display-tooltip-when-elided="true" name="add_skill_button" />
+    <uie:PropertyField name="skills" />
+</ui:UXML>

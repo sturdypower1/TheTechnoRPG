@@ -24,3 +24,10 @@ public class NormalWeapon : Weapon
     {
     }
 }
+[System.Serializable]
+public class SpecialWeapon : Weapon
+{
+    public override void CalculateDamage()
+    {
+    }
+}

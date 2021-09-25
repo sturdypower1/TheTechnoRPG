@@ -947,6 +947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapons: []
   armors: []
+  items: []
   references:
     version: 2
     RefIds: []
@@ -1610,6 +1611,47 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24454558, y: 0.13023674}
   m_EdgeRadius: 0
+--- !u!114 &2093283197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093283190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab78ad67927bd3409332797daaeb7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: 
+  attack: 0
+  defence: 0
+  maxHealth: 0
+  health: 0
+  maxPoints: 0
+  points: 0
+  equipedWeapon:
+    rid: 4465769309720805464
+  equipedArmor:
+    rid: 4465769309720805462
+  skills: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4465769309720805462
+      type: {class: SpecialArmor, ns: , asm: Assembly-CSharp}
+      data:
+        ArmorType: SpecialArmor
+        name: 
+        description: 
+        defence: 0
+    - rid: 4465769309720805464
+      type: {class: SpecialWeapon, ns: , asm: Assembly-CSharp}
+      data:
+        WeaponType: SpecialWeapon
+        name: 
+        description: 
+        attack: 0
 --- !u!1001 &504058228248044681
 PrefabInstance:
   m_ObjectHideFlags: 0

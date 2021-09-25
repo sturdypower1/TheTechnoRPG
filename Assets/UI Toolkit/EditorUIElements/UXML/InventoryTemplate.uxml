@@ -6,4 +6,7 @@
     <ui:DropdownField label="Armors" index="-1" name="armor_choices" choices="temp" />
     <ui:Button text="Add Armor" display-tooltip-when-elided="true" name="add_armor_button" />
     <uie:PropertyField name="armors_list" />
+    <ui:DropdownField label="Armors" index="-1" name="item_choices" choices="temp" />
+    <ui:Button text="Add Item" display-tooltip-when-elided="true" name="add_item_button" />
+    <uie:PropertyField name="items_list" />
 </ui:UXML>

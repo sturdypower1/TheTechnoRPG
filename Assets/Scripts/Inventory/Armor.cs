@@ -22,3 +22,10 @@ public class NormalArmor : Armor
         
     }
 }
+public class SpecialArmor : Armor
+{
+    public override void CalculateDamage()
+    {
+
+    }
+}
