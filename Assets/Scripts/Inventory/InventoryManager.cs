@@ -7,7 +7,8 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager instance;
     [SerializeReference]
     public List<Weapon> weapons = new List<Weapon>();
-    public List<Armor> armor;
+    [SerializeReference]
+    public List<Armor> armors = new List<Armor>();
     private void Awake()
     {
         if(instance == null)

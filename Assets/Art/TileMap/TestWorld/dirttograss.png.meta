@@ -66,6 +66,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -440,6 +441,21 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      dirttograss_3: 614945868562569338
+      dirttograss_13: 7918233041591419739
+      dirttograss_4: -9044241851889920408
+      dirttograss_9: 389569097378585242
+      dirttograss_0: -4019738436578045547
+      dirttograss_12: 6799081914233309068
+      dirttograss_5: 5619570295774524760
+      dirttograss_8: -1709231865045165817
+      dirttograss_2: 801618111545006529
+      dirttograss_6: -8764835736295962404
+      dirttograss_11: -1858974381255552819
+      dirttograss_7: 5315706462181687050
+      dirttograss_1: -4282117258239320521
+      dirttograss_10: 6100399928842813403
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

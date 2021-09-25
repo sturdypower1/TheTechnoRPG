@@ -45,6 +45,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -268,6 +269,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      wilbursootPortriat_1: -3826300996171069795
+      wilbursootPortriat_5: 9035087110161571551
+      wilbursootPortriat_6: -4253855865588494609
+      wilbursootPortriat_4: 1979747753595933974
+      wilbursootPortriat_0: 520214832235992092
+      wilbursootPortriat_2: 1423613824537333289
+      wilbursootPortriat_3: 6273790542221291617
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

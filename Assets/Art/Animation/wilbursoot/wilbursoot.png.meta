@@ -69,6 +69,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -460,6 +461,22 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      wilbursoot_2: -8469162417455793309
+      wilbursoot_7: -4961806369428998110
+      wilbursoot_0: -5924411887939392900
+      wilbursoot_8: -2798705549005472180
+      wilbursoot_11: 3769876342016008097
+      wilbursoot_5: -341670734647105206
+      wilbursoot_9: 1688585463372439391
+      wilbursoot_12: 577967768163665088
+      wilbursoot_1: -9075323647235345073
+      wilbursoot_4: 157054242632089851
+      wilbursoot_6: 163943512367988614
+      wilbursoot_14: 4014383366700500691
+      wilbursoot_10: 7366551640254891739
+      wilbursoot_13: 1008985238946853826
+      wilbursoot_3: -8675124864636013959
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -132,6 +132,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -141,8 +142,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -976,6 +977,43 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      tommyinnit_16: 497463597435328740
+      tommyinnit_10: -3788854338425275234
+      tommyinnit_27: -1709823680959814517
+      tommyinnit_33: 6642295070853428801
+      tommyinnit_17: 320259925086213663
+      tommyinnit_7: 5965300876009991304
+      tommyinnit_1: -5159163421725769341
+      tommyinnit_4: -4172741590188809271
+      tommyinnit_19: -1481469007080836107
+      tommyinnit_30: -6071415877039528009
+      tommyinnit_13: 3394598189237899530
+      tommyinnit_20: -2043207878673424156
+      tommyinnit_9: 2846966048330540760
+      tommyinnit_11: 9206455656497066528
+      tommyinnit_8: -2056831043218766509
+      tommyinnit_26: 4628864095466133521
+      tommyinnit_22: 4670487952059750928
+      tommyinnit_23: 6775873610809491006
+      tommyinnit_28: 1844152331051669929
+      tommyinnit_0: 4757652982030845793
+      tommyinnit_3: 3724195195839406618
+      tommyinnit_29: -2446053239005287021
+      tommyinnit_15: -5118391209997512989
+      tommyinnit_6: 860104993093781607
+      tommyinnit_34: -1626834941273284585
+      tommyinnit_21: -6748363932067157047
+      tommyinnit_18: -7474456242083153938
+      tommyinnit_12: 3527232434905422362
+      tommyinnit_25: -6354974229827639980
+      tommyinnit_2: 8380785105685129424
+      tommyinnit_35: 45859241690824923
+      tommyinnit_14: -6266465786139649674
+      tommyinnit_24: -8299944012364152756
+      tommyinnit_32: -7235812237297598910
+      tommyinnit_5: 2968985013262068676
+      tommyinnit_31: 2801213065146741083
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

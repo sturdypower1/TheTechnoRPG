@@ -4,6 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Weapon : IObtainable
 {
+    public string WeaponType;
     public string name;
     public string description;
     public int attack;

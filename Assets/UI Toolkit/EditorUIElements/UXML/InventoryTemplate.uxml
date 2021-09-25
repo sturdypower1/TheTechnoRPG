@@ -1,4 +1,9 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="/Assets/UI Toolkit/EditorUIElements/USS/EditorStyleSheet.uss" />
-    <ui:DropdownField label="Weapon" index="0" />
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/UI%20Toolkit/EditorUIElements/USS/EditorStyleSheet.uss?fileID=7433441132597879392&amp;guid=8d5b1485f7bb4ee469a10a12e0118a54&amp;type=3#EditorStyleSheet" />
+    <ui:DropdownField label="Weapons" index="-1" name="weapon_choices" choices="temp" />
+    <ui:Button text="Add Weapon" display-tooltip-when-elided="true" name="add_weapon_button" />
+    <uie:PropertyField name="weapons_list" />
+    <ui:DropdownField label="Armors" index="-1" name="armor_choices" choices="temp" />
+    <ui:Button text="Add Armor" display-tooltip-when-elided="true" name="add_armor_button" />
+    <uie:PropertyField name="armors_list" />
 </ui:UXML>
