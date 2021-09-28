@@ -71,6 +71,8 @@ EXTERNAL playSong(songName)
         ~setTextSound("technoblade")
         Staaarting the streeeam
         technolate?
+        #playable
+        test
         Look, you can't blame me. I was inches from hitting the go live button, then my  door flung open. The super volcano underneath Yellow Stone Park is about to erupt. You gotta believe me.
         Luckily, the stuation is sorted. No ancient volcano is going to stop Technoblade from streaming Minecraft.
         Anyways, the note I got last time said to go here for some free fresh cookies.

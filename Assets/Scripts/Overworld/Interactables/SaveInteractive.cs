@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SaveInteractive : Interactable
 {
+    public override void Interact()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

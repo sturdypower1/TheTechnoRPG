@@ -9,13 +9,12 @@ public class InteractiveCheck : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if(direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null)
+        if(direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null && !InkManager.instance.isCurrentlyDisplaying)
         {
             UIManager.instance.EnableInteractive();
-            Debug.Log("ello");
             if (UIManager.instance.isInteractivePressed)
             {
-                Debug.Log("interact");
+                collision.gameObject.GetComponent<Interactable>().Interact();
             }
         }
         
@@ -23,13 +22,12 @@ public class InteractiveCheck : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null)
+        if (direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null &&!InkManager.instance.isCurrentlyDisplaying)
         {
             UIManager.instance.EnableInteractive();
-            Debug.Log("ello");
             if (UIManager.instance.isInteractivePressed)
             {
-                Debug.Log("interact");
+                collision.gameObject.GetComponent<Interactable>().Interact();
             }
         }
     }

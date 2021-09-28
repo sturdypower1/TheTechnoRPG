@@ -68,7 +68,6 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        //singleton pattern
         
         // setting up the ui
         AudioManager.playSong("menuMusic");
@@ -213,17 +212,18 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // disables the interactive button when there isn't any near by interactives
         
     }
     private void FixedUpdate()
     {
-        // disables the interactive button when there isn't any near by interactives
         if (isInteractiveEnabled)
         {
             isInteractiveEnabled = false;
         }
         else
         {
+            isInteractivePressed = false;
             interactiveButton.SetEnabled(false);
         }
     }
@@ -232,18 +232,26 @@ public class UIManager : MonoBehaviour
     /// set the focus to the null focus. prevents some glitches
     /// </summary>
     public void ResetFocus(){
+        nullFocus.Focus();
     }
     /// <summary>
     /// the functionality for the back button of the save files, used in the title screen
     /// </summary>
     private void LoadSaveFileBackButton(){
-        
+        AudioManager.playSound("menuback");
+        titleBackground.visible = true;
+        fileSelectBackground.visible = false;
     }
     /// <summary>
     /// the functionality for the back button of the save files, used in the overworld
     /// </summary>
     private void SaveBackButton(){
+        //TODO: unpause
 
+        textBoxUI.visible = false;
+        PlayerInputManager.instance.EnableInput();
+        overworldOverlay.visible = true;
+        overworldSaveFileSelect.visible = false;
     }
     /// <summary>
     /// set the volume
@@ -257,7 +265,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void InteractButton(){
         // check if it is in the overworld first
-        isInteractivePressed = true;
+        if (!InkManager.instance.isCurrentlyDisplaying&& isInteractiveEnabled)
+        {
+            isInteractivePressed = true;
+        }
     }
     /// <summary>
     /// allows the interactable button to be enabled
@@ -270,7 +281,39 @@ public class UIManager : MonoBehaviour
     /// activate the pause menu, setting all the character values
     /// </summary>
     private void ActivatePauseMenu(){
+        // add pause to the game
+        PlayerInputManager.instance.DisableInput();
 
+        overworldOverlay.visible = false;
+        pauseBackground.visible = true;
+
+        VisualElement currentCharacterUI = pauseBackground.Q<VisualElement>("character" + (1).ToString());
+
+        Label healthBarText = currentCharacterUI.Q<Label>("health_text");
+        VisualElement healthBarBase = currentCharacterUI.Q<VisualElement>("health_bar_base");
+        VisualElement healthBar = currentCharacterUI.Q<VisualElement>("health_bar");
+
+        VisualElement bloodBar = currentCharacterUI.Q<VisualElement>("blood_bar");
+        VisualElement bloodBarBase = currentCharacterUI.Q<VisualElement>("blood_bar_base");
+        Label bloodBarText = currentCharacterUI.Q<Label>("blood_text");
+
+        Label currentLevel = currentCharacterUI.Q<Label>("current_level");
+        Label currentAttack = currentCharacterUI.Q<Label>("current_attack");
+        Label currentDefence = currentCharacterUI.Q<Label>("current_defence");
+        Label neededEXP = currentCharacterUI.Q<Label>("EXP");
+
+        CharacterStats technoStats = Technoblade.instance.stats;
+
+        //currentLevel.text = "LVL " + levelData.currentLVL.ToString();
+        currentAttack.text = "ATK: " + (technoStats.stats.attack + technoStats.equipedWeapon.attack);
+        currentDefence.text = "DEF: " + (technoStats.stats.defence + technoStats.equipedArmor.defence);
+        //neededEXP.text = "EXP needed: " + (levelData.requiredEXP - levelData.currentEXP).ToString();
+
+        healthBar.style.width = healthBarBase.contentRect.width * ((float)technoStats.stats.health / (float)technoStats.stats.maxHealth);
+        healthBarText.text = "HP: " + technoStats.stats.health.ToString() + "/" + technoStats.stats.maxHealth.ToString();
+
+        bloodBar.style.width = bloodBarBase.contentRect.width * ((float)technoStats.stats.points / (float)technoStats.stats.maxPoints);
+        bloodBarText.text = "Blood: " + technoStats.stats.points.ToString() + "/" + technoStats.stats.maxPoints.ToString();
     }
     /// <summary>
     /// start the game
@@ -278,28 +321,48 @@ public class UIManager : MonoBehaviour
     public void StartButton(){
         titleBackground.visible = false;
         overworldOverlay.visible = true;
+        // start new game from load and save system
         SceneManager.LoadSceneAsync("BeforeThePyramid");
     }
     /// <summary>
     /// open up the save ui to load a game
     /// </summary>
     public void continueButton(){
+        AudioManager.playSound("menuselect");
+        // load ui using the save and load system
+
     }
     /// <summary>
     /// open up the settings menu
     /// </summary>
     public void OptionsButton(){
+        AudioManager.playSound("menuselect");
+
+        settingsBackButton.clicked += ToTitleSettingsBackButton;
+
+        titleBackground.visible = false;
+        settingsBackground.visible = true;
     }
     /// <summary>
     /// from the settings, go back to the title screen
     /// </summary>
     public void ToTitleSettingsBackButton(){
+        AudioManager.playSound("menuback");
+        DeActivateSettingsTabs();
+        settingsBackground.visible = false;
+        titleBackground.visible = true;
+        titleBackground.Focus();
+        settingsBackButton.clicked -= ToTitleSettingsBackButton;
     }
 
     /// <summary>
     /// go to the credits menu
     /// </summary>
     public void CreditsButton(){
+        AudioManager.playSound("menuchange");
+        creditsBackground.visible = true;
+        titleBackground.visible = false;
+        creditsBackground.Q<Button>("credits_back_button").Focus();
     }
     /// <summary>
     /// quit the application
@@ -320,6 +383,10 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="saveFileNubmer">the save file number</param>
     public void ContinueGameButton(int saveFileNubmer){
+        overworldOverlay.visible = true;
+        titleBackground.visible = false;
+        fileSelectBackground.visible = false;
+        // use the save system to continue
     }
     /// <summary>
     /// disable all the other tabs, and activate this one
@@ -342,6 +409,26 @@ public class UIManager : MonoBehaviour
     /// load all of the equiment info of technoblade
     /// </summary>
     public void EquipmentButton(){
+        RestartPauseMenu();
+        AudioManager.playSound("menuselect");
+
+        VisualElement otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
+        VisualElement currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
+        Button currentWeaponLabel = equipmentInfo.Q<Button>("current_weapon");
+        Button currentArmorLabel = equipmentInfo.Q<Button>("current_armor");
+        Button currentCharmLabel = equipmentInfo.Q<Button>("current_charm");
+        Label equipmentDesc = equipmentInfo.Q<Label>("equipment_text");
+
+        var inventory = InventoryManager.instance;
+        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+
+        equipmentInfo.visible = true;
+
+        currentWeaponLabel.text = "Weapon: " + technoStats.equipedWeapon.name;
+        currentArmorLabel.text = "Armor: " + technoStats.equipedArmor.name;
+        //currentCharmLabel.text = "Charm: " + characterStatsList[currentCharacter].equipedCharm.name;
+
+        equipmentInfo.Q<Button>("current_weapon").Focus();
 
     }
     /// <summary>
@@ -372,30 +459,135 @@ public class UIManager : MonoBehaviour
     /// set up the switching tab for armor
     /// </summary>
     private void ArmorSwitchButton(){
+        var inventory = InventoryManager.instance;
+
+        equipmentQuickMenu.Q<Button>("switch").clicked -= ArmorSwitchButton;
+
+        var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
+        var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
+        var equipmentDesc = equipmentInfo.Q<Label>("equipment_text");
+        var otherEquipmentList = otherEquipmentBase.Q<ScrollView>("equipment_list");
+        otherEquipmentList.Clear();
+
+        otherEquipmentList.Clear();
+        AudioManager.playSound("menuselect");
+        // makes the new equipment visable and the current equipment invisable
+        otherEquipmentBase.visible = true;
+        currentEquipment.visible = false;
+        // reseting the switch item
+        equipmentQuickMenu.visible = false;
+
+        // show all available equipment switching what to display depending on what is selected
+        for (int i = 0; i < inventory.armors.Count; i++)
+        {
+            int z = i;
+            Armor armor = inventory.armors[i];
+            Button newButton = new Button();
+            newButton.clicked += () => SwitchArmor(z);
+            newButton.text = armor.name.ToString();
+            newButton.AddToClassList("item_button");
+            otherEquipmentList.Add(newButton);
+            if (i == 0)
+            {
+                equipmentDesc.text = armor.description.ToString();
+            }
+        }
     }
     /// <summary>
     /// switch the selected armor with the current armor peice
     /// </summary>
     /// <param name="newArmorNumber"></param>
     private void SwitchArmor(int newArmorNumber){
+        var inventory = InventoryManager.instance;
+
+        var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
+        var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
+
+        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+        Armor unEquipedArmor = technoStats.equipedArmor;
+        technoStats.equipedArmor = inventory.armors[newArmorNumber];
+        // move the unequiped item to the weaponinventory
+        inventory.armors.RemoveAt(newArmorNumber);
+        inventory.armors.Insert(0, unEquipedArmor);
+
+        // update equipment info
+        // also update character stats!!!!!!!
+        //equipmentDesc.text = characterStats.equipedWeapon.description.ToString();
+        equipmentInfo.Q<Button>("current_armor").text = "Armor: " + technoStats.equipedArmor.name.ToString();
+
+        AudioManager.playSound("menuselect");
+        currentEquipment.visible = true;
+        otherEquipmentBase.visible = false;
     }
     /// <summary>
     /// set up the switching tab for weapons
     /// </summary>
     private void WeaponSwitchButton(){
+        var inventory = InventoryManager.instance;
 
+        equipmentQuickMenu.Q<Button>("switch").clicked -= WeaponSwitchButton;
+
+        var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
+        var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
+        var equipmentDesc = equipmentInfo.Q<Label>("equipment_text");
+        var otherEquipmentList = otherEquipmentBase.Q<ScrollView>("equipment_list");
+        otherEquipmentList.Clear();
+
+        otherEquipmentList.Clear();
+        AudioManager.playSound("menuselect");
+        // makes the new equipment visable and the current equipment invisable
+        otherEquipmentBase.visible = true;
+        currentEquipment.visible = false;
+        // reseting the switch item
+        equipmentQuickMenu.visible = false;
+
+        // show all available equipment switching what to display depending on what is selected
+        for (int i = 0; i < inventory.weapons.Count; i++)
+        {
+            int z = i;
+            Weapon weapon = inventory.weapons[i];
+            Button newButton = new Button();
+            newButton.clicked += () => SwitchWeapon(z);
+            newButton.text = weapon.name.ToString();
+            newButton.AddToClassList("item_button");
+            otherEquipmentList.Add(newButton);
+            if (i == 0)
+            {
+                equipmentDesc.text = weapon.description.ToString();
+            }
+        }
     }
     /// <summary>
     /// switch the current weapon with the selected weapon
     /// </summary>
     /// <param name="newWeaponNumber">the selected weapon number</param>
     private void SwitchWeapon(int newWeaponNumber){
+        var inventory = InventoryManager.instance;
 
+        var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
+        var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
+
+        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+        Weapon unEquipedWeapon = technoStats.equipedWeapon;
+        technoStats.equipedWeapon = inventory.weapons[newWeaponNumber];
+        // move the unequiped item to the weaponinventory
+        inventory.weapons.RemoveAt(newWeaponNumber);
+        inventory.weapons.Insert(0, unEquipedWeapon);
+
+        // update equipment info
+        // also update character stats!!!!!!!
+        //equipmentDesc.text = characterStats.equipedWeapon.description.ToString();
+        equipmentInfo.Q<Button>("current_weapon").text = "Weapon: " + technoStats.equipedWeapon.name.ToString();
+
+        AudioManager.playSound("menuselect");
+        currentEquipment.visible = true;
+        otherEquipmentBase.visible = false;
     }
     /// <summary>
     /// open up the tab for items
     /// </summary>
     public void PauseItemsButton(){
+
     }
     /// <summary>
     /// update a label's description

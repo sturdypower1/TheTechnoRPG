@@ -5,24 +5,15 @@ using UnityEngine;
 public class Technoblade : MonoBehaviour
 {
     public static Technoblade instance;
+
+    public CharacterStats stats;
     private void Awake() {
-        if(instance == null){
+        if(instance == null || instance == this){
             instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
         else{
             Destroy(this.gameObject);
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

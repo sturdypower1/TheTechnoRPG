@@ -74,6 +74,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     /// <param name="soundName">the parameter used to determine what dialogue that you want to play from</param>
     public static void playDialogue(string soundName){
+        Debug.Log(soundName);
         bool wasFound = false;
         foreach(SoundData dialogue in dialogues){
             if(dialogue.soundName == soundName){
@@ -92,8 +93,13 @@ public class AudioManager : MonoBehaviour
             }
         }
         if(!wasFound){
-            playDialogue("default");
-            Debug.Log("dialogue not found");
+            if(soundName != "default")
+            {
+                playDialogue("default");
+                Debug.Log("dialogue not found");
+            }
+
+            
         }
     }
 

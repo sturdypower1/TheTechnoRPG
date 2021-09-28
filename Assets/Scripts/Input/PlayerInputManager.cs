@@ -9,6 +9,19 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
 
     public Movement movement;
 
+    public static PlayerInputManager instance;
+    private void Awake()
+    {
+        if (instance == null || instance == this)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     public void OnBack(InputAction.CallbackContext context)
     {
 
@@ -46,5 +59,21 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
     void Update()
     {
         
+    }
+    /// <summary>
+    /// activate overworld input
+    /// </summary>
+    public void EnableInput()
+    {
+        InputActions.Overworld.Enable();
+    }
+    /// <summary>
+    /// disable overworld input
+    /// </summary>
+    public void DisableInput()
+    {
+        // won't accept release input, so it needs to be set to 0,0
+        movement.move(new Vector2(0,0));
+        InputActions.Overworld.Disable();
     }
 }
