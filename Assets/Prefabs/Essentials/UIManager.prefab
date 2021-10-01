@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -45,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 815b96d299d367d4c8e9516394a290fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIDoc: {fileID: 0}
+  UIDoc: {fileID: 1127634487}
   isInteractiveEnabled: 0
   isStartingOnTitle: 0
+  isInteractivePressed: 0
 --- !u!114 &2019125670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +63,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inkAsset: {fileID: 4900000, guid: f7e4ff60a0e749446886b3852ee8e001, type: 3}
+  isDisplayingChoices: 0
+  characterPortraits:
+  - characterName: empty
+    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 0}
+  - characterName: Technoblade
+    audioClip: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 2211357456315834789, guid: 42790c220fd40d1468072a5077a8dfb7, type: 3}
+  - characterName: Wilbur
+    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 21300000, guid: a8b86b38cea3b3c47a2065f5493711e6, type: 3}
+    - name: surprised
+      portraits:
+      - {fileID: 21300000, guid: ca09c4796c49ebf45b21019554543e65, type: 3}
+    - name: silent
+      portraits:
+      - {fileID: 21300000, guid: dbaee2ed6f7dee749ac91b3c49a6e5ac, type: 3}
+    - name: choatic
+      portraits:
+      - {fileID: 21300000, guid: 0b8210ea47be29c4588bbc3c3e1e17f1, type: 3}
+    - name: disgusted
+      portraits:
+      - {fileID: 21300000, guid: 37c812e3304ea6b448925416fdf5db8a, type: 3}
+    - name: kindaangry
+      portraits:
+      - {fileID: 21300000, guid: 988fe857f7fc06a4da13fd76250fac41, type: 3}
+  textSpeed: 30
+  text: 
+  instant: 0
+  unSkipable: 0
+  isSlow: 0
+  isFinishedPage: 0
+  currentChar: 0
+  isContinuable: 0
+  isCurrentlyDisplaying: 0
+  isCurrentlyPlaying: 0
+  currentCutsceneData:
+    director: {fileID: 0}
+    playables: []
+    inkPath: 
+  currentDialogueSound: {fileID: 0}
+  isSetup: 0
 --- !u!114 &1127634487
 MonoBehaviour:
   m_ObjectHideFlags: 0

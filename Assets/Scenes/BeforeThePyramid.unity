@@ -397,14 +397,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 977342420122513801, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
-      propertyPath: m_SoftZoneWidth
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 977342420122513801, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
-      propertyPath: m_SoftZoneHeight
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 977342420193652240, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -453,14 +445,6 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 1189179790}
-    - target: {fileID: 977342420193652241, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
-      propertyPath: m_Lens.ModeOverride
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 977342420193652241, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
-      propertyPath: m_Lens.OrthographicSize
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 977342420193652242, guid: fafd5691f9031644d87c6339e11350c9, type: 3}
       propertyPath: m_Name
       value: CM vcam1
@@ -993,12 +977,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab55de12f30d620439ea9ff135c4f69e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapons: []
-  armors: []
-  items: []
+  weapons:
+  - rid: 4465769408708739090
+  armors:
+  - rid: 4465769408708739091
+  items:
+  - {fileID: 11400000, guid: 7fc877bb8d2e46f4abe7cdf4c01970a8, type: 2}
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4465769408708739090
+      type: {class: NormalWeapon, ns: , asm: AssemblyDefinition}
+      data:
+        WeaponType: NormalWeapon
+        name: test weapon
+        description: a weapon test
+        attack: 0
+    - rid: 4465769408708739091
+      type: {class: NormalArmor, ns: , asm: AssemblyDefinition}
+      data:
+        ArmorType: NormalArmor
+        name: test armor
+        description: a armor test
+        defence: 0
 --- !u!1 &1009360703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,157 +1231,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2019125666, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: UIDoc
-      value: 
-      objectReference: {fileID: 1127634487}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: textSpeed
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].characterName
-      value: empty
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].characterName
-      value: Technoblade
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterName
-      value: Wilbur
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].characterPortraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].characterPortraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].characterPortraits.Array.data[0].name
-      value: default
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].characterPortraits.Array.data[1].name
-      value: default
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].characterPortraits.Array.data[0].name
-      value: default
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[0].name
-      value: default
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[1].name
-      value: surprised
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[2].name
-      value: silent
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[3].name
-      value: choatic
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[4].name
-      value: disgusted
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[5].name
-      value: kindaangry
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[0].characterPortraits.Array.data[0].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].characterPortraits.Array.data[0].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[0].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[1].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[2].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[3].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[4].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[5].portraits.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[1].characterPortraits.Array.data[0].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 2211357456315834789, guid: 42790c220fd40d1468072a5077a8dfb7, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[0].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: a8b86b38cea3b3c47a2065f5493711e6, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[1].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: ca09c4796c49ebf45b21019554543e65, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[2].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: dbaee2ed6f7dee749ac91b3c49a6e5ac, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[3].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 0b8210ea47be29c4588bbc3c3e1e17f1, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[4].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 37c812e3304ea6b448925416fdf5db8a, type: 3}
-    - target: {fileID: 2019125670, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: characterPortraits.Array.data[2].characterPortraits.Array.data[5].portraits.Array.data[0]
-      value: 
-      objectReference: {fileID: 21300000, guid: 988fe857f7fc06a4da13fd76250fac41, type: 3}
     - target: {fileID: 6355940862000183329, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
       propertyPath: m_Name
       value: UIManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 6355940862000183329, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6355940862000183343, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
       propertyPath: m_RootOrder
@@ -1428,17 +1281,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
---- !u!114 &1127634487 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1127634487, guid: 9f5ce452607344b44b429352518f7e38, type: 3}
-  m_PrefabInstance: {fileID: 1127634485}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1189179790 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4332425643559129221, guid: ef7a3692079831046b617225a8eb0325, type: 3}
@@ -1465,7 +1307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3593343610536098522, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.5
+      value: -4.54
       objectReference: {fileID: 0}
     - target: {fileID: 3593343610536098522, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1499,18 +1341,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3593343610536098523, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
-      propertyPath: m_SortingLayer
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593343610536098523, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -206694803
-      objectReference: {fileID: 0}
-    - target: {fileID: 3593343610536098523, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
 --- !u!1001 &1465230637
@@ -1841,26 +1671,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_AssetsPPU
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_UpscaleRT
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_PixelSnapping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_RefResolutionX
-      value: 320
-      objectReference: {fileID: 0}
-    - target: {fileID: 269252910474202835, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_RefResolutionY
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 2579191556705553632, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -1911,19 +1721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4217960342703175780, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
       propertyPath: orthographic size
-      value: 2.8125
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131128183146010485, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131128183146010485, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_UpdateMethod
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6131128183146010485, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
-      propertyPath: m_BlendUpdateMethod
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
@@ -1934,113 +1732,109 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: equipedArmor
-      value: 4465769362034262036
+      value: 4465769408708739100
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: stats.attack
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: stats.health
-      value: 18
+      value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: equipedWeapon
-      value: 4465769362034262035
+      value: 4465769408708739099
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: stats.defence
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: stats.maxHealth
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: stats.maxPoints
       value: 15
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262033]
-      value: Assembly-CSharp NormalWeapon
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: skills.Array.size
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262034]
-      value: Assembly-CSharp NormalArmor
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: stats.characterName
+      value: Technoblade
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262035]
-      value: Assembly-CSharp NormalWeapon
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: skills.Array.data[0]
+      value: 4465769408708739101
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262036]
-      value: Assembly-CSharp NormalArmor
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739099]
+      value: AssemblyDefinition NormalWeapon
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262033].name
-      value: Orphan Obliterate
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739100]
+      value: AssemblyDefinition SpecialArmor
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262034].name
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101]
+      value: AssemblyDefinition BasicSkill
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739099].name
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262035].name
-      value: Orphan Obliterater
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739100].name
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262036].name
-      value: netherite armor
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101].name
+      value: default attack
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262033].attack
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739099].attack
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262035].attack
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262034].defence
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101].damage
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262036].defence
-      value: 3
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739100].defence
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262034].ArmorType
-      value: NormalArmor
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101].useTime
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262036].ArmorType
-      value: NormalArmor
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739100].ArmorType
+      value: SpecialArmor
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262033].WeaponType
-      value: NormalWeapon
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101].skillType
+      value: BasicSkill
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262035].WeaponType
-      value: NormalWeapon
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739099].WeaponType
+      value: OrphanObliterator
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262033].description
-      value: This sword is the third worst thing that happened to those orphans
-      objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262034].description
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739099].description
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262035].description
-      value: 3rd worst thing that happened to those orphans
-      objectReference: {fileID: 0}
-    - target: {fileID: 2093283197, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769362034262036].description
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739100].description
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+      propertyPath: managedReferences[4465769408708739101].description
+      value: make the enemy bleed
       objectReference: {fileID: 0}
     - target: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_Name
@@ -2258,40 +2052,108 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.size
+      propertyPath: gameMusics.Array.size
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[0].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
-    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[1].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[2].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: cb0316e40f3a9114a911998626e5495d, type: 3}
-    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[3].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[0].soundName
-      value: technoblade
+      propertyPath: gameSoundss.Array.size
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[1].soundName
-      value: default
+      propertyPath: gameMusics.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0b991bbf5622a9919aebe2f20d50debd, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ea659ad0d77e23943a95da052239ba83, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0551bd17eed4d2342b58479f85bffc91, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a69e19152dbb74847a6f2e4a90f9951f, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b89afcdcba043d846b0053484ae6ccd3, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c51dfd63cb2fe8540840b3e7542a06c4, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b89afcdcba043d846b0053484ae6ccd3, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: bb4229063776b6944833f282fcabad03, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 90340eef2c632ed42b3e5a705add0cae, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 396f00d5820c4484e982ded74f7bb5b1, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d50e3a2fd982e494faa0466fa61f251c, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b4c66f7103d532b4f9f3452fc0d4c171, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[0].soundName
+      value: tempBattleMusic
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[2].soundName
-      value: bell
+      propertyPath: gameMusics.Array.data[1].soundName
+      value: menuMusic
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
-      propertyPath: dialoguess.Array.data[3].soundName
-      value: Wilbur
+      propertyPath: gameMusics.Array.data[2].soundName
+      value: CalmMountain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[3].soundName
+      value: WilburTheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[0].soundName
+      value: menuchange
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[1].soundName
+      value: menuavailable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[2].soundName
+      value: swordswing
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[3].soundName
+      value: defeatsong
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[4].soundName
+      value: menuback
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[5].soundName
+      value: menuselect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[6].soundName
+      value: sellouttimer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[7].soundName
+      value: TechnoHit
       objectReference: {fileID: 0}
     - target: {fileID: 8834773414010453833, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
       propertyPath: m_Name

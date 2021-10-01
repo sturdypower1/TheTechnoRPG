@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 /// the base clase for items
 /// </summary>
 [System.Serializable]
-public abstract class Item : IObtainable
+[CreateAssetMenu(menuName = "Scriptable Objects/item")]
+public class Item : ScriptableObject, IObtainable
 {
     public string ItemType;
     public string name;
@@ -23,19 +24,9 @@ public abstract class Item : IObtainable
     {
         label.text = description;
     }
-    public abstract void UseItem();
+    public void UseItem() { }
+    public bool GetUseability() { return true; }
 
 }
-/// <summary>
-/// will be used to heal the player
-/// </summary>
-[System.Serializable]
-public class HealingItem : Item
-{
-    public int HealingAmount;
-    public override void UseItem()
-    {
-        
-    }
-}
+
 

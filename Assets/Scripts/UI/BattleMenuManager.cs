@@ -46,7 +46,7 @@ public class BattleMenuManager : MonoBehaviour
     }
 
     private void Start() {
-        // set up the rest of the ui
+        
     }
 
     /// <summary>
@@ -54,12 +54,69 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="characterNumber">the character that is using the item</param>
     public void ItemsButton(int characterNumber){
+        AudioManager.playSound("menuchange");
+        currentCharacterSelected = characterNumber;
+        battleUI.visible = false;
+        itemSelector.visible = true;
+
+        InventoryManager inventory = InventoryManager.instance;
+        int i = 0;
+        int firstItemCheck = 0;
+        ScrollView list1 = itemSelector.Q<ScrollView>("list1");
+        ScrollView list2 = itemSelector.Q<ScrollView>("list2");
+        list1.Clear();
+        list2.Clear();
+        // changing the names of the items
+        while (i < inventory.items.Count)
+        {
+            int z = i;
+            Item item = inventory.items[i];
+            Button button = new Button();
+            button.focusable = true;
+            button.text = item.name.ToString();
+            button.AddToClassList("item_button");
+            button.clicked += () => ItemButton(z);
+            button.RegisterCallback<FocusEvent>(ev => UpdateItemDescription(item.description.ToString()));
+            button.RegisterCallback<PointerEnterEvent>(ev => UpdateItemDescription(item.description.ToString()));
+            // if it isn't usable, don't let the player use the item
+            if (item.GetUseability())
+            {
+                button.SetEnabled(false);
+            }
+            else if(i == 0)
+            {
+                button.Focus();
+                UpdateItemDescription(item.description.ToString());
+            }
+
+            if (i % 2 == 0)
+            {
+                list1.Add(button);
+            }
+            else
+            {
+                list2.Add(button);
+            }
+            i++;
+        }
     }
     /// <summary>
     /// use the currently selected item
     /// </summary>
     /// <param name="itemNumber">the currently selected item</param>
     private void ItemButton(int itemNumber){
+        AudioManager.playSound("menuchange");
+        GameObject currentCharacter = BattleManager.instance.Players[currentPlayer];
+        InventoryManager inventory = InventoryManager.instance;
+
+        Item item = inventory.items[itemNumber];
+        /*
+        battleData.useTime = item.useTime;
+        battleData.maxUseTime = battleData.useTime;
+        itemInventory.RemoveAt(itemNumber);*/
+
+        battleUI.visible = true;
+        itemSelector.visible = false;
     }
     /// <summary>
     /// activate the battle menu skill tab

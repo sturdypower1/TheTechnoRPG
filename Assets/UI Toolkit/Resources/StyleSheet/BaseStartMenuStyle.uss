@@ -55,9 +55,6 @@
     background-color: rgb(118, 180, 229);
 }
 
-.unity-button {
-}
-
 .back_button {
     background-color: rgb(101, 101, 101);
     border-top-left-radius: 0;
@@ -639,6 +636,9 @@
     padding-right: 2px;
     padding-top: 12px;
     padding-bottom: 11px;
+}
+
+.unity-button {
 }
 
 .player_loss_button:active {

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -70,7 +71,6 @@ public class UIManager : MonoBehaviour
     {
         
         // setting up the ui
-        AudioManager.playSong("menuMusic");
             root = UIDoc.rootVisualElement;
             nullFocus = root.Q<VisualElement>("null_focus");
             // for the title screen
@@ -156,7 +156,7 @@ public class UIManager : MonoBehaviour
 
                 skillsQuickMenu = pauseBackground.Q<VisualElement>("skills_quickmenu");
                 //skillsQuickMenu.Q<Button>("switch").clicked += SkillSwitchButton;
-                skillsQuickMenu.Q<Button>("cancel").clicked += SkillCancel;
+                //skillsQuickMenu.Q<Button>("cancel").clicked += SkillCancel;
 
                 Button currentWeapon = equipmentInfo.Q<Button>("current_weapon");
                 currentWeapon.clicked += () => CurrentEquipmentButton(currentWeapon, Equipment.Weapon);
@@ -415,6 +415,7 @@ public class UIManager : MonoBehaviour
         VisualElement otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
         VisualElement currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
         Button currentWeaponLabel = equipmentInfo.Q<Button>("current_weapon");
+        
         Button currentArmorLabel = equipmentInfo.Q<Button>("current_armor");
         Button currentCharmLabel = equipmentInfo.Q<Button>("current_charm");
         Label equipmentDesc = equipmentInfo.Q<Label>("equipment_text");
@@ -422,6 +423,7 @@ public class UIManager : MonoBehaviour
         var inventory = InventoryManager.instance;
         CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
 
+        currentEquipment.visible = true;
         equipmentInfo.visible = true;
 
         currentWeaponLabel.text = "Weapon: " + technoStats.equipedWeapon.name;
@@ -587,7 +589,54 @@ public class UIManager : MonoBehaviour
     /// open up the tab for items
     /// </summary>
     public void PauseItemsButton(){
+        RestartPauseMenu();
+        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
 
+        itemInfo.visible = true;
+        ScrollView itemList = itemInfo.Q<ScrollView>("item_list");
+        itemList.Clear();
+        Label itemDesc = itemInfo.Q<Label>("item_desc");
+        AudioManager.playSound("menuselect");
+        InventoryManager inventory = InventoryManager.instance;
+        itemList.Focus();
+        int i = 0;
+        foreach (Item item in inventory.items)
+        {
+            if (item.name == "")
+            {
+                int z = i;
+                Button itemButton = new Button();
+                itemButton.focusable = true;
+                itemButton.name = "item" + (z + 1).ToString();
+                itemButton.text = "No Name";
+                itemButton.AddToClassList("item_button");
+                itemList.Add(itemButton);
+            }
+            else
+            {
+                int z = i;
+                Button itemButton = new Button();
+                itemButton.focusable = true;
+                itemButton.name = "item" + (z + 1).ToString();
+                itemButton.text = item.name;
+                itemButton.AddToClassList("item_button");
+                itemButton.clicked += () => PauseItemButton(z + 1);
+                // once an item is in focus, change the description accordingly
+                string descriptionToShow = inventory.items[z].description.ToString() == "" ? "no description" : inventory.items[z].description.ToString();
+                itemButton.RegisterCallback<FocusEvent>(ev => UpdateDescription(itemDesc, descriptionToShow));
+                itemList.Add(itemButton);
+            }
+            i++;
+        }
+        string itemDescriptionToShow = inventory.items.Count > 0 ? inventory.items[0].description : "";
+        if (itemDescriptionToShow == "")
+        {
+            itemDesc.text = "no description";
+        }
+        else
+        {
+            itemDesc.text = itemDescriptionToShow;
+        }
     }
     /// <summary>
     /// update a label's description
@@ -600,23 +649,52 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// open the skill's tab on the pause menu
     /// </summary>
-    public void PauseSkillsButton(){     
-    }
-    /// <summary>
-    /// disable the skill quickmenu
-    /// </summary>
-    private void SkillCancel(){
-        AudioManager.playSound("menuback");
-        skillsQuickMenu.visible = false;
-    }
-    /// <summary>
-    /// activated when selecting a skill, sets current item
-    /// </summary>
-    /// <param name="currentSkillNumber"></param>
-    private void CurrentSkillButton(int currentSkillNumber){
-        currentItem = currentSkillNumber;
+    public void PauseSkillsButton(){
+        RestartPauseMenu();
+        skillInfo.visible = true;
+        VisualElement currentSkills = skillInfo.Q<VisualElement>("current_skills");
+        ScrollView skillList = skillInfo.Q<ScrollView>("skill_list");
+        Label skillDesc = skillInfo.Q<Label>("skill_desc");
+
+        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+
         AudioManager.playSound("menuselect");
-}
+        skillList.Clear();
+        currentSkills.visible = true;
+        int i = 1;
+        foreach (Skill skill in technoStats.skills)
+        {
+            Button skillButton = new Button();
+            skillButton.AddToClassList("item_button");
+            skillButton.name = "skill" + i.ToString();
+            skillButton.focusable = true;
+            if (skill.name == "")
+            {
+                skillButton.text = "None";
+            }
+            else
+            {
+                skillButton.text = skill.name;
+            }
+            // for some reason it tracks the value until its not used, so I used a value that wont change
+            int z = i;
+            skillButton.clicked += () => CurrentSkillButton(z);
+            skillButton.RegisterCallback<FocusEvent>(ev => UpdateDescription(skillDesc, skill.description));
+            skillList.Add(skillButton);
+            i++;
+        }
+
+        // sets the description to the first skill
+        string descToDisplay = technoStats.skills[0].description;
+        if (descToDisplay == "")
+        {
+            skillDesc.text = "No description";
+        }
+        else
+        {
+            skillDesc.text = descToDisplay;
+        }
+    }
     /// <summary>
     /// go to the settings menu from the pause menu
     /// </summary>
@@ -642,6 +720,25 @@ public class UIManager : MonoBehaviour
     /// from the pause menu, return to the overworld
     /// </summary>
     private void PauseBackButton(){
+        overworldOverlay.visible = true;
+        RestartPauseMenu();
+
+        AudioManager.playSound("menuback");
+        //Todo unpause game
+        pauseBackground.visible = false;
+        PlayerInputManager.instance.EnableInput();
+    }
+    /// <summary>
+    /// what happens when you click on a skill button, except for updating the description
+    /// </summary>
+    /// <param name="currentSkillNumber"></param>
+    private void CurrentSkillButton(int currentSkillNumber)
+    {
+        currentItem = currentSkillNumber;
+        AudioManager.playSound("menuselect");
+
+        //skillsQuickMenu.visible = true;
+        //placeQuickMenu(currentSkills.Q<Button>("skill" + currentItem), skillsQuickMenu);
     }
     /// <summary>
     /// make all of the pause menu tabs invisable
@@ -663,6 +760,26 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="itemNumber"></param>
     public void PauseItemButton(int itemNumber){
+        InventoryManager inventory = InventoryManager.instance;
+        ScrollView itemList = itemInfo.Q<ScrollView>("item_list");
+        currentItem = itemNumber;
+        AudioManager.playSound("menuchange");
+        itemsQuickMenu.visible = true;
+
+        placeQuickMenu(itemList.Q<Button>("item" + itemNumber.ToString()), itemsQuickMenu);
+        //all items will have these features
+        itemsQuickMenu.Q<Button>("give").SetEnabled(false);
+        //add the useable selectables based on the item type
+        if(inventory.items[itemNumber - 1].GetUseability())
+        {
+            itemsQuickMenu.Q<Button>("use").SetEnabled(true);
+            itemsQuickMenu.Q<Button>("use").Focus();
+        }
+        else
+        {
+            itemsQuickMenu.Q<Button>("use").SetEnabled(false);
+            itemsQuickMenu.Q<Button>("cancel").Focus();
+        }
     }
     /// <summary>
     /// place a quickmenu next to the currently selected box, should change to mouse position
@@ -677,11 +794,27 @@ public class UIManager : MonoBehaviour
     /// when in the overworld and on the settings menu, return to the title
     /// </summary>
     private void SettingsReturnToTitleButton(){
+        AudioManager.playSound("menuback");
+        DeActivateSettingsTabs();
+        settingsBackButton.clicked -= ToTitleSettingsBackButton;
+        settingsBackButton.clicked -= ReturnToPauseMenu;
+
+
+        settingsBackground.visible = false;
+        titleBackground.visible = true;
+        // load the title scene
+        SceneManager.LoadScene("TitleScreen");
     }
     /// <summary>
     /// use the currently selected item
     /// </summary>
     private void ItemUse(){
+        InventoryManager.instance.items[currentItem - 1].UseItem();
+        // update character ui
+        UpdateCharacterInfo();
+
+        itemsQuickMenu.visible = false;
+        itemInfo.visible = false;
     }
     /// <summary>
     /// unload the item quickmenu
@@ -694,11 +827,29 @@ public class UIManager : MonoBehaviour
     /// drop the currently selected item
     /// </summary>
     private void ItemDrop(){
+        InventoryManager.instance.items.RemoveAt(currentItem - 1);
+        //exit items menu
+        itemsQuickMenu.visible = false;
+        itemInfo.visible = false;
     }
     /// <summary>
     /// when a stat changes, change the ui to match
     /// </summary>
     private void UpdateCharacterInfo_OnStatsUpdate(System.Object sender, System.EventArgs e){
+        // will only work while there is one character, will need to add a loop for all player characters
+
+        UpdateCharacterInfo();
+    }
+    public void UpdateCharacterInfo()
+    {
+        VisualElement currentCharacterUI = pauseBackground.Q<VisualElement>("character" + (1).ToString());
+        Label healthBarText = currentCharacterUI.Q<Label>("health_text");
+        VisualElement healthBarBase = currentCharacterUI.Q<VisualElement>("health_bar_base");
+        VisualElement healthBar = currentCharacterUI.Q<VisualElement>("health_bar");
+        //VisualElement bloodBar = currentCharacterUI.Q<VisualElement>("blood");
+        CharacterStats technoStats = Technoblade.instance.stats;
+        healthBar.style.width = healthBarBase.contentRect.width * (technoStats.stats.health / technoStats.stats.maxHealth);
+        healthBarText.text = "HP: " + technoStats.stats.health.ToString() + "/" + technoStats.stats.maxHealth.ToString();
     }
 
 }

@@ -257,6 +257,8 @@ public class InkManager : MonoBehaviour
                 //frozenCinemachine.Priority = 1;
                 // is completely finished
                 PlayerInputManager.instance.EnableInput();
+                isCurrentlyDisplaying = false;
+                  
 
                 UIManager.instance.overworldOverlay.visible = true;
                 ResetTextBox();

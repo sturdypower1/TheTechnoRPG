@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 1240235152}
   - component: {fileID: 4605097411875545085}
   - component: {fileID: 2093283191}
-  - component: {fileID: 2093283197}
+  - component: {fileID: 1222542915304947601}
   m_Layer: 0
   m_Name: Technoblade
   m_TagString: Player
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e993187be719240b732d72c6619e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 2093283197}
+  stats: {fileID: 0}
 --- !u!50 &1240235151
 Rigidbody2D:
   serializedVersion: 4
@@ -612,7 +612,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.24454558, y: 0.13023674}
   m_EdgeRadius: 0
---- !u!114 &2093283197
+--- !u!114 &1222542915304947601
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -633,24 +633,12 @@ MonoBehaviour:
     maxPoints: 0
     points: 0
   equipedWeapon:
-    rid: 4465769309720805472
+    rid: -2
   equipedArmor:
-    rid: 4465769309720805462
+    rid: -2
   skills: []
   references:
     version: 2
     RefIds:
-    - rid: 4465769309720805462
-      type: {class: SpecialArmor, ns: , asm: Assembly-CSharp}
-      data:
-        ArmorType: SpecialArmor
-        name: 
-        description: 
-        defence: 0
-    - rid: 4465769309720805472
-      type: {class: SpecialWeapon, ns: , asm: Assembly-CSharp}
-      data:
-        WeaponType: SpecialWeapon
-        name: 
-        description: 
-        attack: 0
+    - rid: -2
+      type: {class: , ns: , asm: }

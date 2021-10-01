@@ -1,3 +1,4 @@
+/*#if UNITY_EDITOR
 using System.Collections;
 using System;
 using System.Linq;
@@ -143,3 +144,4 @@ public class InventoryManagerInspector : Editor
         return types.Where(p => interfaceType.IsAssignableFrom(p) && !p.IsAbstract).ToArray();
     }
 }
+#endif*/
