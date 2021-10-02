@@ -50,11 +50,17 @@ public class BattleManager : MonoBehaviour
             animator.SetTrigger("BattleStart");
         }
     }
-    public void SetupBattle( GameObject[] enemies)
+    public void SetupBattle(GameObject[] enemies)
     {
+        // pause the game
+        Time.timeScale = 0;
+
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
         // transition all of the characters
+
+        CameraController.instance.ToBattleCamera();
+
         Players.Clear();
         Players.Add(Technoblade.instance.gameObject);
         int i = 0;
@@ -84,7 +90,8 @@ public class BattleManager : MonoBehaviour
             // sets its layer to battler
             enemy.layer = 3;
 
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .1f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .9f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            
             StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false));
             i++;
         }
@@ -105,14 +112,17 @@ public class BattleManager : MonoBehaviour
 
         Transform transform = transformy.transform;
         Vector3 oldPosition = transform.position;
+        newPosition.z = 0;
+        float timePassed = 0;
         while(transform.position != newPosition)
         {
-            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime);
+            timePassed += Time.unscaledDeltaTime;
+            transform.position = Vector3.Lerp(oldPosition, newPosition, timePassed);
             yield return null;
         }
         if (triggerEvent)
         {
-            inBattlePositon.Invoke(null, null);
+            inBattlePositon?.Invoke(this, EventArgs.Empty);
         }
     }
 
