@@ -18,6 +18,11 @@ public class BattleMenuManager : MonoBehaviour
     VisualElement itemSelector;
     VisualElement previousUI;
 
+    /// <summary>
+    /// the ui for the selecting technoblade's attacks, skills, and items
+    /// </summary>
+    VisualElement technobladeSelectorUI;
+
     bool hasBattleStarted;
     private int currentPlayer;
 
@@ -30,7 +35,6 @@ public class BattleMenuManager : MonoBehaviour
     [HideInInspector]
     public bool hasMoved;
     public VisualTreeAsset enemySelectionUITemplate;
-    public VisualTreeAsset overHeadUITemplate;
     //need pause manager
     //need save and load manager
     private void Awake() {
@@ -46,7 +50,7 @@ public class BattleMenuManager : MonoBehaviour
     }
 
     private void Start() {
-        
+        // have to set up ui here so that 
     }
 
     /// <summary>
@@ -110,10 +114,9 @@ public class BattleMenuManager : MonoBehaviour
         InventoryManager inventory = InventoryManager.instance;
 
         Item item = inventory.items[itemNumber];
-        /*
-        battleData.useTime = item.useTime;
-        battleData.maxUseTime = battleData.useTime;
-        itemInventory.RemoveAt(itemNumber);*/
+
+        // need to change this when multiple players are added
+        item.UseItem(Technoblade.instance.gameObject);
 
         battleUI.visible = true;
         itemSelector.visible = false;
@@ -123,13 +126,68 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="characterNumber"> the selected character</param>
     public void SkillsButton(int characterNumber){
+        AudioManager.playSound("menuchange");
+        currentCharacterSelected = characterNumber;
+        skillSelector.visible = true;
+        battleUI.visible = false;
+        UIManager.instance.ResetFocus();
+        List<Button> skillButtons = new List<Button>();
+        CharacterStats technoStats = Technoblade.instance.stats;
+        int i = 1;
+        ScrollView skillList = skillSelector.Q<ScrollView>("skill_list");
+        skillList.Clear();
+        while (i < technoStats.skills.Count)
+        {
+            Skill skill = technoStats.skills[i];
+            int z = i;
+            Button skillButton = new Button();
+            skillButton.focusable = true;
+
+            skillButton.text = skill.name.ToString();
+            skillButton.clicked += () => SkillButton(z);
+            skillButton.RegisterCallback<FocusEvent>(ev => UpdateSkillDescription(skill.description.ToString()));
+            skillButton.RegisterCallback<PointerEnterEvent>(ev => UpdateSkillDescription(skill.description.ToString()));
+
+
+            skillButton.AddToClassList("item_button");
+            skillSelector.Q<Label>("skill_desc").text = skill.description.ToString();
+            skillList.Add(skillButton);
+            skillButtons.Add(skillButton);
+            if (i == 1)
+            {
+                UpdateSkillDescription(skill.description.ToString());
+                skillButton.Focus();
+            }
+            i++;
+        }
     }
     /// <summary>
     /// open the enemy selector for the currently selected skill
     /// </summary>
     /// <param name="skillNumber">the currently selected skill</param>
     public void SkillButton(int skillNumber){
+        CharacterStats technoStats = Technoblade.instance.stats;
+        //checking if there have enough points to use the move
+        if (technoStats.stats.points >= technoStats.skills[skillNumber].cost)
+        {
+            AudioManager.playSound("menuchange");
+            int i = 0;
+            previousUI = skillSelector;
+            skillSelector.visible = false;
+            enemySelector.visible = true;
+            
+            foreach(GameObject enemy in BattleManager.instance.Enemies)
+            {
+                int z = i;
 
+                VisualElement enemySelectorUI = BattleManager.instance.enemySelectorUI[i].ui;
+                Button button = enemySelectorUI.Q<Button>("Base");
+                int tempNumber = skillNumber;
+                cachedHandler = () => SkillEnemySelectButton(z, tempNumber, button);
+                button.clicked += cachedHandler;
+                i++;
+            }
+        }
     }
     /// <summary>
     /// attacks the selected enemy with the selected skill
@@ -138,6 +196,28 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="currentSkill">the selected skill</param>
     /// <param name="selectButton">the button that is pressed</param>
     public void SkillEnemySelectButton(int enemyNumber, int currentSkill, Button selectButton){
+        selectButton.clicked -= cachedHandler;
+        cachedHandler = null;
+        AudioManager.playSound("menuselect");
+        battleUI.Focus();
+
+        CharacterStats technoStats = Technoblade.instance.stats;
+
+        Skill skill = technoStats.skills[currentSkill];
+        if (technoStats.stats.points >= skill.cost)
+        {
+            technoStats.stats.points -= skill.cost;
+        }
+        else
+        {
+            technoStats.stats.points = 0;
+        }
+
+            //deal damage to the enemy
+            skill.UseSkill( BattleManager.instance.Enemies[currentEnemySelected], technoStats.gameObject);
+
+            battleUI.visible = true;
+            enemySelector.visible = false;
     }
     /// <summary>
     /// go back to the previous battle menu tab
@@ -182,7 +262,23 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="characterNumber">the character </param>
     public void AttackButton(int characterNumber){
+        AudioManager.playSound("menuchange");
+        previousUI = battleUI;
+        battleUI.visible = false;
+        enemySelector.visible = true;
+        currentCharacterSelected = characterNumber;
 
+        int i = 0;
+
+        foreach(GameObject enemy in BattleManager.instance.Enemies)
+        {
+            int z = i;
+            VisualElement enemySelectorUI = BattleManager.instance.enemySelectorUI[currentEnemySelected].ui;
+            Button button = enemySelectorUI.Q<Button>("Base");
+            cachedHandler = () => AttackEnemySelectButton(z, button);
+            button.clicked += cachedHandler;
+            i++;
+        }
     }
     /// <summary>
     /// use first skill to attack an enemy
@@ -190,26 +286,114 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="EnemyNumber">the selected enemy</param>
     /// <param name="selectButton">the button used</param>
     private void AttackEnemySelectButton(int EnemyNumber, Button selectButton){
+        UIManager.instance.ResetFocus();
+        CharacterStats technoStats = Technoblade.instance.stats;
+        
+        Skill skill = technoStats.skills[0];
+        battleUI.visible = true;
+        technobladeSelectorUI.SetEnabled(false);
+        //makes sure that nothing is selected
+        foreach(EnemySelectorUI enemySelectorUI in BattleManager.instance.enemySelectorUI)
+        {
+            enemySelectorUI.UnSelectUI();
+        }
+        // the attack button will always use the first skill
+        skill.UseSkill(BattleManager.instance.Enemies[EnemyNumber], technoStats.gameObject);
+
+        battleUI.visible = true;
+        enemySelector.visible = false;
+            
+        selectButton.clicked -= cachedHandler;
+        cachedHandler = null;
     }
+
     /// <summary>
     /// when the battle transition is over, resume the gameworld(unless in a cutscene)
     /// </summary>
     private void ResumeGameWorld_OnTransitionEnd(System.Object sender, System.EventArgs e){
+        battleUI.visible = false;
+        enemySelector.visible = false;
+        skillSelector.visible = false;
+        itemSelector.visible = false;
+        hasBattleStarted = false;
+
+        // unpause the game world
+
+        InkManager.instance.ContinueStory();
+
+
     }
     /// <summary>
     /// disable all the menus that were in the battle
     /// </summary>
     private void DisableMenu_OnBattleEnd(System.Object sender, OnBattleEndEventArgs e){
+        battleUI.visible = false;
+        enemySelector.visible = false;
+        skillSelector.visible = false;
+        itemSelector.visible = false;
+        hasBattleStarted = false;
+
+        technobladeSelectorUI.SetEnabled(true);
+        if (e.isPlayerVictor)
+        {
+           //get ready to transition all the game objects
+        }
     }
     /// <summary>
     /// after the first battle transition is over, set up the battle menus
     /// </summary>
     private void EnableMenu_OnTransitionEnd(System.Object sender, System.EventArgs e){
+        if (!hasBattleStarted)
+        {
+            // enables all the features of the menu
+            Camera cam = FindObjectOfType<Camera>();
+            float positionRatio = 1280.0f / cam.pixelWidth;
+
+            VisualElement root = UIManager.instance.root;
+            battleUI = root.Q<VisualElement>("BattleUI");
+            enemySelector = root.Q<VisualElement>("EnemySelector");
+            skillSelector = root.Q<VisualElement>("skill_selector");
+            itemSelector = root.Q<VisualElement>("item_selector");
+            losingBackground = root.Q<VisualElement>("losing_screen");
+            battleUI.visible = true;
+            battleUI.Focus();
+            // adding the selectorUI stuff to the players
+            int i = 0;
+            foreach (GameObject player in BattleManager.instance.Players)
+            {
+                string tempstr = "character" + (i + 1).ToString();
+                VisualElement currentCharacter = battleUI.Q<Button>(tempstr);
+
+                HeadsUpUI headsUpUI = player.GetComponent<Battler>().headsUpUI;
+                TemplateContainer headsUpDisplay = headsUpUI.ui;
+
+                // setting the position of the headsUpDisplay
+                Vector2 uiPosition = headsUpDisplay.WorldToLocal(headsUpUI.transform.position);
+                headsUpDisplay.Q<VisualElement>("base").style.bottom = uiPosition.y;
+                headsUpDisplay.Q<VisualElement>("base").style.left = uiPosition.x;
+                i++;
+            }
+            i = 0;
+            foreach (GameObject enemy in BattleManager.instance.Enemies)
+            {
+                int z = i;
+
+                HeadsUpUI headsUpUI = enemy.GetComponent<Battler>().headsUpUI;
+                TemplateContainer headsUpDisplay = headsUpUI.ui;
+
+                // setting the position of the headsUpDisplay
+                Vector2 uiPosition = headsUpDisplay.WorldToLocal(headsUpUI.transform.position);
+                headsUpDisplay.Q<VisualElement>("base").style.bottom = uiPosition.y;
+                headsUpDisplay.Q<VisualElement>("base").style.left = uiPosition.x;
+            }
+            hasBattleStarted = true;
+        }
     }
     /// <summary>
     /// set up the transition of the battle menu
     /// </summary>
     private void WaitForTransition_OnBattleSetup(System.Object sender, System.EventArgs e){
+
     }
     /// <summary>
     /// once the victory data is finished being displayed, start trasition back to the overworld

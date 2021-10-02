@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public abstract class Weapon : IObtainable
+
+public abstract class Weapon : ScriptableObject, IObtainable
 {
     public string WeaponType;
     public string name;
@@ -17,14 +18,9 @@ public abstract class Weapon : IObtainable
         
     }
 }
+
 [System.Serializable]
-public class NormalWeapon : Weapon
-{
-    public override void CalculateDamage()
-    {
-    }
-}
-[System.Serializable]
+//[CreateAssetMenu(menuName = "Weapon/Special Weapon")]
 public class SpecialWeapon : Weapon
 {
     public override void CalculateDamage()

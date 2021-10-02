@@ -530,7 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e993187be719240b732d72c6619e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 0}
+  stats: {fileID: 1222542915304947601}
 --- !u!50 &1240235151
 Rigidbody2D:
   serializedVersion: 4
@@ -626,19 +626,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
     characterName: 
-    attack: 0
-    defence: 0
-    maxHealth: 0
+    attack: 4
+    defence: 4
+    maxHealth: 10
     health: 0
-    maxPoints: 0
+    maxPoints: 10
     points: 0
-  equipedWeapon:
-    rid: -2
-  equipedArmor:
-    rid: -2
-  skills: []
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+  equipedWeapon: {fileID: 11400000, guid: defe2cdb3ed65a548a51bc932e82be70, type: 2}
+  equipedArmor: {fileID: 11400000, guid: 8e006f00d5d392e4188ab1bf08962ac3, type: 2}
+  skills:
+  - {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}

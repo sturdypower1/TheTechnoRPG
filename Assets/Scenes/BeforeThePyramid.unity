@@ -537,16 +537,9 @@ MonoBehaviour:
     health: 0
     maxPoints: 0
     points: 0
-  equipedWeapon:
-    rid: -2
-  equipedArmor:
-    rid: -2
+  equipedWeapon: {fileID: 0}
+  equipedArmor: {fileID: 0}
   skills: []
-  references:
-    version: 2
-    RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
 --- !u!95 &730183025
 Animator:
   serializedVersion: 4
@@ -978,28 +971,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - rid: 4465769408708739090
+  - {fileID: 11400000, guid: defe2cdb3ed65a548a51bc932e82be70, type: 2}
   armors:
-  - rid: 4465769408708739091
+  - {fileID: 11400000, guid: 8e006f00d5d392e4188ab1bf08962ac3, type: 2}
   items:
   - {fileID: 11400000, guid: 7fc877bb8d2e46f4abe7cdf4c01970a8, type: 2}
-  references:
-    version: 2
-    RefIds:
-    - rid: 4465769408708739090
-      type: {class: NormalWeapon, ns: , asm: AssemblyDefinition}
-      data:
-        WeaponType: NormalWeapon
-        name: test weapon
-        description: a weapon test
-        attack: 0
-    - rid: 4465769408708739091
-      type: {class: NormalArmor, ns: , asm: AssemblyDefinition}
-      data:
-        ArmorType: NormalArmor
-        name: test armor
-        description: a armor test
-        defence: 0
 --- !u!1 &1009360703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,7 +1697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4217960342703175780, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
       propertyPath: orthographic size
-      value: 0
+      value: 2.4107144
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f710b64bba2b35f40b580f20f0cae898, type: 3}
@@ -1732,110 +1708,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: equipedArmor
-      value: 4465769408708739100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.attack
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.health
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: equipedWeapon
-      value: 4465769408708739099
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.defence
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.maxHealth
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.maxPoints
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: skills.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.characterName
-      value: Technoblade
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: skills.Array.data[0]
-      value: 4465769408708739101
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739099]
-      value: AssemblyDefinition NormalWeapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739100]
-      value: AssemblyDefinition SpecialArmor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101]
-      value: AssemblyDefinition BasicSkill
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739099].name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739100].name
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101].name
-      value: default attack
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739099].attack
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101].damage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739100].defence
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101].useTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739100].ArmorType
-      value: SpecialArmor
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101].skillType
-      value: BasicSkill
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739099].WeaponType
-      value: OrphanObliterator
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739099].description
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739100].description
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: managedReferences[4465769408708739101].description
-      value: make the enemy bleed
-      objectReference: {fileID: 0}
     - target: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_Name
       value: Technoblade

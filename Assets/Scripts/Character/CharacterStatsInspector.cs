@@ -1,4 +1,4 @@
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
 using System.Collections;
 using System;
 using System.Linq;
@@ -154,4 +154,4 @@ public class CharacterStatsInspector : Editor
         return types.Where(p => interfaceType.IsAssignableFrom(p) && !p.IsAbstract).ToArray();
     }
 }
-#endif
+#endif*/

@@ -5,11 +5,15 @@ using UnityEngine;
 /// special skills you can use in battle
 /// </summary>
 [System.Serializable]
-public abstract class Skill
+public abstract class Skill : ScriptableObject
 {
     public string skillType;
-    public string name;
+    public new string name;
     public string description;
+    /// <summary>
+    /// how much it costs to use the skill
+    /// </summary>
+    public int cost;
 
     /// <summary>
     /// how long the player has to wait after using the skill
@@ -18,25 +22,7 @@ public abstract class Skill
     /// <summary>
     /// use the skill
     /// </summary>
-    public abstract void UseSkill(GameObject target);
+    public abstract void UseSkill(GameObject target, GameObject user);
 }
-/// <summary>
-/// deal regular damage
-/// </summary>
-[System.Serializable]
-public class BasicSkill : Skill
-{
-    /// <summary>
-    /// how much damage the attack does
-    /// </summary>
-    public int damage;
-    /// <summary>
-    /// attack the enemy 
-    /// </summary>
-    /// <param name="target"></param>
-    public override void UseSkill(GameObject target)
-    {
-    }
 
-}
 

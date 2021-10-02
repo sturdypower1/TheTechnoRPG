@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// the class that represents a characters stats
 /// </summary>
+[RequireComponent(typeof(Battler))]
 [System.Serializable]
 public class CharacterStats : MonoBehaviour
 {
@@ -11,17 +12,14 @@ public class CharacterStats : MonoBehaviour
     /// <summary>
     /// the currently equiped weapon
     /// </summary>
-    [SerializeReference]
     public Weapon equipedWeapon;
     /// <summary>
     /// the currently equiped armor
     /// </summary>
-    [SerializeReference]
     public Armor equipedArmor;
     /// <summary>
     /// all the skills the character has earned
     /// </summary>
-    [SerializeReference]
     public List<Skill> skills;
 
 }

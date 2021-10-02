@@ -53,6 +53,10 @@ public class UIManager : MonoBehaviour
     VisualElement skillInfo;
     VisualElement overworldSaveFileSelect;
 
+    
+
+
+
     // need reference to battleMenuSystem
     //need refernce to inkdisplaySystem
     // need reference to save system
@@ -736,9 +740,6 @@ public class UIManager : MonoBehaviour
     {
         currentItem = currentSkillNumber;
         AudioManager.playSound("menuselect");
-
-        //skillsQuickMenu.visible = true;
-        //placeQuickMenu(currentSkills.Q<Button>("skill" + currentItem), skillsQuickMenu);
     }
     /// <summary>
     /// make all of the pause menu tabs invisable
@@ -809,7 +810,7 @@ public class UIManager : MonoBehaviour
     /// use the currently selected item
     /// </summary>
     private void ItemUse(){
-        InventoryManager.instance.items[currentItem - 1].UseItem();
+        InventoryManager.instance.items[currentItem - 1].UseItem(Technoblade.instance.gameObject);
         // update character ui
         UpdateCharacterInfo();
 

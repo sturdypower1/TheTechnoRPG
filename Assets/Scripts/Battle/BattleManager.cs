@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using UnityEngine.UIElements;
 
 public class BattleManager : MonoBehaviour
 {
@@ -8,6 +10,12 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> Players;
     public List<GameObject> Enemies;
     public bool isInBattle;
+
+    public event EventHandler inBattlePositon;
+    /// <summary>
+    /// a list of all of the ui for selecting an enemy
+    /// </summary>
+    public List<EnemySelectorUI> enemySelectorUI;
 
     private void Awake()
     {
@@ -42,8 +50,88 @@ public class BattleManager : MonoBehaviour
             animator.SetTrigger("BattleStart");
         }
     }
-    public void SetupBattle(GameObject[] players)
+    public void SetupBattle( GameObject[] enemies)
     {
-        
+        Camera cam = FindObjectOfType<Camera>();
+        float positionRatio = 1280.0f / cam.pixelWidth;
+        // transition all of the characters
+        Players.Clear();
+        Players.Add(Technoblade.instance.gameObject);
+        int i = 0;
+
+        // need to start trasition of the new camera
+
+        foreach (GameObject player in Players)
+        {
+            player.layer = 3;
+
+            bool triggerEvent = false;
+            if(i == 0)
+            {
+                triggerEvent = true;
+            }
+            // sets its layer to battler
+            player.layer = 3;
+
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .1f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent));
+            i++;
+        }
+
+        i = 0;
+        foreach (GameObject enemy in enemies)
+        {
+            // sets its layer to battler
+            enemy.layer = 3;
+
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .1f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false));
+            i++;
+        }
+
+        UIManager.instance.overworldOverlay.visible = false;
+        UIManager.instance.ResetFocus();
+
+
+    }
+    IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent)
+    {
+        // disable collision
+        if(transformy.GetComponent<Collider2D>() != null)
+        {
+            Collider2D collider = transformy.GetComponent<Collider2D>();
+            collider.enabled = false;
+        }
+
+        Transform transform = transformy.transform;
+        Vector3 oldPosition = transform.position;
+        while(transform.position != newPosition)
+        {
+            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime);
+            yield return null;
+        }
+        if (triggerEvent)
+        {
+            inBattlePositon.Invoke(null, null);
+        }
+    }
+
+    IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent)
+    {
+        // disable collision
+        if (transformy.GetComponent<Collider2D>() != null)
+        {
+            Collider2D collider = transformy.GetComponent<Collider2D>();
+            collider.enabled = true;
+        }
+
+        Transform transform = transformy.transform;
+        Vector3 oldPosition = transform.position;
+        while (transform.position != newPosition)
+        {
+            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime);
+            yield return null;
+        }
+
     }
 }

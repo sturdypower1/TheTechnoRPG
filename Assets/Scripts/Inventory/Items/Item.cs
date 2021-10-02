@@ -24,7 +24,7 @@ public class Item : ScriptableObject, IObtainable
     {
         label.text = description;
     }
-    public void UseItem() { }
+    public void UseItem(GameObject target) { }
     public bool GetUseability() { return true; }
 
 }
