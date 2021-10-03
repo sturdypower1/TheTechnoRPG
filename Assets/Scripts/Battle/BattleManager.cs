@@ -21,7 +21,7 @@ public class BattleManager : MonoBehaviour
 
     public event EmptyEventHandler settingUpBattle;
 
- 
+    public AudioSource BattleMusic;
 
     private void Awake()
     {
@@ -45,11 +45,23 @@ public class BattleManager : MonoBehaviour
     }
     public void StartBattle()
     {
+        BattleMusic.Play();
         isInBattle = true;
-        foreach(GameObject battler in Players)
+
+        Camera cam = FindObjectOfType<Camera>();
+        float positionRatio = 1280.0f / cam.pixelWidth;
+        
+        
+
+
+        foreach (GameObject battler in Players)
         {
             Animator animator = battler.GetComponent<Animator>();
             animator.SetTrigger("BattleStart");
+
+            // set up heads up display
+            Battler battledata = battler.GetComponent<Battler>();
+            TemplateContainer headsupUI = battledata.headsUpUI.ui;        
         }
         foreach (GameObject battler in Enemies)
         {
@@ -57,14 +69,14 @@ public class BattleManager : MonoBehaviour
             animator.SetTrigger("BattleStart");
         }
     }
-    public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground)
-    { 
-
+    public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
+    {
+        BattleMusic = battleMusic;
         PauseManager.instance.Pause();
         // pause the game
         Time.timeScale = 0;
 
-        StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground));
+        StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground, .5f));
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
@@ -97,7 +109,7 @@ public class BattleManager : MonoBehaviour
             player.layer = 3;
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
-            StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent));
+            StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
             i++;
         }
 
@@ -123,7 +135,7 @@ public class BattleManager : MonoBehaviour
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             
-            StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false));
+            StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false, .5f));
             i++;
         }
 
@@ -132,7 +144,7 @@ public class BattleManager : MonoBehaviour
 
 
     }
-    IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent)
+    IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
         // disable collision
         if(transformy.GetComponent<Collider2D>() != null)
@@ -148,7 +160,7 @@ public class BattleManager : MonoBehaviour
         while(transform.position != newPosition)
         {
             timePassed += Time.unscaledDeltaTime;
-            transform.position = Vector3.Lerp(oldPosition, newPosition, timePassed);
+            transform.position = Vector3.Lerp(oldPosition, newPosition, timePassed/ duration);
             yield return null;
         }
         if (triggerEvent)
@@ -157,7 +169,7 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent)
+    IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
         // disable collision
         if (transformy.GetComponent<Collider2D>() != null)
@@ -170,13 +182,13 @@ public class BattleManager : MonoBehaviour
         Vector3 oldPosition = transform.position;
         while (transform.position != newPosition)
         {
-            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime);
+            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime/ duration);
             yield return null;
         }
 
     }
 
-    IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background)
+    IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)
     {
         float timePassed = 0;
         while(timePassed < 1)
@@ -184,7 +196,7 @@ public class BattleManager : MonoBehaviour
             timePassed += Time.unscaledDeltaTime;
             MaterialPropertyBlock myMatBlock = new MaterialPropertyBlock();
             background.GetPropertyBlock(myMatBlock);
-            myMatBlock.SetFloat("Alpha", Mathf.Lerp(a, b, timePassed));
+            myMatBlock.SetFloat("Alpha", Mathf.Lerp(a, b, timePassed/ duration));
             background.SetPropertyBlock(myMatBlock);
             yield return null;
         }

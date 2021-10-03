@@ -30,6 +30,17 @@ public class Technoblade : MonoBehaviour
     {
         if (BattleManager.instance.isInBattle)
         {
+            InventoryManager inventory = InventoryManager.instance;
+            // there are no items, so don't let them go into the menu
+            if(inventory.items.Count == 0)
+            {
+                technoSelectorUI.Q<Button>("items").SetEnabled(false);
+            }
+            else
+            {
+                technoSelectorUI.Q<Button>("items").SetEnabled(true);
+            }
+
             Label healthText = technoSelectorUI.Q<Label>("health_text");
             VisualElement healthBarBase = technoSelectorUI.Q<VisualElement>("health_bar_base");
             VisualElement healthBar = technoSelectorUI.Q<VisualElement>("health_bar");

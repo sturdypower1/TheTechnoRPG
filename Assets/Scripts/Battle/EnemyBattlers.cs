@@ -7,4 +7,6 @@ public class EnemyBattlers : MonoBehaviour
     public GameObject[] Enemies;
 
     public SpriteRenderer battleBackground;
+
+    public AudioSource battleMusic;
 }

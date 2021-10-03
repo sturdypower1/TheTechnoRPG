@@ -63,7 +63,7 @@ public class RandomMovementAI : MonoBehaviour
                 }
                 break;
             case RandomMovementState.Following:
-                movement.move(-1 * (this.transform.position - playerPositon.position).normalized);
+                movement.move(-1 * (this.transform.position - playerPositon.position + new Vector3(0, -.5f, 0)).normalized);
                 break;
         }
     }

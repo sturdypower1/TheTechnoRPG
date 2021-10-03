@@ -354,6 +354,7 @@ public class BattleMenuManager : MonoBehaviour
             // enables all the features of the menu
             Camera cam = FindObjectOfType<Camera>();
             float positionRatio = 1280.0f / cam.pixelWidth;
+        Debug.Log(positionRatio);
 
             VisualElement root = UIManager.instance.root;
             battleUI = root.Q<VisualElement>("BattleUI");
@@ -364,7 +365,6 @@ public class BattleMenuManager : MonoBehaviour
 
         technobladeSelectorUI = battleUI.Q<VisualElement>("character1");
         Technoblade.instance.technoSelectorUI = technobladeSelectorUI;
-        Debug.Log(technobladeSelectorUI == null);
 
         battleUI.visible = true;
         battleUI.Focus();
@@ -375,11 +375,13 @@ public class BattleMenuManager : MonoBehaviour
                 HeadsUpUI headsUpUI = player.GetComponent<Battler>().headsUpUI;
                 TemplateContainer headsUpDisplay = headsUpUI.ui;
 
-                // setting the position of the headsUpDisplay
-                Vector2 uiPosition = headsUpDisplay.WorldToLocal(headsUpUI.transform.position);
-                headsUpDisplay.Q<VisualElement>("base").style.bottom = uiPosition.y;
-                headsUpDisplay.Q<VisualElement>("base").style.left = uiPosition.x;
-                i++;
+            // setting the position of the headsUpDisplay
+            Vector3 camPo = cam.WorldToScreenPoint(headsUpUI.transform.position);
+            Vector2 uiPosition = new Vector2(camPo.x * positionRatio, camPo.y * positionRatio);
+
+            headsUpUI.ui.Q<VisualElement>("base").style.bottom = uiPosition.y;
+            headsUpUI.ui.Q<VisualElement>("base").style.left = uiPosition.x;
+            i++;
             }
             i = 0;
             foreach (GameObject enemy in BattleManager.instance.Enemies)
@@ -389,11 +391,14 @@ public class BattleMenuManager : MonoBehaviour
                 HeadsUpUI headsUpUI = enemy.GetComponent<Battler>().headsUpUI;
                 TemplateContainer headsUpDisplay = headsUpUI.ui;
 
-                // setting the position of the headsUpDisplay
-                Vector2 uiPosition = headsUpDisplay.WorldToLocal(headsUpUI.transform.position);
-                headsUpDisplay.Q<VisualElement>("base").style.bottom = uiPosition.y;
-                headsUpDisplay.Q<VisualElement>("base").style.left = uiPosition.x;
-            }
+            // setting the position of the headsUpDisplay
+
+            Vector3 camPo = cam.WorldToScreenPoint(headsUpUI.transform.position);
+            Vector2 uiPosition =  new Vector2(camPo.x * positionRatio, camPo.y * positionRatio);
+
+            headsUpUI.ui.Q<VisualElement>("base").style.bottom = uiPosition.y;
+            headsUpUI.ui.Q<VisualElement>("base").style.left = uiPosition.x;
+        }
     }
 
     /// <summary>
