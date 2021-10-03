@@ -182,7 +182,7 @@ public class UIManager : MonoBehaviour
             losingBackground.Q<Button>("title").clicked += BattleMenuManager.instance.LossReturnToTitleButton;
             
             // should be technoblade
-            Button technobladeBattleUI = battleUI.Q<Button>("character1");
+            VisualElement technobladeBattleUI = battleUI.Q<VisualElement>("character1");
             technobladeBattleUI.Q<Button>("fight").clicked += () => BattleMenuManager.instance.AttackButton(0);
             technobladeBattleUI.Q<Button>("skills").clicked += () => BattleMenuManager.instance.SkillsButton(0);
             technobladeBattleUI.Q<Button>("items").clicked += () => BattleMenuManager.instance.ItemsButton(0);

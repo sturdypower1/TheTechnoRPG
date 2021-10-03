@@ -11,17 +11,25 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> Enemies;
     public bool isInBattle;
 
-    public event EventHandler inBattlePositon;
+    public VisualTreeAsset enemySelectionUITemplate;
+
+    public event EmptyEventHandler inBattlePositon;
     /// <summary>
     /// a list of all of the ui for selecting an enemy
     /// </summary>
     public List<EnemySelectorUI> enemySelectorUI;
+
+    public event EmptyEventHandler settingUpBattle;
+
+ 
 
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
+
+            inBattlePositon += StartBattle;
         }
         else
         {
@@ -37,23 +45,26 @@ public class BattleManager : MonoBehaviour
     }
     public void StartBattle()
     {
+        isInBattle = true;
         foreach(GameObject battler in Players)
         {
             Animator animator = battler.GetComponent<Animator>();
-            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.SetTrigger("BattleStart");
         }
         foreach (GameObject battler in Enemies)
         {
             Animator animator = battler.GetComponent<Animator>();
-            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.SetTrigger("BattleStart");
         }
     }
-    public void SetupBattle(GameObject[] enemies)
-    {
+    public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground)
+    { 
+
+        PauseManager.instance.Pause();
         // pause the game
         Time.timeScale = 0;
+
+        StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground));
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
@@ -69,7 +80,13 @@ public class BattleManager : MonoBehaviour
 
         foreach (GameObject player in Players)
         {
-            player.layer = 3;
+            Animator animator = player.GetComponent<Animator>();
+            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+            animator.SetTrigger("BattleSetup");
+
+            // makes it so the sprite is above the battle background
+            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+            sprite.sortingLayerName = "Battlers";
 
             bool triggerEvent = false;
             if(i == 0)
@@ -79,18 +96,32 @@ public class BattleManager : MonoBehaviour
             // sets its layer to battler
             player.layer = 3;
 
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .1f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent));
             i++;
         }
 
+        Enemies.Clear();
+        enemySelectorUI.Clear();
         i = 0;
+
+        VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
         foreach (GameObject enemy in enemies)
         {
-            // sets its layer to battler
-            enemy.layer = 3;
+            // makes it so the sprite is above the battle background
+            SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
+            sprite.sortingLayerName = "Battlers";
 
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .9f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            Enemies.Add(enemy);
+            EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>()};
+            enemySelectorUI.Add(enemySelector);
+            enemySelectorGroup.Add(enemySelector.ui);
+
+            Animator animator = enemy.GetComponent<Animator>();
+            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+            animator.SetTrigger("BattleSetup");
+
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             
             StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false));
             i++;
@@ -122,7 +153,7 @@ public class BattleManager : MonoBehaviour
         }
         if (triggerEvent)
         {
-            inBattlePositon?.Invoke(this, EventArgs.Empty);
+            inBattlePositon?.Invoke();
         }
     }
 
@@ -144,4 +175,20 @@ public class BattleManager : MonoBehaviour
         }
 
     }
+
+    IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background)
+    {
+        float timePassed = 0;
+        while(timePassed < 1)
+        {
+            timePassed += Time.unscaledDeltaTime;
+            MaterialPropertyBlock myMatBlock = new MaterialPropertyBlock();
+            background.GetPropertyBlock(myMatBlock);
+            myMatBlock.SetFloat("Alpha", Mathf.Lerp(a, b, timePassed));
+            background.SetPropertyBlock(myMatBlock);
+            yield return null;
+        }
+    }
 }
+
+public delegate void EmptyEventHandler();

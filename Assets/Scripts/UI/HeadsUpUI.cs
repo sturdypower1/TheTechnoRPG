@@ -17,15 +17,16 @@ public class HeadsUpUI : MonoBehaviour
     {
         overHeadUITemplate = Resources.Load<VisualTreeAsset>("UIDocuments/OverHeadBattleStats");
     }
-    void Start()
-    {
-        ui = overHeadUITemplate.CloneTree();
-        UIManager.instance.root.Add(ui);
-    }
 
     // Update is called once per frame
     void Update()
     {
+        if(ui == null)
+        {
+            ui = overHeadUITemplate.CloneTree();
+            ui.visible = false;
+            UIManager.instance.root.Add(ui);
+        }
         // update the messages
     }
 }

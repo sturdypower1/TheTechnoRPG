@@ -34,7 +34,7 @@ public class BattleMenuManager : MonoBehaviour
     public int playerNumber;
     [HideInInspector]
     public bool hasMoved;
-    public VisualTreeAsset enemySelectionUITemplate;
+    
     //need pause manager
     //need save and load manager
     private void Awake() {
@@ -51,6 +51,8 @@ public class BattleMenuManager : MonoBehaviour
 
     private void Start() {
         // have to set up ui here so that 
+        BattleManager.instance.inBattlePositon += EnableMenu_OnTransitionEnd;
+        //BattleManager.instance.settingUpBattle += WaitForTransition_OnBattleSetup;
     }
 
     /// <summary>
@@ -201,6 +203,13 @@ public class BattleMenuManager : MonoBehaviour
         AudioManager.playSound("menuselect");
         battleUI.Focus();
 
+        technobladeSelectorUI.SetEnabled(false);
+        //makes sure that nothing is selected
+        foreach (EnemySelectorUI enemySelectorUI in BattleManager.instance.enemySelectorUI)
+        {
+            enemySelectorUI.UnSelectUI();
+        }
+
         CharacterStats technoStats = Technoblade.instance.stats;
 
         Skill skill = technoStats.skills[currentSkill];
@@ -212,7 +221,6 @@ public class BattleMenuManager : MonoBehaviour
         {
             technoStats.stats.points = 0;
         }
-
             //deal damage to the enemy
             skill.UseSkill( BattleManager.instance.Enemies[currentEnemySelected], technoStats.gameObject);
 
@@ -342,9 +350,7 @@ public class BattleMenuManager : MonoBehaviour
     /// <summary>
     /// after the first battle transition is over, set up the battle menus
     /// </summary>
-    private void EnableMenu_OnTransitionEnd(System.Object sender, System.EventArgs e){
-        if (!hasBattleStarted)
-        {
+    private void EnableMenu_OnTransitionEnd(){
             // enables all the features of the menu
             Camera cam = FindObjectOfType<Camera>();
             float positionRatio = 1280.0f / cam.pixelWidth;
@@ -355,15 +361,17 @@ public class BattleMenuManager : MonoBehaviour
             skillSelector = root.Q<VisualElement>("skill_selector");
             itemSelector = root.Q<VisualElement>("item_selector");
             losingBackground = root.Q<VisualElement>("losing_screen");
-            battleUI.visible = true;
-            battleUI.Focus();
+
+        technobladeSelectorUI = battleUI.Q<VisualElement>("character1");
+        Technoblade.instance.technoSelectorUI = technobladeSelectorUI;
+        Debug.Log(technobladeSelectorUI == null);
+
+        battleUI.visible = true;
+        battleUI.Focus();
             // adding the selectorUI stuff to the players
             int i = 0;
             foreach (GameObject player in BattleManager.instance.Players)
             {
-                string tempstr = "character" + (i + 1).ToString();
-                VisualElement currentCharacter = battleUI.Q<Button>(tempstr);
-
                 HeadsUpUI headsUpUI = player.GetComponent<Battler>().headsUpUI;
                 TemplateContainer headsUpDisplay = headsUpUI.ui;
 
@@ -386,15 +394,8 @@ public class BattleMenuManager : MonoBehaviour
                 headsUpDisplay.Q<VisualElement>("base").style.bottom = uiPosition.y;
                 headsUpDisplay.Q<VisualElement>("base").style.left = uiPosition.x;
             }
-            hasBattleStarted = true;
-        }
     }
-    /// <summary>
-    /// set up the transition of the battle menu
-    /// </summary>
-    private void WaitForTransition_OnBattleSetup(System.Object sender, System.EventArgs e){
 
-    }
     /// <summary>
     /// once the victory data is finished being displayed, start trasition back to the overworld
     /// </summary>

@@ -19,7 +19,9 @@ public class BasicSkill : Skill
     /// <param name="target"></param>
     public override void UseSkill(GameObject target, GameObject user)
     {
-
+        Battler battler = user.GetComponent<Battler>();
+        battler.useTime = 0;
+        battler.maxUseTime = useTime;
     }
 
 }

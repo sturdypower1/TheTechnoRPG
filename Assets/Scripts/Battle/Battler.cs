@@ -15,7 +15,9 @@ public class Battler : MonoBehaviour
     /// <summary>
     /// how much long it has left before it can do another attack
     /// </summary>
-    public float recoveryTime;
+    public float useTime;
+
+    public float maxUseTime;
 
     public HeadsUpUI headsUpUI;
 

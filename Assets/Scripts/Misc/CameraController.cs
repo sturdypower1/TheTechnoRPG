@@ -25,6 +25,7 @@ public class CameraController : MonoBehaviour
 
     public void ToBattleCamera()
     {
+        battleCamera.Priority = 11;
         battleCamera.transform.position = overworldCamera.transform.position;
         animator.SetTrigger("OnBattleSetup");
     }
