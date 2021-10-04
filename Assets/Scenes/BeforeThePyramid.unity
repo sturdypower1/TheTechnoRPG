@@ -692,8 +692,8 @@ MonoBehaviour:
     characterName: 
     attack: 0
     defence: 0
-    maxHealth: 0
-    health: 0
+    maxHealth: 10
+    health: 10
     maxPoints: 0
     points: 0
   equipedWeapon: {fileID: 0}
@@ -892,6 +892,9 @@ MonoBehaviour:
   maxUseTime: 0
   headsUpUI: {fileID: 792761748}
   oldPosition: {x: 0, y: 0, z: 0}
+  isDown: 0
+  damagedSound: {fileID: 0}
+  characterStats: {fileID: 0}
 --- !u!82 &730183034
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1133,6 +1136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characaterStats: {fileID: 730183024}
+  battler: {fileID: 730183033}
 --- !u!4 &792761749
 Transform:
   m_ObjectHideFlags: 0
@@ -1273,51 +1277,6 @@ PolygonCollider2D:
       - {x: -0.0625, y: 0.40625}
       - {x: -0.6875, y: 0.40625}
       - {x: -0.6875, y: -3.9375}
---- !u!1 &915287395
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 915287396}
-  - component: {fileID: 915287397}
-  m_Layer: 0
-  m_Name: HeadsUpDisplay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &915287396
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915287395}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.753, y: 0.246, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1189179790}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &915287397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 915287395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39201496ab5a2164ca56bd228ea79c85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characaterStats: {fileID: 2093283204}
 --- !u!1 &926528872
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,17 +2176,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4332425643559129223, guid: ef7a3692079831046b617225a8eb0325, type: 3}
   m_PrefabInstance: {fileID: 4332425644609888523}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2093283204 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-  m_PrefabInstance: {fileID: 4332425644609888523}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ab78ad67927bd3409332797daaeb7d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &504058228248044681
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2418,30 +2366,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 608028240633797675, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: headsUpUI
-      value: 
-      objectReference: {fileID: 915287397}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.health
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.maxHealth
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: stats.maxPoints
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: skills.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1222542915304947601, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: skills.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}
     - target: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_Name
       value: Technoblade

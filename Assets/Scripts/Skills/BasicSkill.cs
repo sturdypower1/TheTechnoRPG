@@ -14,6 +14,13 @@ public class BasicSkill : Skill
     /// </summary>
     public int damage;
     /// <summary>
+    /// the name of the animation for the skill
+    /// </summary>
+    public string skillAnimationName;
+
+    public DamageType damageType;
+
+    /// <summary>
     /// attack the enemy 
     /// </summary>
     /// <param name="target"></param>
@@ -22,6 +29,11 @@ public class BasicSkill : Skill
         Battler battler = user.GetComponent<Battler>();
         battler.useTime = 0;
         battler.maxUseTime = useTime;
+
+        Animator animator = user.GetComponent<Animator>();
+        animator.Play(skillAnimationName);
+
+        target.GetComponent<Battler>().TakeDamage(new Damage { damageAmount = damage , damageType = damageType});
     }
 
 }

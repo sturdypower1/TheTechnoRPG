@@ -329,6 +329,52 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!1 &915287395
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 915287396}
+  - component: {fileID: 915287397}
+  m_Layer: 0
+  m_Name: HeadsUpDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &915287396
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915287395}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.753, y: 0.246, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4332425643559129221}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &915287397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 915287395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39201496ab5a2164ca56bd228ea79c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characaterStats: {fileID: 1222542915304947601}
+  battler: {fileID: 0}
 --- !u!1 &1475370610
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,6 +489,7 @@ Transform:
   - {fileID: 239311101}
   - {fileID: 240418042}
   - {fileID: 711549362}
+  - {fileID: 915287396}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -531,6 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 1222542915304947601}
+  battler: {fileID: 0}
 --- !u!50 &1240235151
 Rigidbody2D:
   serializedVersion: 4
@@ -628,11 +676,12 @@ MonoBehaviour:
     characterName: 
     attack: 4
     defence: 4
-    maxHealth: 10
-    health: 0
-    maxPoints: 10
+    maxHealth: 20
+    health: 20
+    maxPoints: 15
     points: 0
   equipedWeapon: {fileID: 11400000, guid: defe2cdb3ed65a548a51bc932e82be70, type: 2}
   equipedArmor: {fileID: 11400000, guid: 8e006f00d5d392e4188ab1bf08962ac3, type: 2}
   skills:
+  - {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}
   - {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}

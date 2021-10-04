@@ -22,7 +22,20 @@ public class CharacterStats : MonoBehaviour
     /// </summary>
     public List<Skill> skills;
 
+    
 }
+public struct Damage{
+    public int damageAmount;
+    public DamageType damageType;
+}
+public enum DamageType
+{
+    Physical,
+    Bleeding,
+    Butchering
+}
+
+
 [System.Serializable]
 public struct Stats
 {

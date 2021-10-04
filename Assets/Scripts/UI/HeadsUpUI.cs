@@ -13,7 +13,9 @@ public class HeadsUpUI : MonoBehaviour
 
     public CharacterStats characaterStats;
 
-    public List<Message> messages;
+    public List<Message> messages = new List<Message>();
+
+    public Battler battler;
 
     private void Awake()
     {
@@ -31,7 +33,7 @@ public class HeadsUpUI : MonoBehaviour
         }
         // update the messages
 
-        if (BattleManager.instance.isInBattle)
+        if (BattleManager.instance.isInBattle && !battler.isDown)
         {
             ui.visible = true;
 
@@ -41,7 +43,30 @@ public class HeadsUpUI : MonoBehaviour
             VisualElement healthbar = healthbarBase.Q<VisualElement>("healthbar");
             healthbar.style.width = healthbarBase.contentRect.width * ((float)characaterStats.stats.health / characaterStats.stats.maxHealth);
 
-            // luuoop through all of the messages
+            // loop through all of the messages
+            for (int i = 0; i < messages.Count; i++)
+            {
+                Message message = messages[i];
+                message.timePassed += Time.unscaledDeltaTime;
+                messages[i] = message;
+                if (message.timePassed > 2)
+                {
+                    ui.Q<VisualElement>("messages").Remove(message.label);
+                    messages.RemoveAt(i);
+                    i--;
+                }
+                else if (message.timePassed > 1)
+                {
+                    messages[i].label.style.opacity = Mathf.Lerp(1, 0, message.timePassed - 1);
+                }
+                else
+                {
+                    Vector3 newPosition = messages[i].label.transform.position;
+                    newPosition.y += 20 * Time.unscaledDeltaTime * messages[i].direction.y;
+                    newPosition.x += 20 * Time.unscaledDeltaTime * messages[i].direction.x;
+                    messages[i].label.transform.position = newPosition;
+                }
+            }
         }
         else
         {
