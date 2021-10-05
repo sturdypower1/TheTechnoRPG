@@ -17,11 +17,15 @@ public class BattleManager : MonoBehaviour
     /// <summary>
     /// a list of all of the ui for selecting an enemy
     /// </summary>
-    public List<EnemySelectorUI> enemySelectorUI;
+    public List<EnemySelectorUI> enemySelectorUI = new List<EnemySelectorUI>();
 
     public event EmptyEventHandler settingUpBattle;
 
     public AudioSource BattleMusic;
+
+    public event BattleEndEventHandler OnBattleEnd;
+
+    public BattleRewardData battleRewardData;
 
     private void Awake()
     {
@@ -37,6 +41,87 @@ public class BattleManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (isInBattle)
+        {
+            foreach(EnemySelectorUI enemySelector in enemySelectorUI)
+            {
+                enemySelector.Update();
+            }
+
+            bool isPlayerVictory = true;
+            foreach(GameObject enemy in Enemies)
+            {
+                if (!enemy.GetComponent<Battler>().isDown)
+                {
+                    isPlayerVictory = false;
+                }
+            }
+            if (isPlayerVictory)
+            {
+                // end battle as player victory
+                EndBattle(true);
+            }
+
+        }
+    }
+    /// <summary>
+    /// triggered when either all the players or enemies are down
+    /// </summary>
+    /// <param name="isPlayerVictor"></param>
+    public void EndBattle(bool isPlayerVictor)
+    {
+        BattleMusic.Stop();
+        isInBattle = false;
+
+        
+
+
+        foreach (GameObject player in Players)
+        {
+            CharacterStats stats = player.GetComponent<CharacterStats>();
+            Battler battler = player.GetComponent<Battler>();
+            battler.isDown = false;
+            if (stats.stats.health <= 0)
+            {
+                stats.stats.health = isPlayerVictor ? 1 : stats.stats.maxHealth;
+            }
+        }
+        foreach (GameObject enemy in Players)
+        {
+            Battler battler = enemy.GetComponent<Battler>();
+            battler.isDown = false;
+        }
+
+        if (isPlayerVictor)
+        {
+            // play old song
+            battleRewardData = new BattleRewardData();
+            //add total exp, total gold and items
+            foreach (GameObject enemy in Enemies)
+            {
+                if (enemy.GetComponent<EnemyRewardData>() != null)
+                {
+                    EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
+                    float randomValue = UnityEngine.Random.Range(0, 1);
+                    battleRewardData.totalEXP += enemyRewardData.EXP;
+                    battleRewardData.totalGold += enemyRewardData.gold;
+                    // seeing if the player gets the item
+                    if (randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
+                }
+            }
+            foreach (GameObject player in Players)
+            {
+                LevelUpController levelUpController = player.GetComponent<LevelUpController>();
+                levelUpController.currentEXP += battleRewardData.totalEXP;
+            }
+
+            InkManager.instance.DisplayVictoryData();
+
+            OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
+        }
+    }
     public void UnpauseBattler(GameObject battler)
     {
         Animator animator = battler.GetComponent<Animator>();
@@ -45,15 +130,13 @@ public class BattleManager : MonoBehaviour
     }
     public void StartBattle()
     {
+
         BattleMusic.Play();
         isInBattle = true;
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
         
-        
-
-
         foreach (GameObject battler in Players)
         {
             Animator animator = battler.GetComponent<Animator>();
@@ -125,9 +208,14 @@ public class BattleManager : MonoBehaviour
             sprite.sortingLayerName = "Battlers";
 
             Enemies.Add(enemy);
-            EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>()};
+            EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>(), enemy = enemy.GetComponent<Battler>()};
             enemySelectorUI.Add(enemySelector);
             enemySelectorGroup.Add(enemySelector.ui);
+
+            //making it so when it's focused, the enemy glows
+            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusEvent>(ev => enemySelector.SelectUI());
+            // making it so when it's un focused, it no longer glows
+            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusOutEvent>(ev => enemySelector.UnSelectUI());
 
             Animator animator = enemy.GetComponent<Animator>();
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -203,4 +291,13 @@ public class BattleManager : MonoBehaviour
     }
 }
 
+public struct BattleRewardData
+{
+    public int totalEXP;
+    public int totalGold;
+    public List<Item> items;
+}
+
 public delegate void EmptyEventHandler();
+
+public delegate void BattleEndEventHandler( OnBattleEndEventArgs e);

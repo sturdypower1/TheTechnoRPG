@@ -16,7 +16,7 @@ MonoBehaviour:
   name: test skill
   description: a skill simple for testing
   cost: 0
-  useTime: 3
+  useTime: 0.5
   damage: 3
   skillAnimationName: TechnobladeBasicSwordSwing
   damageType: 0

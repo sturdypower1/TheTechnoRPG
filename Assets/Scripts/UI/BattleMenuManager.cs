@@ -42,6 +42,7 @@ public class BattleMenuManager : MonoBehaviour
         if(instance == null){
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            
         }
         else
         {
@@ -53,6 +54,7 @@ public class BattleMenuManager : MonoBehaviour
         // have to set up ui here so that 
         BattleManager.instance.inBattlePositon += EnableMenu_OnTransitionEnd;
         //BattleManager.instance.settingUpBattle += WaitForTransition_OnBattleSetup;
+        BattleManager.instance.OnBattleEnd += DisableMenu_OnBattleEnd;
     }
 
     /// <summary>
@@ -198,17 +200,13 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="currentSkill">the selected skill</param>
     /// <param name="selectButton">the button that is pressed</param>
     public void SkillEnemySelectButton(int enemyNumber, int currentSkill, Button selectButton){
+        // doesn't do anything if the enemy isn't selected yet
         selectButton.clicked -= cachedHandler;
         cachedHandler = null;
         AudioManager.playSound("menuselect");
         battleUI.Focus();
 
         technobladeSelectorUI.SetEnabled(false);
-        //makes sure that nothing is selected
-        foreach (EnemySelectorUI enemySelectorUI in BattleManager.instance.enemySelectorUI)
-        {
-            enemySelectorUI.UnSelectUI();
-        }
 
         CharacterStats technoStats = Technoblade.instance.stats;
 
@@ -334,7 +332,7 @@ public class BattleMenuManager : MonoBehaviour
     /// <summary>
     /// disable all the menus that were in the battle
     /// </summary>
-    private void DisableMenu_OnBattleEnd(System.Object sender, OnBattleEndEventArgs e){
+    private void DisableMenu_OnBattleEnd(OnBattleEndEventArgs e){
         battleUI.visible = false;
         enemySelector.visible = false;
         skillSelector.visible = false;
@@ -410,7 +408,8 @@ public class BattleMenuManager : MonoBehaviour
     /// <summary>
     /// once the battle ends, start displaying the victory data
     /// </summary>
-    private void StartVictoryData_OnBattleEnd(object sender, OnBattleEndEventArgs e){
+    private void StartVictoryData_OnBattleEnd(OnBattleEndEventArgs e){
+
     }
     /// <summary>
     /// after dying load the last save

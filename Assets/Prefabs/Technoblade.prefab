@@ -374,7 +374,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characaterStats: {fileID: 1222542915304947601}
-  battler: {fileID: 0}
+  battler: {fileID: 7832482802752890047}
 --- !u!1 &1475370610
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +465,7 @@ GameObject:
   - component: {fileID: 4605097411875545085}
   - component: {fileID: 2093283191}
   - component: {fileID: 1222542915304947601}
+  - component: {fileID: 7832482802752890047}
   m_Layer: 0
   m_Name: Technoblade
   m_TagString: Player
@@ -685,3 +686,23 @@ MonoBehaviour:
   skills:
   - {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}
   - {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}
+--- !u!114 &7832482802752890047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332425643559129216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e74841852952ad428410fd24415e287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPaused: 0
+  useTime: 0
+  maxUseTime: 0
+  headsUpUI: {fileID: 915287397}
+  oldPosition: {x: 0, y: 0, z: 0}
+  isDown: 0
+  damagedSound: {fileID: 0}
+  characterStats: {fileID: 1222542915304947601}

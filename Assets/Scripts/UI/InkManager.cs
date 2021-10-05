@@ -100,14 +100,66 @@ public class InkManager : MonoBehaviour
 
     public void LevelUp(){
         //level up the character and change the data in the ink story to reflect that
+        LevelUpController levelData = Technoblade.instance.gameObject.GetComponent<LevelUpController>();
+
+        LevelUpRewardData levelUpRewardData = levelData.LevelUpRewardData;
+
+        if (levelData.currentEXP >= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10)))
+        {
+
+            // leveled up
+            levelData.currentEXP -= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
+            levelData.currentLVL += 1;
+            levelData.requiredEXP = ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
+
+
+            LevelReward levelReward = levelUpRewardData.levelRewards[levelData.currentLVL - levelUpRewardData.startingLevel - 1];
+            CharacterStats characterStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+            characterStats.stats.attack += levelReward.attackBonus;
+            characterStats.stats.defence += levelReward.defenceBonus;
+            characterStats.stats.maxPoints += levelReward.pointsBonus;
+            characterStats.stats.maxHealth += levelReward.healthBonus;
+
+            if (levelReward.skill == null)
+            {
+                inkStory.EvaluateFunction("updateLevelInfo", "Technoblade", "", levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+            }
+            else
+            {
+                characterStats.skills.Insert(1, levelReward.skill);
+                inkStory.EvaluateFunction("updateLevelInfo", "Technoblade", levelReward.skill.name, levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+            }
+
+
+        }
+        else
+        {
+            // no more level ups
+            inkStory.EvaluateFunction("updateLevelInfo", "", "", 0, 0, 0, 0);
+        }
     }
     public void UpdateEXPGold(){
         // update the EXP and Gold in the ink story
+
+        inkStory.EvaluateFunction("updateEXPandGold", BattleManager.instance.battleRewardData.totalEXP, BattleManager.instance.battleRewardData.totalGold);
     }
     /// <summary>
     /// gets next item won from battle
     /// </summary>
     public void GetNextBattleItem(){
+        BattleRewardData battleRewardData = BattleManager.instance.battleRewardData;
+
+        if (battleRewardData.items.Count > 0)
+        {
+            inkStory.EvaluateFunction("updateItemInfo", battleRewardData.items[0].name);
+
+            InventoryManager.instance.items.Add(battleRewardData.items[0]);
+            battleRewardData.items.RemoveAt(0);
+        }
+        else
+        {
+            inkStory.EvaluateFunction("updateItemInfo", "");
+        }
     }
     public void SetDialogueSound(string name){
         // mearly for the fact that it was here previously, want to change it so sound is recorded with the character portrait
@@ -145,7 +197,9 @@ public class InkManager : MonoBehaviour
     /// display the victory data of the battle
     /// </summary>
     public void DisplayVictoryData(){
-        
+        inkStory.SwitchFlow("victory");
+        inkStory.ChoosePathString("victory");
+        ContinueStory();
     }
     /// <summary>
     /// start reading the text from the ink story

@@ -5,10 +5,13 @@ using UnityEngine.UIElements;
 /// <summary>
 /// is used with 
 /// </summary>
-public class EnemySelectorUI : MonoBehaviour
+public class EnemySelectorUI
 {
     public VisualElement ui;
     public SpriteRenderer sprite;
+
+    public Battler enemy;
+
     /// <summary>
     /// make the target glow
     /// </summary>
@@ -31,5 +34,18 @@ public class EnemySelectorUI : MonoBehaviour
         sprite.GetPropertyBlock(myMatBlock);
         myMatBlock.SetInt("IsSelected", 0);
         sprite.SetPropertyBlock(myMatBlock);
+    }
+
+    public void Update()
+    {
+        if (BattleManager.instance.isInBattle)
+        {
+            if (enemy.isDown)
+            {
+                ui.SetEnabled(false);
+            }
+        }
+        
+
     }
 }

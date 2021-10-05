@@ -21,8 +21,10 @@ public class Battler : MonoBehaviour
     public float maxUseTime;
 
     public HeadsUpUI headsUpUI;
+    [HideInInspector]
 
     public Vector3 oldPosition;
+    [HideInInspector]
 
     public bool isDown;
 
@@ -62,13 +64,14 @@ public class Battler : MonoBehaviour
         Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection};
         headsUpUI.messages.Add(newMessage);
 
+        // character should be down
         if(characterStats.stats.health <= 0)
         {
-            for (int i = 0; i < headsUpUI.messages.Count; i++)
+            isDown = true;
+
+            foreach(Message message in headsUpUI.messages)
             {
-                Message message = headsUpUI.messages[i];
                 headsUpUI.ui.Q<VisualElement>("messages").Remove(message.label);
-                i--;
             }
 
             headsUpUI.messages.Clear();

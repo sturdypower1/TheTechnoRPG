@@ -144,7 +144,6 @@ MonoBehaviour:
   Enemies: []
   isInBattle: 0
   enemySelectionUITemplate: {fileID: 9197481963319205126, guid: b6b6adaa7920e755b8e3bcfed6bb41e0, type: 3}
-  enemySelectorUI: []
   BattleMusic: {fileID: 0}
 --- !u!1 &327730443
 GameObject:
@@ -627,6 +626,8 @@ GameObject:
   - component: {fileID: 730183032}
   - component: {fileID: 730183031}
   - component: {fileID: 730183034}
+  - component: {fileID: 730183035}
+  - component: {fileID: 730183036}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -739,7 +740,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: d860f3cfe9ef9bd4eada6a121c26e08f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -894,7 +895,7 @@ MonoBehaviour:
   oldPosition: {x: 0, y: 0, z: 0}
   isDown: 0
   damagedSound: {fileID: 0}
-  characterStats: {fileID: 0}
+  characterStats: {fileID: 730183024}
 --- !u!82 &730183034
 AudioSource:
   m_ObjectHideFlags: 0
@@ -991,6 +992,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &730183035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730183021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 985a93382e1fafc4d83723bf5296ca4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+--- !u!114 &730183036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730183021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abaf48c83c01a2c41b94c086a18f8d76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EXP: 10
+  gold: 10
+  itemData:
+    item: {fileID: 0}
+    chance: 0
 --- !u!1 &778357505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1790,6 +1821,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b6f927ab6ff2864aad45cdc04d616f4, type: 3}
+--- !u!1 &1445421510 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
+  m_PrefabInstance: {fileID: 4332425644609888523}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1465230637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1970,7 +2006,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1723115709}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.483, y: -3.836, z: 0}
+  m_LocalPosition: {x: 1.41, y: -3.85, z: 0}
   m_LocalScale: {x: 34.391132, y: 17.716492, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2176,6 +2212,23 @@ Animator:
   m_CorrespondingSourceObject: {fileID: 4332425643559129223, guid: ef7a3692079831046b617225a8eb0325, type: 3}
   m_PrefabInstance: {fileID: 4332425644609888523}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2093283210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1445421510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52dfc4b51482efd46937ca34873084b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelCAP: 20
+  currentLVL: 1
+  currentEXP: 0
+  requiredEXP: 20
+  LevelUpRewardData: {fileID: 11400000, guid: ec4ee0afdf8d8ae41a6713c0bd4a99cc, type: 2}
 --- !u!1001 &504058228248044681
 PrefabInstance:
   m_ObjectHideFlags: 0

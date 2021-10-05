@@ -166,6 +166,7 @@ EXTERNAL playSong(songName)
     ~ totalGold = gold
 == victory ==
 ~updateEXPGold()
+~displayPortrait("empty", "default")
 You Won
 Technoblade gained {totalEXP} EXP and {totalGold} gold
 -> items
