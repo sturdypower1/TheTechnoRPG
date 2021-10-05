@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Weapon : ScriptableObject, IObtainable
 {
     public string WeaponType;
-    public string name;
+    public new string name;
     public string description;
     public int attack;
     /// <summary>

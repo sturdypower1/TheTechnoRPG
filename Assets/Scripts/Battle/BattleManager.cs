@@ -40,6 +40,10 @@ public class BattleManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void Start()
+    {
+        InkManager.instance.OnVictoryDisplayFinish += FinishVictoryData_OnDisplayFinished;
+    }
 
     private void Update()
     {
@@ -98,6 +102,7 @@ public class BattleManager : MonoBehaviour
         {
             // play old song
             battleRewardData = new BattleRewardData();
+            battleRewardData.items = new List<Item>();
             //add total exp, total gold and items
             foreach (GameObject enemy in Enemies)
             {
@@ -108,7 +113,7 @@ public class BattleManager : MonoBehaviour
                     battleRewardData.totalEXP += enemyRewardData.EXP;
                     battleRewardData.totalGold += enemyRewardData.gold;
                     // seeing if the player gets the item
-                    if (randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
+                    if (enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
                 }
             }
             foreach (GameObject player in Players)
@@ -120,6 +125,34 @@ public class BattleManager : MonoBehaviour
             InkManager.instance.DisplayVictoryData();
 
             OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
+        }
+    }
+    /// <summary>
+    /// what happens when the ink story is done displaying the victory data
+    /// </summary>
+    private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
+    {
+        // start transitioning the background
+        
+        foreach (GameObject enemy in Enemies)
+        {
+            EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
+            if (enemyRewardData.destroyOnDefeat)
+            {
+                Destroy(enemy);
+                Enemies.Remove(enemy);
+            }
+        }
+        int i = 0;
+        // transition back once the writer is done
+        foreach(GameObject player in Players)
+        {
+            StartCoroutine(TransitionToOriginalPositions(player, player.GetComponent<Battler>().oldPosition, i == 0, .5f));
+            i++;
+        }
+        foreach (GameObject enemy in Enemies)
+        {
+            StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
         }
     }
     public void UnpauseBattler(GameObject battler)
@@ -191,6 +224,9 @@ public class BattleManager : MonoBehaviour
             // sets its layer to battler
             player.layer = 3;
 
+            Battler battler = player.GetComponent<Battler>();
+            battler.oldPosition = player.transform.position;
+
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
             i++;
@@ -220,6 +256,9 @@ public class BattleManager : MonoBehaviour
             Animator animator = enemy.GetComponent<Animator>();
             animator.updateMode = AnimatorUpdateMode.UnscaledTime;
             animator.SetTrigger("BattleSetup");
+
+            Battler battler = enemy.GetComponent<Battler>();
+            battler.oldPosition = enemy.transform.position;
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             
@@ -268,9 +307,13 @@ public class BattleManager : MonoBehaviour
 
         Transform transform = transformy.transform;
         Vector3 oldPosition = transform.position;
+
+        float totalTime = 0;
+        
         while (transform.position != newPosition)
         {
-            transform.position = Vector3.Lerp(oldPosition, newPosition, Time.deltaTime/ duration);
+            totalTime += Time.unscaledDeltaTime;
+            transform.position = Vector3.Lerp(oldPosition, newPosition, totalTime/ duration);
             yield return null;
         }
 
