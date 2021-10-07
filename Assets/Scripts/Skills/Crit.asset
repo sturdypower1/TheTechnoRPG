@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66f1cb0feb354c24fa588497a9fe388b, type: 3}
-  m_Name: New Basic Skill
+  m_Name: Crit
   m_EditorClassIdentifier: 
-  name: test skill
-  description: a skill simple for testing
-  cost: 0
-  useTime: 0.5
-  damage: 3
+  name: Crit
+  description: Land a critical hit on the opponent
+  cost: 10
+  useTime: 1
+  damage: 50
   skillAnimation: {fileID: 7400000, guid: 952e6d071685b9842a07dfd332d22e0b, type: 2}
   damageType: 0

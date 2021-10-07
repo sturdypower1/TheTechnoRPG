@@ -6,8 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Armor/Normal Armor")]
 public class NormalArmor : Armor
 {
-    public override void CalculateDamage()
+    public override Damage CalculateDamage(Damage damage)
     {
-
+        switch (damage.damageType)
+        {
+            case DamageType.Bleeding:
+                return damage;
+                break;
+        }
+         
+        damage.damageAmount -= defence;
+        return damage;
     }
 }

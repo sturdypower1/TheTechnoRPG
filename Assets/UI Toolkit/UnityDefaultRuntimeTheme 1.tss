@@ -5,6 +5,12 @@
 @import url("Resources/StyleSheet/pauseMenuStyleSheet.uss");
 @import url("Resources/StyleSheet/OverworldStlyeSheet.uss");
 @import url("Resources/StyleSheet/battleDetails.uss");
+@import url("Resources/StyleSheet/OptionsStlyeSheet.uss");
+@import url("Resources/StyleSheet/SaveFileStlyeSheet.uss");
+@import url("Resources/StyleSheet/settingsStlyeSheet.uss");
+
+
+
 
 
 

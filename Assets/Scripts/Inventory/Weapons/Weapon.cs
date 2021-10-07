@@ -5,14 +5,13 @@ using UnityEngine;
 
 public abstract class Weapon : ScriptableObject, IObtainable
 {
-    public string WeaponType;
     public new string name;
     public string description;
     public int attack;
     /// <summary>
     /// from the special properties of the sword, calculate the damage
     /// </summary>
-    public abstract void CalculateDamage();
+    public abstract Damage CalculateDamage(Damage damage, GameObject target, GameObject user);
     public void Obtain()
     {
         
@@ -23,7 +22,8 @@ public abstract class Weapon : ScriptableObject, IObtainable
 //[CreateAssetMenu(menuName = "Weapon/Special Weapon")]
 public class SpecialWeapon : Weapon
 {
-    public override void CalculateDamage()
+    public override Damage CalculateDamage(Damage damage, GameObject target, GameObject user)
     {
+        return new Damage();
     }
 }

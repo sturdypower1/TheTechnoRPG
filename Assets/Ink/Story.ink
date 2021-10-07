@@ -176,8 +176,7 @@ Technoblade gained {totalEXP} EXP and {totalGold} gold
         -> items
     = levelupdetails
         ~levelUp()
-        {characterName == "":  ->DONE}
-        {characterName} leveled up!
+        {characterName == "": ->DONE | {characterName} leveled up!}
         {characterName} gained {attackBonus} attack, {defenceBonus} defence, {pointsBonus} blood, and {healthBonus} hp
         {skillName != "": {characterName} unlocked {skillName}| ->levelupdetails}
         ->levelupdetails

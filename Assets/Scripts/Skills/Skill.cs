@@ -7,8 +7,8 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Skill : ScriptableObject
 {
-    public string skillType;
     public new string name;
+    [TextArea(1, 20)]
     public string description;
     /// <summary>
     /// how much it costs to use the skill

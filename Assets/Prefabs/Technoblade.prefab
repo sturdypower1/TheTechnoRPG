@@ -466,6 +466,7 @@ GameObject:
   - component: {fileID: 2093283191}
   - component: {fileID: 1222542915304947601}
   - component: {fileID: 7832482802752890047}
+  - component: {fileID: 2093283210}
   m_Layer: 0
   m_Name: Technoblade
   m_TagString: Player
@@ -706,3 +707,21 @@ MonoBehaviour:
   isDown: 0
   damagedSound: {fileID: 0}
   characterStats: {fileID: 1222542915304947601}
+  animator: {fileID: 0}
+--- !u!114 &2093283210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4332425643559129216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52dfc4b51482efd46937ca34873084b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LevelCAP: 20
+  currentLVL: 1
+  currentEXP: 15
+  requiredEXP: 20
+  LevelUpRewardData: {fileID: 11400000, guid: ec4ee0afdf8d8ae41a6713c0bd4a99cc, type: 2}

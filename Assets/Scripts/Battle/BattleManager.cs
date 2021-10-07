@@ -14,6 +14,8 @@ public class BattleManager : MonoBehaviour
     public VisualTreeAsset enemySelectionUITemplate;
 
     public event EmptyEventHandler inBattlePositon;
+
+    public event EmptyEventHandler inOverworldPosition;
     /// <summary>
     /// a list of all of the ui for selecting an enemy
     /// </summary>
@@ -26,6 +28,8 @@ public class BattleManager : MonoBehaviour
     public event BattleEndEventHandler OnBattleEnd;
 
     public BattleRewardData battleRewardData;
+
+    public SpriteRenderer BattleBackground;
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         InkManager.instance.OnVictoryDisplayFinish += FinishVictoryData_OnDisplayFinished;
+        inOverworldPosition += ResumeGameWorld;
     }
 
     private void Update()
@@ -115,11 +120,14 @@ public class BattleManager : MonoBehaviour
                     // seeing if the player gets the item
                     if (enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
                 }
+                enemy.GetComponent<Animator>().SetTrigger("BattleEnd");
             }
             foreach (GameObject player in Players)
             {
                 LevelUpController levelUpController = player.GetComponent<LevelUpController>();
                 levelUpController.currentEXP += battleRewardData.totalEXP;
+
+                player.GetComponent<Animator>().SetTrigger("BattleEnd");
             }
 
             InkManager.instance.DisplayVictoryData();
@@ -127,25 +135,35 @@ public class BattleManager : MonoBehaviour
             OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
         }
     }
+    private void ResumeGameWorld()
+    {
+        InkManager.instance.ContinueStory();
+    }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
     /// </summary>
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
     {
+        InkManager.instance.DisableTextboxUI();
         // start transitioning the background
-        
-        foreach (GameObject enemy in Enemies)
+        int i = 0;
+        while(i < Enemies.Count)
         {
+            GameObject enemy = Enemies[i];
             EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
             if (enemyRewardData.destroyOnDefeat)
             {
                 Destroy(enemy);
                 Enemies.Remove(enemy);
             }
+            else
+            {
+                i++;
+            }
         }
-        int i = 0;
+        i = 0;
         // transition back once the writer is done
-        foreach(GameObject player in Players)
+        foreach (GameObject player in Players)
         {
             StartCoroutine(TransitionToOriginalPositions(player, player.GetComponent<Battler>().oldPosition, i == 0, .5f));
             i++;
@@ -154,6 +172,9 @@ public class BattleManager : MonoBehaviour
         {
             StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
         }
+        StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
+
+        
     }
     public void UnpauseBattler(GameObject battler)
     {
@@ -187,6 +208,8 @@ public class BattleManager : MonoBehaviour
     }
     public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
     {
+        BattleBackground = battleBackground;
+
         BattleMusic = battleMusic;
         PauseManager.instance.Pause();
         // pause the game
@@ -298,12 +321,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
-        // disable collision
-        if (transformy.GetComponent<Collider2D>() != null)
-        {
-            Collider2D collider = transformy.GetComponent<Collider2D>();
-            collider.enabled = true;
-        }
+        
 
         Transform transform = transformy.transform;
         Vector3 oldPosition = transform.position;
@@ -316,7 +334,14 @@ public class BattleManager : MonoBehaviour
             transform.position = Vector3.Lerp(oldPosition, newPosition, totalTime/ duration);
             yield return null;
         }
+        // enable collision
+        if (transformy.GetComponent<Collider2D>() != null)
+        {
+            Collider2D collider = transformy.GetComponent<Collider2D>();
+            collider.enabled = true;
+        }
 
+        inOverworldPosition?.Invoke();
     }
 
     IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)

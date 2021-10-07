@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 66f1cb0feb354c24fa588497a9fe388b, type: 3}
-  m_Name: New Basic Skill
+  m_Name: Slash
   m_EditorClassIdentifier: 
-  name: test skill
-  description: a skill simple for testing
+  name: Slash
+  description: Default attack. Deals regular damage as well as inceasing how much
+    the enemy is bleeding
   cost: 0
-  useTime: 0.5
+  useTime: 1
   damage: 3
   skillAnimation: {fileID: 7400000, guid: 952e6d071685b9842a07dfd332d22e0b, type: 2}
-  damageType: 0
+  damageType: 1

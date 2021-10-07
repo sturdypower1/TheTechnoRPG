@@ -212,8 +212,8 @@
         </ui:VisualElement>
     </ui:VisualElement>
     <ui:VisualElement name="overworld_overlay" style="position: absolute; width: 100%; height: 100%; visibility: hidden;">
-        <ui:Button text="Interact&#10;" display-tooltip-when-elided="true" name="interactive_item_check" enable-rich-text="true" class="interactive_button" style="position: absolute; top: 606px; left: 21px; width: 156px; height: 55px;" />
-        <ui:Button text="Pause" display-tooltip-when-elided="true" name="pause_button" tooltip="pause the game" class="pause_button" style="position: absolute; top: 19px; left: 22px; height: 55px; width: 156px;" />
+        <ui:Button text="Interact&#10;" display-tooltip-when-elided="true" name="interactive_item_check" enable-rich-text="true" focusable="false" class="interactive_button" style="position: absolute; top: 606px; left: 21px; width: 156px; height: 55px;" />
+        <ui:Button text="Pause" display-tooltip-when-elided="true" name="pause_button" tooltip="pause the game" focusable="false" class="pause_button" style="position: absolute; top: 19px; left: 22px; height: 55px; width: 156px;" />
     </ui:VisualElement>
     <ui:VisualElement name="overworld_file_select" style="position: absolute; width: 100%; height: 100%; visibility: hidden; background-color: rgba(60, 60, 60, 0.11); align-items: stretch;">
         <ui:Button text="&#10;" display-tooltip-when-elided="true" name="save_back_button" class="back_button" style="width: 106px; background-image: url(&apos;project://database/Assets/Art/Icons/BackIcon.png?fileID=21300000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;); height: 97px;" />
@@ -254,7 +254,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="use_bar" style="flex-grow: 0; background-color: rgba(24, 24, 24, 0.6); flex-shrink: 0; height: 8px;" />
-                <ui:VisualElement name="choice_bar" class="itembar" style="flex-grow: 1; flex-direction: row; height: 84px; width: 100%; justify-content: space-between;">
+                <ui:VisualElement name="choice_bar" focusable="true" class="itembar" style="flex-grow: 1; flex-direction: row; height: 84px; width: 100%; justify-content: space-between;">
                     <ui:Button display-tooltip-when-elided="true" name="fight" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; min-height: 71px; max-height: 84px; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
                         <ui:VisualElement name="attack_image" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/basicsword.png?fileID=21300000&amp;guid=dd5d532594d511769834e0928f9ffd52&amp;type=3#basicsword&apos;); width: 58px;" />
                         <ui:Label text="attack" display-tooltip-when-elided="true" name="choice_name" style="max-width: 0; max-height: 0;" />

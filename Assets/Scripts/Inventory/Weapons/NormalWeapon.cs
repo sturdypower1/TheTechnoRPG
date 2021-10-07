@@ -6,7 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Weapon/Normal Weapon")]
 public class NormalWeapon : Weapon
 {
-    public override void CalculateDamage()
+    public override Damage CalculateDamage(Damage damage, GameObject target, GameObject user)
     {
+        damage.damageAmount += attack;
+        return damage;
     }
 }

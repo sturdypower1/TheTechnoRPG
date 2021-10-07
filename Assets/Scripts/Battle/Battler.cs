@@ -31,15 +31,28 @@ public class Battler : MonoBehaviour
     public AudioSource damagedSound;
 
     public CharacterStats characterStats;
+    public Animator animator;
 
     private void Start()
     {
         characterStats = GetComponent<CharacterStats>();
+        animator = GetComponent<Animator>();
     }
 
     public virtual void TakeDamage(Damage damage)
     {
+        Damage trueDamage = new Damage();
+        if (characterStats.equipedArmor != null)
+        {
+            trueDamage = characterStats.equipedArmor.CalculateDamage(damage); ;
+        }
+        else
+        {
+            trueDamage = damage;
+        }
+
         characterStats.stats.health -= damage.damageAmount;
+
 
         Label label = new Label();
         label.text = damage.damageAmount.ToString();
@@ -47,6 +60,7 @@ public class Battler : MonoBehaviour
         {
             case DamageType.Bleeding:
                 label.AddToClassList("message_red");
+                Technoblade.instance.AddBlood(damage.damageAmount);
                 break;
             case DamageType.Physical:
                 if (damagedSound != null)
@@ -68,6 +82,7 @@ public class Battler : MonoBehaviour
         if(characterStats.stats.health <= 0)
         {
             isDown = true;
+            animator.SetTrigger("Down");
 
             foreach(Message message in headsUpUI.messages)
             {
@@ -80,4 +95,26 @@ public class Battler : MonoBehaviour
 
     }
 
+    public virtual void AddBleeding(int levelGain, int Limit)
+    {
+        if(GetComponent<Bleeding>() != null)
+        {
+            // add bleeding to the object, if it already has it increase its level
+            Bleeding bleeding = GetComponent<Bleeding>();
+            if(bleeding.level + levelGain >= Limit)
+            {
+                // if the current level of bleeding is greater 
+                bleeding.level = bleeding.level > Limit ? bleeding.level : Limit;
+            }
+            else
+            {
+                bleeding.level += levelGain;
+            }
+            
+        }
+        else
+        {
+            this.gameObject.AddComponent<Bleeding>();
+        }
+    }
 }

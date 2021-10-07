@@ -75,4 +75,20 @@ public class Technoblade : MonoBehaviour
             
         }
     }
+    public void AddBlood(int bloodToAdd)
+    {
+        // makes it so if techno is down he doesn't continue to get blood
+        if (battler.isDown)
+        {
+            return;
+        }
+        if(stats.stats.points + bloodToAdd >= stats.stats.maxPoints)
+        {
+            stats.stats.points = stats.stats.maxPoints;
+        }
+        else
+        {
+            stats.stats.points += bloodToAdd;
+        }
+    }
 }

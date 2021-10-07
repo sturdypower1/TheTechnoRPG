@@ -12,12 +12,12 @@ public abstract class Armor : ScriptableObject, IObtainable
     {
 
     }
-    public abstract void CalculateDamage();
+    public abstract Damage CalculateDamage(Damage damage);
 }
 public class SpecialArmor : Armor
 {
-    public override void CalculateDamage()
+    public override Damage CalculateDamage(Damage damage)
     {
-
+        return new Damage();
     }
 }

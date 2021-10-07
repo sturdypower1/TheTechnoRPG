@@ -352,7 +352,6 @@ public class BattleMenuManager : MonoBehaviour
             // enables all the features of the menu
             Camera cam = FindObjectOfType<Camera>();
             float positionRatio = 1280.0f / cam.pixelWidth;
-        Debug.Log(positionRatio);
 
             VisualElement root = UIManager.instance.root;
             battleUI = root.Q<VisualElement>("BattleUI");

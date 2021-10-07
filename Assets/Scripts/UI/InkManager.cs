@@ -208,6 +208,7 @@ public class InkManager : MonoBehaviour
     public void StartCutScene(CutsceneData cutsceneData){
         if (!isCurrentlyDisplaying)
         {
+            DisplayPortriat("empty", "default");
             currentCutsceneData = cutsceneData;
             isDisplayingChoices = false;
             PlayerInputManager.instance.DisableInput();
@@ -251,12 +252,18 @@ public class InkManager : MonoBehaviour
         {
             // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
             inkStory.Continue();
-            if (inkStory.currentTags.Contains("battle"))
+            if(inkStory.currentText == "\n" || inkStory.currentText == "")
             {
+                ContinueStory();
+            }
+            else if (inkStory.currentTags.Contains("battle"))
+            {
+                PauseManager.instance.Pause();
                 //start the battle
             }
             else if (inkStory.currentTags.Contains("playable"))
             {
+                PauseManager.instance.Pause();
                 DisableTextboxUI();
 
                 isCurrentlyPlaying = true ;
@@ -266,7 +273,7 @@ public class InkManager : MonoBehaviour
             }
             else
             {
-
+                PauseManager.instance.Pause();
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
                 if (inkStory.currentTags.Contains("unskipable"))
@@ -304,17 +311,20 @@ public class InkManager : MonoBehaviour
             {
                 inkStory.SwitchToDefaultFlow();
                 OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
+                
             }
             else if(inkStory.currentFlowName != "battle")
             {
-                //overoworldCinemachine.Priority = 10;
-                //frozenCinemachine.Priority = 1;
+                PauseManager.instance.UnPause();
+
+                CameraController.instance.ToOverworldCamera();
                 // is completely finished
                 PlayerInputManager.instance.EnableInput();
                 isCurrentlyDisplaying = false;
                   
 
                 UIManager.instance.overworldOverlay.visible = true;
+                UIManager.instance.isInteractiveEnabled = false;
                 ResetTextBox();
                 DisableTextboxUI();
             }
@@ -343,11 +353,13 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="characterName">the name of the character portrait</param>
     /// <param name="feeling">the type of portrait that should be displayed</param>
-    public void DisplayPortriat(string characterName, string feeling){
+    public void DisplayPortriat(string characterName, string feeling)
+    {
+
         if (GetPortraitList(characterName, feeling).portraits != null)
         {
             //CharacterPortraitReference portraitReference = GetPortraitList(characterName, feeling);
-            UIManager.instance.textBoxUI.Q<VisualElement>("character_mouth").style.backgroundImage = Background.FromSprite(GetPortraitList(characterName, feeling).portraits[0]);
+            UIManager.instance.textBoxUI.Q<VisualElement>("character_base").style.backgroundImage = Background.FromSprite(GetPortraitList(characterName, feeling).portraits[0]);
         }
         else
         {
@@ -383,6 +395,7 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="choices">the choices the player has</param>
     public void DisplayChoices(Button[] choices){
+
     }
 
     public CharacterPortraitData GetPortraitList(string characterName, string feeling)

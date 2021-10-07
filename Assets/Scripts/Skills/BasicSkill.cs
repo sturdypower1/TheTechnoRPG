@@ -16,7 +16,7 @@ public class BasicSkill : Skill
     /// <summary>
     /// the name of the animation for the skill
     /// </summary>
-    public string skillAnimationName;
+    public AnimationClip skillAnimation;
 
     public DamageType damageType;
 
@@ -31,9 +31,24 @@ public class BasicSkill : Skill
         battler.maxUseTime = useTime;
 
         Animator animator = user.GetComponent<Animator>();
-        animator.Play(skillAnimationName);
+        animator.Play(skillAnimation.name);
 
-        target.GetComponent<Battler>().TakeDamage(new Damage { damageAmount = damage , damageType = damageType});
+        Damage totalDamage = new Damage();
+
+        switch (damageType)
+        {
+            case DamageType.Bleeding:
+                target.GetComponent<Battler>().AddBleeding(1, 10);
+                totalDamage = user.GetComponent<CharacterStats>().equipedWeapon.CalculateDamage(new Damage { damageAmount = damage, damageType = DamageType.Physical }, target, user);
+                break;
+            case DamageType.Physical:
+                totalDamage = user.GetComponent<CharacterStats>().equipedWeapon.CalculateDamage(new Damage { damageAmount = damage, damageType = damageType }, target, user);
+                break;
+        }
+
+        
+        
+        target.GetComponent<Battler>().TakeDamage(totalDamage);
     }
 
 }
