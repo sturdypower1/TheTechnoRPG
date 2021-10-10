@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 864edf1e304abbc4891e846f08e9aa9a, type: 3}
   m_Name: New Normal Weapon
   m_EditorClassIdentifier: 
-  WeaponType: 
   name: test weapon
   description: a test weapon
-  attack: 1
+  attack: 0

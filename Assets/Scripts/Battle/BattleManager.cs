@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UIElements;
-
+using UnityEngine.Playables;
+[RequireComponent(typeof(PlayableDirector))]
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
     public List<GameObject> Players;
     public List<GameObject> Enemies;
     public bool isInBattle;
+
+    public PlayableDirector director;
 
     public VisualTreeAsset enemySelectionUITemplate;
 
@@ -23,13 +26,19 @@ public class BattleManager : MonoBehaviour
 
     public event EmptyEventHandler settingUpBattle;
 
+    [HideInInspector]
     public AudioSource BattleMusic;
-
+    
     public event BattleEndEventHandler OnBattleEnd;
 
     public BattleRewardData battleRewardData;
-
+    [HideInInspector]
     public SpriteRenderer BattleBackground;
+
+    public bool IsWaitingForSkill;
+
+    public Transform userTransform;
+    public Transform targetTransform;
 
     private void Awake()
     {
@@ -48,6 +57,8 @@ public class BattleManager : MonoBehaviour
     {
         InkManager.instance.OnVictoryDisplayFinish += FinishVictoryData_OnDisplayFinished;
         inOverworldPosition += ResumeGameWorld;
+
+        director = GetComponent<PlayableDirector>();
     }
 
     private void Update()
@@ -84,7 +95,7 @@ public class BattleManager : MonoBehaviour
         BattleMusic.Stop();
         isInBattle = false;
 
-        
+        UIManager.instance.ResetFocus();
 
 
         foreach (GameObject player in Players)
@@ -139,6 +150,16 @@ public class BattleManager : MonoBehaviour
     {
         InkManager.instance.ContinueStory();
     }
+    public void PauseBattle()
+    {
+        IsWaitingForSkill = true;
+        BattleMenuManager.instance.battleUI.SetEnabled(false);
+    }
+    public void UnPauseBattle()
+    {
+        IsWaitingForSkill = false;
+        BattleMenuManager.instance.battleUI.SetEnabled(true);
+    }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
     /// </summary>
@@ -165,11 +186,15 @@ public class BattleManager : MonoBehaviour
         // transition back once the writer is done
         foreach (GameObject player in Players)
         {
+            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
+            sprite.sortingLayerName = "Characters";
             StartCoroutine(TransitionToOriginalPositions(player, player.GetComponent<Battler>().oldPosition, i == 0, .5f));
             i++;
         }
         foreach (GameObject enemy in Enemies)
         {
+            SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
+            sprite.sortingLayerName = "Battlers";
             StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
         }
         StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
@@ -245,7 +270,6 @@ public class BattleManager : MonoBehaviour
                 triggerEvent = true;
             }
             // sets its layer to battler
-            player.layer = 3;
 
             Battler battler = player.GetComponent<Battler>();
             battler.oldPosition = player.transform.position;
@@ -356,6 +380,17 @@ public class BattleManager : MonoBehaviour
             background.SetPropertyBlock(myMatBlock);
             yield return null;
         }
+    }
+
+    public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
+    {
+        Transform prefabTransform = Instantiate(prefab).transform;
+        prefabTransform.position = position;
+    }
+    public void SetUserTargetTransforms(Transform target, Transform user)
+    {
+        targetTransform.position = target.position;
+        userTransform.position = user.position;
     }
 }
 

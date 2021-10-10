@@ -53,3 +53,6 @@ TagManager:
   - name: Battlers
     uniqueID: 3150718683
     locked: 0
+  - name: BattleEffects
+    uniqueID: 605627111
+    locked: 0

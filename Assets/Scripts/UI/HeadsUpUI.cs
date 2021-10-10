@@ -37,7 +37,16 @@ public class HeadsUpUI : MonoBehaviour
         {
             ui.visible = true;
 
-            // add check to see if its down
+
+            if (battler.gameObject.GetComponent<Bleeding>() != null)
+            {
+                ui.Q<VisualElement>("bleeding_icon").visible = true;
+            }
+            else
+            {
+                ui.Q<VisualElement>("bleeding_icon").visible = false;
+            }
+
             VisualElement healthbarBase = ui.Q<VisualElement>("healthbar_base");
             //healthbarBase.visible = true;
             VisualElement healthbar = healthbarBase.Q<VisualElement>("healthbar");
@@ -71,6 +80,7 @@ public class HeadsUpUI : MonoBehaviour
         else
         {
             ui.visible = false;
+            ui.Q<VisualElement>("bleeding_icon").visible = false;
         }
     }
 }

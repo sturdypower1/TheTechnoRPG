@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -45,5 +46,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerNumber: 0
   hasMoved: 0
-  enemySelectionUITemplate: {fileID: 9197481963319205126, guid: b6b6adaa7920e755b8e3bcfed6bb41e0, type: 3}
-  overHeadUITemplate: {fileID: 9197481963319205126, guid: 8f1c904b2926bf9479c5c5e7e8db6dfb, type: 3}

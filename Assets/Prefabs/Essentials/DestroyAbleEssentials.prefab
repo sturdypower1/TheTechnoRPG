@@ -1,0 +1,200 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7850739633498146340
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3003680291196487298}
+  m_Layer: 0
+  m_Name: DestroyAbleEssentials
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3003680291196487298
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7850739633498146340}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.9641528, y: -1.9662628, z: 0.05519905}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1017844746956503057}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &8411448649367586646
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3003680291196487298}
+    m_Modifications:
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.02155
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.0030227
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.1617786
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0b991bbf5622a9919aebe2f20d50debd, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: ea659ad0d77e23943a95da052239ba83, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 0551bd17eed4d2342b58479f85bffc91, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: a69e19152dbb74847a6f2e4a90f9951f, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b89afcdcba043d846b0053484ae6ccd3, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: c51dfd63cb2fe8540840b3e7542a06c4, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[2].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b89afcdcba043d846b0053484ae6ccd3, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[3].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: bb4229063776b6944833f282fcabad03, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[4].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 90340eef2c632ed42b3e5a705add0cae, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[5].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 396f00d5820c4484e982ded74f7bb5b1, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[6].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d50e3a2fd982e494faa0466fa61f251c, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: b4c66f7103d532b4f9f3452fc0d4c171, type: 3}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[0].soundName
+      value: tempBattleMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[1].soundName
+      value: menuMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[2].soundName
+      value: CalmMountain
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameMusics.Array.data[3].soundName
+      value: WilburTheme
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[0].soundName
+      value: menuchange
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[1].soundName
+      value: menuavailable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[2].soundName
+      value: swordswing
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[3].soundName
+      value: defeatsong
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[4].soundName
+      value: menuback
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[5].soundName
+      value: menuselect
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[6].soundName
+      value: sellouttimer
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453832, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: gameSoundss.Array.data[7].soundName
+      value: TechnoHit
+      objectReference: {fileID: 0}
+    - target: {fileID: 8834773414010453833, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+--- !u!4 &1017844746956503057 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8834773414010453831, guid: bec656c4fb4b3e245898e33840d3c5f7, type: 3}
+  m_PrefabInstance: {fileID: 8411448649367586646}
+  m_PrefabAsset: {fileID: 0}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f1cb0feb354c24fa588497a9fe388b, type: 3}
   m_Name: Slash
   m_EditorClassIdentifier: 
+  chance: 0
   name: Slash
   description: Default attack. Deals regular damage as well as inceasing how much
     the enemy is bleeding

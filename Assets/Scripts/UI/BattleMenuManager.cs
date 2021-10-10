@@ -11,7 +11,8 @@ public class BattleMenuManager : MonoBehaviour
     public static BattleMenuManager instance;
     Action cachedHandler;
     public event EventHandler OnContinue;
-    VisualElement battleUI;
+    [HideInInspector]
+    public VisualElement battleUI;
     VisualElement losingBackground;
     VisualElement enemySelector;
     VisualElement skillSelector;
@@ -220,10 +221,12 @@ public class BattleMenuManager : MonoBehaviour
             technoStats.stats.points = 0;
         }
             //deal damage to the enemy
-            skill.UseSkill( BattleManager.instance.Enemies[currentEnemySelected], technoStats.gameObject);
+            skill.UseSkill( BattleManager.instance.Enemies[enemyNumber], technoStats.gameObject);
 
             battleUI.visible = true;
             enemySelector.visible = false;
+        // waits until the animation is over to resume the battle
+        BattleManager.instance.PauseBattle();
     }
     /// <summary>
     /// go back to the previous battle menu tab
@@ -232,6 +235,13 @@ public class BattleMenuManager : MonoBehaviour
         AudioManager.playSound("menuback");
         enemySelector.visible = false;
         previousUI.visible = true;
+
+        // makes sure that this functionality doesn't doesn't stay after exiting the skills
+        foreach (EnemySelectorUI selectorUI in BattleManager.instance.enemySelectorUI)
+        {
+            selectorUI.ui.Q<Button>("Base").clicked -= cachedHandler;
+        }
+        cachedHandler = null;
     }
     /// <summary>
     /// update the description of the skill
@@ -279,7 +289,7 @@ public class BattleMenuManager : MonoBehaviour
         foreach(GameObject enemy in BattleManager.instance.Enemies)
         {
             int z = i;
-            VisualElement enemySelectorUI = BattleManager.instance.enemySelectorUI[currentEnemySelected].ui;
+            VisualElement enemySelectorUI = BattleManager.instance.enemySelectorUI[i].ui;
             Button button = enemySelectorUI.Q<Button>("Base");
             cachedHandler = () => AttackEnemySelectButton(z, button);
             button.clicked += cachedHandler;
@@ -309,8 +319,13 @@ public class BattleMenuManager : MonoBehaviour
         battleUI.visible = true;
         enemySelector.visible = false;
             
-        selectButton.clicked -= cachedHandler;
+        foreach(EnemySelectorUI selectorUI in BattleManager.instance.enemySelectorUI)
+        {
+            selectorUI.ui.Q<Button>("Base").clicked -= cachedHandler;
+        }
         cachedHandler = null;
+
+        BattleManager.instance.PauseBattle();
     }
 
     /// <summary>

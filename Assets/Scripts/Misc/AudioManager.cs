@@ -15,8 +15,9 @@ public class AudioManager : MonoBehaviour
     private static SoundData currentSong;
 
     public static float volume = .1f;
-    
-    private void Start() {
+   
+
+    private void Awake() {
         //singleton pattern
         if(instance == null){
             DontDestroyOnLoad(this.gameObject);
@@ -47,7 +48,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    private void Awake(){
+    private void Start(){
         foreach( SoundData dialogue in dialoguess){
             dialogue.audioSource = gameObject.AddComponent<AudioSource>();
             dialogue.audioSource.clip = dialogue.clip;

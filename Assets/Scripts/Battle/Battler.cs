@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UnityEngine.Playables;
+using UnityEngine.Timeline;
 /// <summary>
 /// component that'll be used for all the battlers in a battle
 /// </summary>
@@ -12,7 +14,6 @@ public class Battler : MonoBehaviour
     /// when true, disables all battle ai and other actions
     /// </summary>
     public bool isPaused;
-
     /// <summary>
     /// how much long it has left before it can do another attack
     /// </summary>
@@ -32,11 +33,21 @@ public class Battler : MonoBehaviour
 
     public CharacterStats characterStats;
     public Animator animator;
+    [HideInInspector]
+    public GameObject target;
+    /// <summary>
+    /// the target position 
+    /// </summary>
+    public Transform BattleOffset;
 
     private void Start()
     {
         characterStats = GetComponent<CharacterStats>();
         animator = GetComponent<Animator>();
+        if(BattleOffset == null)
+        {
+            BattleOffset = this.transform;
+        }
     }
 
     public virtual void TakeDamage(Damage damage)
@@ -95,6 +106,25 @@ public class Battler : MonoBehaviour
 
     }
 
+    public virtual void DealDamage(Damage damage)
+    {
+        // make sure to set this, since it could record use an old value later
+        if(target != null)
+        {
+            Damage totalDamage = new Damage();
+            switch (damage.damageType)
+            {
+                case DamageType.Bleeding:
+                    target.GetComponent<Battler>().AddBleeding(1, 10);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    break;
+                case DamageType.Physical:
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    break;
+            }
+            target.GetComponent<Battler>().TakeDamage(totalDamage);
+        }
+    }
     public virtual void AddBleeding(int levelGain, int Limit)
     {
         if(GetComponent<Bleeding>() != null)

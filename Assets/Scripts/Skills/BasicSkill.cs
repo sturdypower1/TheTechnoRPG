@@ -45,10 +45,14 @@ public class BasicSkill : Skill
                 totalDamage = user.GetComponent<CharacterStats>().equipedWeapon.CalculateDamage(new Damage { damageAmount = damage, damageType = damageType }, target, user);
                 break;
         }
-
-        
-        
         target.GetComponent<Battler>().TakeDamage(totalDamage);
+
+        BattleManager.instance.StartCoroutine(WaitToUnpauseBattle(useTime));
     }
 
+    IEnumerator WaitToUnpauseBattle(float time)
+    {
+        yield return new WaitForSecondsRealtime(time);
+        BattleManager.instance.UnPauseBattle();
+    }
 }

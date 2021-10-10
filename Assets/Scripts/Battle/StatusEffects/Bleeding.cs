@@ -17,12 +17,15 @@ public class Bleeding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeFromLastDamageTick += Time.unscaledDeltaTime;
-        //deal damage every other second
-        if (timeFromLastDamageTick >= 2)
+        if (!BattleManager.instance.IsWaitingForSkill)
         {
-            battler.TakeDamage(new Damage { damageAmount = level, damageType = DamageType.Bleeding });
-            timeFromLastDamageTick = 0;
+            timeFromLastDamageTick += Time.unscaledDeltaTime;
+            //deal damage every other second
+            if (timeFromLastDamageTick >= 2)
+            {
+                battler.TakeDamage(new Damage { damageAmount = level, damageType = DamageType.Bleeding });
+                timeFromLastDamageTick = 0;
+            }
         }
     }
     private void RemoveBleeding_OnBattleEnd(OnBattleEndEventArgs e)

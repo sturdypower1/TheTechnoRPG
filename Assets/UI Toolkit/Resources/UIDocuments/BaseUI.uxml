@@ -253,7 +253,7 @@
                         <ui:VisualElement name="blood_bar" style="flex-grow: 1; background-color: rgb(221, 13, 0); width: 84px;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="use_bar" style="flex-grow: 0; background-color: rgba(24, 24, 24, 0.6); flex-shrink: 0; height: 8px;" />
+                <ui:VisualElement name="use_bar" style="flex-grow: 0; background-color: rgba(154, 154, 154, 0.6); flex-shrink: 0; height: 8px;" />
                 <ui:VisualElement name="choice_bar" focusable="true" class="itembar" style="flex-grow: 1; flex-direction: row; height: 84px; width: 100%; justify-content: space-between;">
                     <ui:Button display-tooltip-when-elided="true" name="fight" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; min-height: 71px; max-height: 84px; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
                         <ui:VisualElement name="attack_image" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/basicsword.png?fileID=21300000&amp;guid=dd5d532594d511769834e0928f9ffd52&amp;type=3#basicsword&apos;); width: 58px;" />

@@ -7,6 +7,8 @@ public class SaveAndLoadManager : MonoBehaviour
 {
     public static SaveAndLoadManager instance;
     // Start is called before the first frame update
+
+    public event SaveEventHandler OnStartSave;
     private void Awake() {
         
         //singleton pattern
@@ -34,7 +36,7 @@ public class SaveAndLoadManager : MonoBehaviour
     /// </summary>
     /// <param name="saveFileNubmer"></param>
     public void SaveGame(int saveFileNubmer){
-
+        OnStartSave?.Invoke(saveFileNubmer);
     }
     /// <summary>
     /// update the savefile ui
@@ -42,6 +44,7 @@ public class SaveAndLoadManager : MonoBehaviour
     /// <param name="saveFileUI">the visual element with the savefile ui</param>
     /// <param name="isSaving">whether or not it is saving or loading</param>
     public void UpdateSaveFileUI(VisualElement saveFileUI, bool isSaving = false){
+
     }
     /// <summary>
     /// update the the 
@@ -50,4 +53,12 @@ public class SaveAndLoadManager : MonoBehaviour
     /// <param name="saveFileNumber">the save file number</param>
     public void UpdateSaveFile(Button currentFile, int saveFileNumber){
     }
+}
+public delegate void SaveEventHandler(int saveFileNumber);
+
+[System.Serializable]
+public struct AnimationSaveData
+{
+    public string name;
+    public float normilizedtime;
 }

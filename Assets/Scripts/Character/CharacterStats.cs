@@ -24,10 +24,12 @@ public class CharacterStats : MonoBehaviour
 
     
 }
+[System.Serializable]
 public struct Damage{
     public int damageAmount;
     public DamageType damageType;
 }
+[System.Serializable]
 public enum DamageType
 {
     Physical,

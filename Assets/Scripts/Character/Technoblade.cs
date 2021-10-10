@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
+using System.IO;
 public class Technoblade : MonoBehaviour
 {
     public static Technoblade instance;
@@ -12,6 +12,10 @@ public class Technoblade : MonoBehaviour
     public Battler battler;
 
     public VisualElement technoSelectorUI;
+
+    LevelUpController levelUpController;
+    Animator animator;
+
 
     private void Awake() {
         if(instance == null || instance == this){
@@ -24,7 +28,11 @@ public class Technoblade : MonoBehaviour
     }
     private void Start()
     {
+        levelUpController = this.gameObject.GetComponent<LevelUpController>();
+        animator = this.gameObject.GetComponent<Animator>();
         battler = this.gameObject.GetComponent<Battler>();
+
+        SaveAndLoadManager.instance.OnStartSave += Save;
     }
     private void Update()
     {
@@ -56,7 +64,7 @@ public class Technoblade : MonoBehaviour
             bloodText.text = "Blood: " + stats.stats.points.ToString() + "/" + stats.stats.maxPoints.ToString();
 
 
-            if (battler.useTime < battler.maxUseTime)
+            if (battler.useTime < battler.maxUseTime && !BattleManager.instance.IsWaitingForSkill)
             {
                 VisualElement useBar = technoSelectorUI.Q<VisualElement>("use_bar");
 
@@ -68,7 +76,7 @@ public class Technoblade : MonoBehaviour
                     AudioManager.playSound("menuavailable");
                 }
             }
-            else if(battler.useTime >= battler.maxUseTime)
+            else if(battler.useTime >= battler.maxUseTime && !BattleManager.instance.IsWaitingForSkill)
             {
                 technoSelectorUI.SetEnabled(true);
             }
@@ -91,4 +99,36 @@ public class Technoblade : MonoBehaviour
             stats.stats.points += bloodToAdd;
         }
     }
+
+    public void Save(int saveFileNumber)
+    {
+        //save level data
+        string savePath = Application.persistentDataPath + "/tempsave" + "/techno";
+        AnimationSaveData animationSaveData = new AnimationSaveData
+        {
+            name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
+            normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
+        };
+        TechnoSaveData saveData = new TechnoSaveData { characterStats = stats, animationSave = animationSaveData, transform = transform.position};
+        
+        string jsonString = JsonUtility.ToJson(saveData);
+        File.WriteAllText(savePath, jsonString);
+    }
+
+    public void Load()
+    {
+        string savePath = Application.persistentDataPath + "/tempsave" + "/techno";
+        string jsonString = File.ReadAllText(savePath);
+        TechnoSaveData saveData = JsonUtility.FromJson<TechnoSaveData>(jsonString);
+        stats = saveData.characterStats;
+        animator.Play(saveData.animationSave.name, 0, saveData.animationSave.normilizedtime);
+        transform.position = saveData.transform;
+    }
 }
+[System.Serializable]
+public struct TechnoSaveData{
+    public CharacterStats characterStats;
+    public AnimationSaveData animationSave;
+    public Vector2 transform;
+}
+
