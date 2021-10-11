@@ -351,6 +351,7 @@ public class BattleMenuManager : MonoBehaviour
         hasBattleStarted = false;
 
         technobladeSelectorUI.SetEnabled(true);
+        enemySelector.Clear();
         if (e.isPlayerVictor)
         {
            //get ready to transition all the game objects

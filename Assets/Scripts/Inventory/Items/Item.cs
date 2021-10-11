@@ -12,7 +12,6 @@ public class Item : IObtainable
     public string description;
     public override void Obtain()
     {
-        Debug.Log("adding item");
         InventoryManager.instance.AddItem(this);
 
     }

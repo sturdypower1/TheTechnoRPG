@@ -434,6 +434,9 @@ public class InkManager : MonoBehaviour
         Button textBoxUI = UIManager.instance.textBoxUI;
         Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
         string displayText = "Technoblade obtained <color=green>" + ItemName + "</color>.";
+        isDisplayingChoices = false;
+        PlayerInputManager.instance.DisableInput();
+        UIManager.instance.overworldOverlay.visible = false;
 
         isCurrentlyDisplaying = true;
         instant = false;

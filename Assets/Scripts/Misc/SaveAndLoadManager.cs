@@ -22,9 +22,17 @@ public class SaveAndLoadManager : MonoBehaviour
         //singleton pattern
         if(instance == null){
             instance = this;
+            // ensure is empty when you start the game
             foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
             {
                 File.Delete(file);
+            }
+            foreach(string directory in Directory.GetDirectories(Application.persistentDataPath + "/tempsave"))
+            {
+                foreach (string file in Directory.GetFiles(directory))
+                {
+                    File.Delete(file);
+                }
             }
         }
         else
@@ -54,6 +62,7 @@ public class SaveAndLoadManager : MonoBehaviour
     /// </summary>
     /// <param name="saveFileNubmer"></param>
     public void SaveGame(int saveFileNubmer){
+        CreateSaveFiles();
         OnStartSave?.Invoke(saveFileNubmer);
         // To do save everything
         //SaveAtmosphere();
@@ -71,10 +80,27 @@ public class SaveAndLoadManager : MonoBehaviour
         {
             File.Delete(file);
         }
+        foreach (string directory in Directory.GetDirectories(savePath))
+        {
+            foreach (string file in Directory.GetFiles(directory))
+            {
+                File.Delete(file);
+            }
+        }
         foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
         {
             string fileSavePath = Path.Combine(savePath, Path.GetFileName(file));
             File.Copy(file, fileSavePath);
+        }
+        foreach (string directory in Directory.GetDirectories(Application.persistentDataPath + "/tempsave"))
+        {
+            string subDirectory = directory.Substring((Application.persistentDataPath + "/tempsave").Length);
+            if (!Directory.Exists(savePath + subDirectory)) Directory.CreateDirectory(savePath + subDirectory);
+            foreach (string file in Directory.GetFiles(directory))
+            {
+                string fileSavePath = Path.Combine(savePath + subDirectory, Path.GetFileName(file));
+                File.Copy(file, fileSavePath);
+            }
         }
     }
     public void LoadSaveUI(string savePointName)
@@ -185,11 +211,28 @@ public class SaveAndLoadManager : MonoBehaviour
             {
                 File.Delete(file);
             }
+            foreach (string directory in Directory.GetDirectories(Application.persistentDataPath + "/tempsave"))
+            {
+                foreach (string file in Directory.GetFiles(directory))
+                {
+                    File.Delete(file);
+                }
+            }
             // load the temp file up with the data
             foreach (string file in Directory.GetFiles(savePath))
             {
                 string fileSavePath = Path.Combine(Application.persistentDataPath + "/tempsave", Path.GetFileName(file));
                 File.Copy(file, fileSavePath);
+            }
+            foreach (string directory in Directory.GetDirectories(savePath))
+            {
+                string subDirectory = directory.Substring((savePath).Length);
+                if (!Directory.Exists(Application.persistentDataPath + "/tempsave" + subDirectory)) Directory.CreateDirectory(Application.persistentDataPath + "/tempsave" + subDirectory);
+                foreach (string file in Directory.GetFiles(directory))
+                {
+                    string fileSavePath = Path.Combine(Application.persistentDataPath + "/tempsave" + subDirectory, Path.GetFileName(file));
+                    File.Copy(file, fileSavePath);
+                }
             }
         }
         string savePointPath = Application.persistentDataPath + "/tempsave" + "/SavePointData";
@@ -213,11 +256,15 @@ public class SaveAndLoadManager : MonoBehaviour
         
         SceneManager.LoadSceneAsync(subScenesData.sceneName);
     }
+    /// <summary>
+    /// ensures that all the folders that need to exist to save do in fact exist
+    /// </summary>
     public void CreateSaveFiles()
     {
         if (!Directory.Exists(Application.persistentDataPath + "/tempsave")) Directory.CreateDirectory(Application.persistentDataPath + "/tempsave");
         if (!Directory.Exists(Application.persistentDataPath + "/save1")) Directory.CreateDirectory(Application.persistentDataPath + "/save1");
         if (!Directory.Exists(Application.persistentDataPath + "/save2")) Directory.CreateDirectory(Application.persistentDataPath + "/save2");
+        if (!Directory.Exists(Application.persistentDataPath + "/tempsave" + "/" + SceneManager.GetActiveScene().name)) Directory.CreateDirectory(Application.persistentDataPath + "/tempsave" + "/" + SceneManager.GetActiveScene().name);
     }
 }
 public delegate void SaveEventHandler(int saveFileNumber);

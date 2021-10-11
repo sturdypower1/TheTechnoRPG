@@ -13,7 +13,7 @@ public class Technoblade : MonoBehaviour
 
     public VisualElement technoSelectorUI;
 
-    LevelUpController levelUpController;
+    public LevelUpController levelUpController;
     Animator animator;
 
 
@@ -123,9 +123,15 @@ public class Technoblade : MonoBehaviour
             skillNames.Add(skill.name);
         }
         TechnoSaveData saveData = new TechnoSaveData { 
-            characterStats = new CharacterStatsSaveData {stats = stats.stats, armorName = stats.equipedArmor.name, weaponName = stats.equipedWeapon.name, skillNames = skillNames }, 
+            characterStats = new CharacterStatsSaveData {stats = stats.stats, 
+                armorName = stats.equipedArmor.name, 
+                weaponName = stats.equipedWeapon.name, 
+                skillNames = skillNames 
+            }, 
             animationSave = animationSaveData, 
-            transform = transform.position};
+            transform = transform.position,
+            levelUpSave = new LevelUpSave { currentEXP = levelUpController.currentEXP, currentLVL = levelUpController.currentLVL, LevelCap = levelUpController.LevelCAP, requiredEXP = levelUpController.requiredEXP}
+        };
 
 
         string jsonString = JsonUtility.ToJson(saveData);
@@ -154,7 +160,18 @@ public class Technoblade : MonoBehaviour
 
             animator.Play(saveData.animationSave.name, 0, saveData.animationSave.normilizedtime);
             transform.position = saveData.transform;
+
+            levelUpController.LevelCAP = saveData.levelUpSave.LevelCap;
+            levelUpController.currentLVL = saveData.levelUpSave.currentLVL;
+            levelUpController.requiredEXP = saveData.levelUpSave.requiredEXP;
+            levelUpController.currentEXP = saveData.levelUpSave.currentEXP;
         }
+    }
+    private void OnDestroy()
+    {
+        // makes sure that all subribed events are unsubscribed
+        SaveAndLoadManager.instance.OnStartSave -= Save;
+        UIManager.instance.OnTitleReturn -= DestroyTechno;
     }
     public void DestroyTechno()
     {
@@ -166,6 +183,7 @@ public struct TechnoSaveData{
     public CharacterStatsSaveData characterStats;
     public AnimationSaveData animationSave;
     public Vector2 transform;
+    public LevelUpSave levelUpSave;
 }
 [System.Serializable]
 public struct CharacterStatsSaveData
@@ -174,5 +192,13 @@ public struct CharacterStatsSaveData
     public string weaponName;
     public string armorName;
     public List<string> skillNames;
+}
+[System.Serializable]
+public struct LevelUpSave
+{
+    public int LevelCap;
+    public int currentLVL;
+    public int requiredEXP;
+    public int currentEXP;
 }
 

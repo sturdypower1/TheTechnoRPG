@@ -10,6 +10,10 @@ public class ChestInteractive : Interactable
     {
         obtainable.Obtain();
         animator.Play("ChestOpen");
+        if (IsSingleUse)
+        {
+            IsEnabled = false;
+        }
     }
 
     // Start is called before the first frame update
@@ -23,4 +27,13 @@ public class ChestInteractive : Interactable
     {
         
     }
+    void Save(int saveFileNumber)
+    {
+        string savePath = Application.persistentDataPath + "/tempsave" + "/chest";
+    }
+    void Load()
+    {
+
+    }
 }
+

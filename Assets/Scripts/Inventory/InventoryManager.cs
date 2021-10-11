@@ -24,7 +24,9 @@ public class InventoryManager : MonoBehaviour
     }
     private void Start()
     {
+        Load();
         UIManager.instance.OnTitleReturn += DestroyInventory;
+        SaveAndLoadManager.instance.OnStartSave += Save;
     }
     private void Update()
     {
@@ -90,6 +92,13 @@ public class InventoryManager : MonoBehaviour
     public void DestroyInventory()
     {
         Destroy(this.gameObject);
+    }
+
+
+    private void OnDestroy()
+    {
+        UIManager.instance.OnTitleReturn -= DestroyInventory;
+        SaveAndLoadManager.instance.OnStartSave -= Save;
     }
 }
 [System.Serializable]

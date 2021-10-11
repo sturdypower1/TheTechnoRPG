@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: ZombieAttack
   m_EditorClassIdentifier: 
   chance: 1
-  name: 
   description: 
   cost: 0
-  useTime: 3
+  useTime: 10
   playable: {fileID: 11400000, guid: 4b9738afd00cda846ad59545bdf17923, type: 2}
   userTracks:
   - UserAnimator
