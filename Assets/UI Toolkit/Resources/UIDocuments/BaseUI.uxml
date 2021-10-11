@@ -301,5 +301,6 @@
                 <ui:Label text="&#10;" display-tooltip-when-elided="true" name="item_desc" style="width: 601px; font-size: 20px; left: 35px; flex-wrap: wrap; white-space: normal;" />
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="battle_text" class="selector" style="position: absolute; bottom: 0; width: 100%; height: 30%; background-color: rgba(63, 63, 63, 255); visibility: hidden;" />
     </ui:VisualElement>
 </ui:UXML>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(Battler))]
 [RequireComponent(typeof(CharacterStats))]
+[RequireComponent(typeof(EnemyRewardData))]
 public class RandomEnemyBattleAI : MonoBehaviour
 {
     Battler battler;

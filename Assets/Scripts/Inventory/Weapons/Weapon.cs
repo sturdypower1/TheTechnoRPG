@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
 
-public abstract class Weapon : ScriptableObject, IObtainable
+public abstract class Weapon :  IObtainable
 {
-    public new string name;
     public string description;
     public int attack;
     /// <summary>
     /// from the special properties of the sword, calculate the damage
     /// </summary>
     public abstract Damage CalculateDamage(Damage damage, GameObject target, GameObject user);
-    public void Obtain()
+    public override void Obtain()
     {
         
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     public Animator animator;
-    public Rigidbody2D rigidbody2D;
+    public Rigidbody2D rb2D;
 
     public Direction Direction;
     /// <summary>
@@ -34,7 +34,10 @@ public class Movement : MonoBehaviour
     /// </summary>
     public float sprintBoost;
     // Start is called before the first frame update
-
+    public void Start()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+    }
     public void move(Vector2 direction){
         if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
@@ -70,7 +73,7 @@ public class Movement : MonoBehaviour
         {
             animator.SetBool("IsWalking", false);
         }
-        rigidbody2D.velocity = direction* speed;
+        rb2D.velocity = direction* speed;
     }
 }
 public enum Direction

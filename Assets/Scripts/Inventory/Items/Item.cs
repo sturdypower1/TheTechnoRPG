@@ -7,13 +7,13 @@ using UnityEngine.UIElements;
 /// </summary>
 [System.Serializable]
 [CreateAssetMenu(menuName = "Scriptable Objects/item")]
-public class Item : ScriptableObject, IObtainable
+public class Item : IObtainable
 {
-    public string ItemType;
-    public string name;
     public string description;
-    public void Obtain()
+    public override void Obtain()
     {
+        Debug.Log("adding item");
+        InventoryManager.instance.AddItem(this);
 
     }
     /// <summary>
@@ -24,8 +24,8 @@ public class Item : ScriptableObject, IObtainable
     {
         label.text = description;
     }
-    public void UseItem(GameObject target) { }
-    public bool GetUseability() { return true; }
+    public virtual void UseItem(GameObject target) { }
+    public virtual bool GetUseability() { return true; }
 
 }
 

@@ -48,7 +48,7 @@ public class BasicCutsceneSkill : Skill
 
 
 
-        BattleManager.instance.PauseBattle();
+        BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);
         director.stopped += UnpauseOnCutSceneFinish;
     }
 

@@ -13,7 +13,6 @@ public abstract class Skill : ScriptableObject
     [Range(0, 1)]
     public float chance;
 
-    public new string name;
     [TextArea(1, 20)]
     public string description;
     /// <summary>

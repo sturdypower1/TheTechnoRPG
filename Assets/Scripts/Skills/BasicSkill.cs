@@ -47,6 +47,8 @@ public class BasicSkill : Skill
         }
         target.GetComponent<Battler>().TakeDamage(totalDamage);
 
+
+        BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);
         BattleManager.instance.StartCoroutine(WaitToUnpauseBattle(useTime));
     }
 

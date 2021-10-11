@@ -33,7 +33,7 @@ public class HeadsUpUI : MonoBehaviour
         }
         // update the messages
 
-        if (BattleManager.instance.isInBattle && !battler.isDown)
+        if (BattleManager.instance.isInBattle && battler.isInBattle && !battler.isDown)
         {
             ui.visible = true;
 

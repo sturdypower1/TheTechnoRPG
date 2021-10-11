@@ -39,7 +39,8 @@ public class Battler : MonoBehaviour
     /// the target position 
     /// </summary>
     public Transform BattleOffset;
-
+    [HideInInspector]
+    public bool isInBattle;
     private void Start()
     {
         characterStats = GetComponent<CharacterStats>();

@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public abstract class Armor : ScriptableObject, IObtainable
+public abstract class Armor :  IObtainable
 {
     public string ArmorType;
-    public new string name;
     public string description;
     public int defence;
-    public void Obtain()
+    public override void Obtain()
     {
 
     }

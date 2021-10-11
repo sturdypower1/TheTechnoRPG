@@ -20,7 +20,6 @@ public class AudioManager : MonoBehaviour
     private void Awake() {
         //singleton pattern
         if(instance == null){
-            DontDestroyOnLoad(this.gameObject);
             instance = this;
         }
         else

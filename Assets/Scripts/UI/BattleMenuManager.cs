@@ -14,9 +14,9 @@ public class BattleMenuManager : MonoBehaviour
     [HideInInspector]
     public VisualElement battleUI;
     VisualElement losingBackground;
-    VisualElement enemySelector;
-    VisualElement skillSelector;
-    VisualElement itemSelector;
+    public VisualElement enemySelector;
+    public VisualElement skillSelector;
+    public VisualElement itemSelector;
     VisualElement previousUI;
 
     /// <summary>
@@ -24,7 +24,7 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     VisualElement technobladeSelectorUI;
 
-    bool hasBattleStarted;
+    bool hasBattleStarted = false;
     private int currentPlayer;
 
     private int currentCharacterSelected;
@@ -42,8 +42,6 @@ public class BattleMenuManager : MonoBehaviour
         //singleton pattern
         if(instance == null){
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
-            
         }
         else
         {
@@ -70,7 +68,7 @@ public class BattleMenuManager : MonoBehaviour
 
         InventoryManager inventory = InventoryManager.instance;
         int i = 0;
-        int firstItemCheck = 0;
+        //int firstItemCheck = 0;
         ScrollView list1 = itemSelector.Q<ScrollView>("list1");
         ScrollView list2 = itemSelector.Q<ScrollView>("list2");
         list1.Clear();
@@ -226,7 +224,6 @@ public class BattleMenuManager : MonoBehaviour
             battleUI.visible = true;
             enemySelector.visible = false;
         // waits until the animation is over to resume the battle
-        BattleManager.instance.PauseBattle();
     }
     /// <summary>
     /// go back to the previous battle menu tab
@@ -325,7 +322,6 @@ public class BattleMenuManager : MonoBehaviour
         }
         cachedHandler = null;
 
-        BattleManager.instance.PauseBattle();
     }
 
     /// <summary>

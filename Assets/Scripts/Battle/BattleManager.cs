@@ -24,7 +24,7 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     public List<EnemySelectorUI> enemySelectorUI = new List<EnemySelectorUI>();
 
-    public event EmptyEventHandler settingUpBattle;
+    //public event EmptyEventHandler settingUpBattle;
 
     [HideInInspector]
     public AudioSource BattleMusic;
@@ -122,6 +122,8 @@ public class BattleManager : MonoBehaviour
             //add total exp, total gold and items
             foreach (GameObject enemy in Enemies)
             {
+                Battler battledata = enemy.GetComponent<Battler>();
+                battledata.isInBattle = false;
                 if (enemy.GetComponent<EnemyRewardData>() != null)
                 {
                     EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
@@ -135,6 +137,9 @@ public class BattleManager : MonoBehaviour
             }
             foreach (GameObject player in Players)
             {
+                Battler battledata = player.GetComponent<Battler>();
+                battledata.isInBattle = false;
+
                 LevelUpController levelUpController = player.GetComponent<LevelUpController>();
                 levelUpController.currentEXP += battleRewardData.totalEXP;
 
@@ -150,15 +155,29 @@ public class BattleManager : MonoBehaviour
     {
         InkManager.instance.ContinueStory();
     }
-    public void PauseBattle()
+    public void PauseBattle(string attackName, string userName, string targetName)
     {
+        Label battleText = UIManager.instance.root.Q<Label>("battle_text");
+        battleText.visible = true;
+        battleText.text = userName + " used " + attackName + " on " + targetName;
+
         IsWaitingForSkill = true;
         BattleMenuManager.instance.battleUI.SetEnabled(false);
+        BattleMenuManager.instance.skillSelector.SetEnabled(false);
+        BattleMenuManager.instance.enemySelector.SetEnabled(false);
+        BattleMenuManager.instance.itemSelector.SetEnabled(false);
     }
     public void UnPauseBattle()
     {
+        Label battleText = UIManager.instance.root.Q<Label>("battle_text");
+        battleText.visible = false;
+
+
         IsWaitingForSkill = false;
         BattleMenuManager.instance.battleUI.SetEnabled(true);
+        BattleMenuManager.instance.skillSelector.SetEnabled(true);
+        BattleMenuManager.instance.enemySelector.SetEnabled(true);
+        BattleMenuManager.instance.itemSelector.SetEnabled(true);
     }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
@@ -223,10 +242,14 @@ public class BattleManager : MonoBehaviour
 
             // set up heads up display
             Battler battledata = battler.GetComponent<Battler>();
+            battledata.isInBattle = true;
             TemplateContainer headsupUI = battledata.headsUpUI.ui;        
         }
         foreach (GameObject battler in Enemies)
         {
+            Battler battledata = battler.GetComponent<Battler>();
+            battledata.isInBattle = true;
+
             Animator animator = battler.GetComponent<Animator>();
             animator.SetTrigger("BattleStart");
         }
@@ -273,6 +296,7 @@ public class BattleManager : MonoBehaviour
 
             Battler battler = player.GetComponent<Battler>();
             battler.oldPosition = player.transform.position;
+            
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));

@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5832587612613011748
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978729, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1127567113212978734, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ff42216b33f8a184f9ca395d81f7b1ea, type: 2}
+    - target: {fileID: 1127567113212978735, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_Name
+      value: GreenLightning Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 1203594621161978008, guid: 5ebb72382811c3343879169aa93c167a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 638667503, guid: 2daee978fbf601c46832df1848de384d, type: 3}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5ebb72382811c3343879169aa93c167a, type: 3}

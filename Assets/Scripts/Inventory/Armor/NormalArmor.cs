@@ -12,7 +12,6 @@ public class NormalArmor : Armor
         {
             case DamageType.Bleeding:
                 return damage;
-                break;
         }
          
         damage.damageAmount -= defence;

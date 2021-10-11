@@ -224,11 +224,22 @@ public class InkManager : MonoBehaviour
     }
     IEnumerator TextCoroutine(Label textBoxText)
     {
+        bool waitingForSymbol = false;
         foreach(Char letter in text)
         {
             if (!isFinishedPage)
             {
                 textBoxText.text += letter;
+                //will automatically display rich text
+                if (letter == '<' || waitingForSymbol)
+                {
+                    waitingForSymbol = true;
+                    if(letter == '>')
+                    {
+                        waitingForSymbol = false;
+                    }
+                    continue;
+                }
                 // add stuff for character animations
                 if(letter != ' ')
                 {
@@ -395,9 +406,44 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="choices">the choices the player has</param>
     public void DisplayChoices(Button[] choices){
+        isDisplayingChoices = true;
+        isCurrentlyDisplaying = true;
+        Label textBoxText = UIManager.instance.textBoxUI.Q<Label>("TextBoxText");
+        textBoxText.text = "";
 
+        // updating the portrait
+        DisplayPortriat("Technoblade", "default");
+  
+        Button textBoxUI = UIManager.instance.textBoxUI;
+        textBoxUI.visible = true;
+        PlayerInputManager.instance.DisableInput();
+        VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
+        playerChoiceUI.Clear();
+        foreach (Button choice in choices)
+        {
+            playerChoiceUI.Add(choice);
+            choice.focusable = true;
+            choice.Focus();
+            
+        }
     }
 
+    public void DisplayNewItem(string ItemName)
+    {
+        PauseManager.instance.Pause();
+        Button textBoxUI = UIManager.instance.textBoxUI;
+        Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
+        string displayText = "Technoblade obtained <color=green>" + ItemName + "</color>.";
+
+        isCurrentlyDisplaying = true;
+        instant = false;
+        unSkipable = false;
+        isSlow = false;
+        text = displayText;
+        DisplayPortriat("empty", "default");
+        UpdateTextBox();
+        //StartCoroutine(TextCoroutine(textBoxText));
+    }
     public CharacterPortraitData GetPortraitList(string characterName, string feeling)
     {
         if(characterName != "")

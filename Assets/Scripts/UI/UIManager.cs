@@ -5,6 +5,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class UIManager : MonoBehaviour
 {
@@ -53,7 +54,7 @@ public class UIManager : MonoBehaviour
     VisualElement skillInfo;
     VisualElement overworldSaveFileSelect;
 
-    
+    public event EmptyEventHandler OnTitleReturn;
 
 
 
@@ -63,7 +64,6 @@ public class UIManager : MonoBehaviour
     private void Awake() {
         if(instance == null){
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -243,6 +243,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void LoadSaveFileBackButton(){
         AudioManager.playSound("menuback");
+        
         titleBackground.visible = true;
         fileSelectBackground.visible = false;
     }
@@ -251,6 +252,9 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void SaveBackButton(){
         //TODO: unpause
+        PauseManager.instance.UnPause();
+        InkManager.instance.isCurrentlyDisplaying = false;
+        InkManager.instance.isDisplayingChoices = false;
 
         textBoxUI.visible = false;
         PlayerInputManager.instance.EnableInput();
@@ -327,6 +331,10 @@ public class UIManager : MonoBehaviour
         overworldOverlay.visible = true;
         // start new game from load and save system
         SceneManager.LoadSceneAsync("BeforeThePyramid");
+        foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
+        {
+            File.Delete(file);
+        }
     }
     /// <summary>
     /// open up the save ui to load a game
@@ -334,7 +342,10 @@ public class UIManager : MonoBehaviour
     public void continueButton(){
         AudioManager.playSound("menuselect");
         // load ui using the save and load system
+        SaveAndLoadManager.instance.UpdateSaveFileUI(fileSelectBackground);
 
+        fileSelectBackground.visible = true;
+        titleBackground.visible = false;
     }
     /// <summary>
     /// open up the settings menu
@@ -390,6 +401,8 @@ public class UIManager : MonoBehaviour
         overworldOverlay.visible = true;
         titleBackground.visible = false;
         fileSelectBackground.visible = false;
+
+        SaveAndLoadManager.instance.LoadGame(saveFileNubmer);
         // use the save system to continue
     }
     /// <summary>
@@ -804,6 +817,7 @@ public class UIManager : MonoBehaviour
         settingsBackground.visible = false;
         titleBackground.visible = true;
         // load the title scene
+        OnTitleReturn?.Invoke();
         SceneManager.LoadScene("TitleScreen");
     }
     /// <summary>

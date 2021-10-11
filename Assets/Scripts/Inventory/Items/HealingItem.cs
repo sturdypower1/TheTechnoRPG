@@ -14,7 +14,7 @@ public class HealingItem : Item
     {
         Debug.Log("using item");
     }
-    public bool GetUseability()
+    public override bool GetUseability()
     {
         return true;
     }
