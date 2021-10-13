@@ -260,8 +260,6 @@ public class BattleManager : MonoBehaviour
 
         BattleMusic = battleMusic;
         PauseManager.instance.Pause();
-        // pause the game
-        Time.timeScale = 0;
 
         StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground, .5f));
 

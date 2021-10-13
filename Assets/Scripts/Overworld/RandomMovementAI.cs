@@ -18,6 +18,11 @@ public class RandomMovementAI : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (PauseManager.isPaused)
+        {
+            movement.move(new Vector2(0, 0));
+            return;
+        }
         Transform playerPositon = PlayerInputManager.instance.transform;
         switch (state)
         {

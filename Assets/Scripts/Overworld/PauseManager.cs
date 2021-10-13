@@ -5,7 +5,7 @@ using UnityEngine;
 public class PauseManager : MonoBehaviour
 {
     public static PauseManager instance;
-
+    public static bool isPaused;
     private void Awake()
     {
         if(instance == null)
@@ -19,13 +19,15 @@ public class PauseManager : MonoBehaviour
     }
     public void Pause()
     {
-        Time.timeScale = 0;
+        isPaused = true;
+        Time.timeScale = 1;
         PlayerInputManager.instance.DisableInput();
     }
 
     public void UnPause()
     {
-        Time.timeScale = 1;
+        isPaused = false;
+        //Time.timeScale = 1;
         PlayerInputManager.instance.EnableInput();
     }
 }

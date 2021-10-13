@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// the class that represents a characters stats
 /// </summary>
-[RequireComponent(typeof(Battler))]
+//[RequireComponent(typeof(Battler))]
 [System.Serializable]
 public class CharacterStats : MonoBehaviour
 {

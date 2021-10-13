@@ -29,7 +29,15 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        movement.move(context.ReadValue<Vector2>());
+        if (!PauseManager.isPaused)
+        {
+            movement.move(context.ReadValue<Vector2>());
+        }
+        else
+        {
+            movement.move(new Vector2(0,0));
+        }
+        
     }
 
     public void OnPause(InputAction.CallbackContext context)

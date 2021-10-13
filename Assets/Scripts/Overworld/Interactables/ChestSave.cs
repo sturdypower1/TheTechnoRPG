@@ -40,7 +40,7 @@ public class ChestSave : ISaveable
         string jsonString = JsonUtility.ToJson(save);
         File.WriteAllText(savePath, jsonString);
     }
-    private void OnDestroy()
+    public override void OnDestroy()
     {
         base.OnDestroy();
     }

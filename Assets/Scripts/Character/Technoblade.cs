@@ -11,10 +11,11 @@ public class Technoblade : MonoBehaviour
     [HideInInspector]
     public Battler battler;
 
+    public Animator animator;
+
     public VisualElement technoSelectorUI;
 
     public LevelUpController levelUpController;
-    Animator animator;
 
 
     private void Awake() {
