@@ -19,3 +19,28 @@ MonoBehaviour:
     defenceBonus: 1
     pointsBonus: 1
     skill: {fileID: 11400000, guid: c7dff421232b0a245b82773c99da68ea, type: 2}
+  - healthBonus: 2
+    attackBonus: 1
+    defenceBonus: 1
+    pointsBonus: 1
+    skill: {fileID: 0}
+  - healthBonus: 2
+    attackBonus: 1
+    defenceBonus: 1
+    pointsBonus: 1
+    skill: {fileID: 0}
+  - healthBonus: 2
+    attackBonus: 1
+    defenceBonus: 1
+    pointsBonus: 1
+    skill: {fileID: 0}
+  - healthBonus: 2
+    attackBonus: 1
+    defenceBonus: 1
+    pointsBonus: 1
+    skill: {fileID: 0}
+  - healthBonus: 2
+    attackBonus: 1
+    defenceBonus: 1
+    pointsBonus: 1
+    skill: {fileID: 0}

@@ -24,6 +24,8 @@ public abstract class Battler : MonoBehaviour
     [HideInInspector]
 
     public Vector3 oldPosition;
+
+    public AnimationSaveData animationSaveData;
     [HideInInspector]
 
     public bool isDown;

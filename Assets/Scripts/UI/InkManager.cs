@@ -23,6 +23,7 @@ public class InkManager : MonoBehaviour
     public Story inkStory;
     public static InkManager instance;
     public bool isDisplayingChoices;
+    public bool isScrollingText;
 
     public CharacterPortraitReference[] characterPortraits;
 
@@ -224,6 +225,7 @@ public class InkManager : MonoBehaviour
     }
     IEnumerator TextCoroutine(Label textBoxText)
     {
+        isScrollingText = true;
         bool waitingForSymbol = false;
         foreach(Char letter in text)
         {
@@ -253,33 +255,43 @@ public class InkManager : MonoBehaviour
                 break;
             }
         }
+        isScrollingText = false;
         isFinishedPage = true;
     }
     /// <summary>
     /// called to read the next line of text for the story
     /// </summary>
     public void ContinueStory(){
-        if(inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying)
+        if(inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText)
         {
+            
             // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
             inkStory.Continue();
             if(inkStory.currentText == "\n" || inkStory.currentText == "")
             {
+                Debug.Log("skipping");
                 ContinueStory();
             }
             else if (inkStory.currentTags.Contains("battle"))
             {
                 PauseManager.instance.Pause();
+                DisableTextboxUI();
                 //start the battle
+
+                EnemyBattlers battle = currentCutsceneData.battles[int.Parse(inkStory.currentText)];
+                BattleManager.instance.SetupBattle(battle.Enemies, battle.battleBackground, battle.battleMusic);
+                
             }
             else if (inkStory.currentTags.Contains("playable"))
             {
+
+                CameraController.instance.ToBattleCamera();
                 PauseManager.instance.Pause();
                 DisableTextboxUI();
 
                 isCurrentlyPlaying = true ;
 
-                currentCutsceneData.director.playableAsset = currentCutsceneData.playables[0];
+                currentCutsceneData.director.playableAsset = currentCutsceneData.playables[int.Parse(inkStory.currentText)];
                 currentCutsceneData.director.Play();
             }
             else
@@ -315,11 +327,11 @@ public class InkManager : MonoBehaviour
             
             }
         }
-        else if (!isDisplayingChoices && !isCurrentlyPlaying)
+        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText)
         {
-            PlayerInputManager.instance.EnableInput();
             if(inkStory.currentFlowName == "victory")
             {
+                DisableTextboxUI();
                 inkStory.SwitchToDefaultFlow();
                 OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
                 

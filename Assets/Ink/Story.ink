@@ -82,7 +82,7 @@ EXTERNAL playSong(songName)
         -> DONE
     =wilbur
         #playable
-        WilburBattle
+        0
         ~displayPortrait("Technoblade", "default")
         ~setTextSound("technoblade")
         Wilbur?
@@ -134,10 +134,9 @@ EXTERNAL playSong(songName)
         What, did I say something wrong?
         ~displayPortrait("Wilbur", "silent")
         ~setTextSound("Wilbur")
-        ~playSong("WilburTheme")
         Technoblade, I'm going to need those keys
         #battle
-        Wilbur
+        0
         ~displayPortrait("Technoblade", "default")
         ~setTextSound("technoblade")
         If you want to go so bad, you could just follow me in

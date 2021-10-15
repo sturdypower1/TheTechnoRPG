@@ -71,6 +71,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void invokeTitleReturn()
+    {
+        OnTitleReturn?.Invoke();
+    }
     void Start()
     {
         

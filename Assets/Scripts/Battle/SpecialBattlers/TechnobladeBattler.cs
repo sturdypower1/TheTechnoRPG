@@ -9,6 +9,16 @@ public class TechnobladeBattler : Battler
     public bool isInCarnageMode;
 
     public VisualEffect visualEffect;
+    private void Update()
+    {
+        // ensures that if he is healed, that he won't be in carnage mode
+        if (characterStats.stats.health > 0)
+        {
+            visualEffect.enabled = false;
+            isInCarnageMode = false;
+            animator.SetBool("isInCarnageMode", false);
+        }
+    }
     public override void DealDamage(Damage damage)
     {
 
@@ -80,7 +90,7 @@ public class TechnobladeBattler : Battler
             {
                 visualEffect.enabled = true;
                 isInCarnageMode = true;
-                //animator.SetBool("isInCarnageMode", true);
+                animator.SetBool("isInCarnageMode", true);
             }
         }
         else if (characterStats.stats.points > 0)
@@ -92,7 +102,7 @@ public class TechnobladeBattler : Battler
         {
             visualEffect.enabled = false;
             isInCarnageMode = false;
-            //animator.SetBool("isInCarnageMode", false);
+            animator.SetBool("isInCarnageMode", false);
 
             isDown = true;
             animator.SetTrigger("Down");

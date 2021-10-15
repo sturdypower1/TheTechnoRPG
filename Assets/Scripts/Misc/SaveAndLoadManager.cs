@@ -14,6 +14,7 @@ public class SaveAndLoadManager : MonoBehaviour
 
     public event SaveEventHandler OnStartSave;
     public event EmptyEventHandler OnLoadSave;
+    public event EmptyEventHandler OnReLoadSave;
 
     float gameTime = 0;
     string SavePointName;
@@ -52,6 +53,14 @@ public class SaveAndLoadManager : MonoBehaviour
        
     }
 
+    public void Reload()
+    {
+        LoadGame(0);
+        
+        OnReLoadSave?.Invoke();
+        UIManager.instance.overworldOverlay.visible = true;
+        PauseManager.instance.UnPause();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -239,7 +248,6 @@ public class SaveAndLoadManager : MonoBehaviour
         string jsonString = File.ReadAllText(savePointPath);
         SavePointData savePointData = JsonUtility.FromJson<SavePointData>(jsonString);
         gameTime = savePointData.timePassed;
-        // clear the temp file
 
 
         LoadCurrentSubscenes();

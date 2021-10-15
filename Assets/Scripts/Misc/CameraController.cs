@@ -11,6 +11,8 @@ public class CameraController : MonoBehaviour
     public CinemachineVirtualCamera overworldCamera;
     public CinemachineVirtualCamera battleCamera;
 
+    bool isInBattleCamera;
+
     private void Awake()
     {
         if(instance == null)
@@ -22,16 +24,27 @@ public class CameraController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    private void Start()
+    {
+        overworldCamera.Follow = Technoblade.instance.transform;
+        
+    }
 
     public void ToBattleCamera()
     {
-        battleCamera.Priority = 11;
-        battleCamera.transform.position = overworldCamera.transform.position;
-        animator.SetTrigger("OnBattleSetup");
+        if (!isInBattleCamera)
+        {
+            battleCamera.Priority = 11;
+            battleCamera.transform.position = overworldCamera.transform.position;
+            animator.SetTrigger("OnBattleSetup");
+
+            isInBattleCamera = true;
+        }
     }
 
     public void ToOverworldCamera()
     {
+        isInBattleCamera = false;
         battleCamera.Priority = 9;
         animator.SetTrigger("OnBattleEnd");
     }

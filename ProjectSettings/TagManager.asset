@@ -11,7 +11,7 @@ TagManager:
   - Battler
   - Water
   - UI
-  - 
+  - BattleBackground
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
     locked: 0
   - name: Battle Background
     uniqueID: 3515566717
+    locked: 0
+  - name: BackgroundBattleEffects
+    uniqueID: 2425631851
     locked: 0
   - name: Battlers
     uniqueID: 3150718683

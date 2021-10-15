@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.UIElements;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// controls the main menu during battle
 /// </summary>
@@ -336,7 +337,7 @@ public class BattleMenuManager : MonoBehaviour
 
         // unpause the game world
 
-        InkManager.instance.ContinueStory();
+        //InkManager.instance.ContinueStory();
 
 
     }
@@ -426,11 +427,20 @@ public class BattleMenuManager : MonoBehaviour
     /// after dying load the last save
     /// </summary>
     public void ContinueButton(){
+        AudioManager.playSound("menuselect");
+        VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
+        losingBackground.visible = false;
+        SaveAndLoadManager.instance.Reload();
     }
     /// <summary>
     /// go back to the title after losing
     /// </summary>
     public void LossReturnToTitleButton(){
+        PauseManager.instance.UnPause();
+        UIManager.instance.titleBackground.visible = true;
+        losingBackground.visible = false;
+        UIManager.instance.invokeTitleReturn();
+        SceneManager.LoadScene("TitleScreen");
     }
     /// <summary>
     /// after dying, unload the scene

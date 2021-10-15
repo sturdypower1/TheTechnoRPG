@@ -8,6 +8,7 @@ public struct CutsceneData
     public PlayableDirector director;
 
     public PlayableAsset[] playables;
+    public EnemyBattlers[] battles;
 
     public string inkPath;
 

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using System.IO;
 using UnityEngine.UIElements;
 using UnityEngine.Playables;
 [RequireComponent(typeof(PlayableDirector))]
@@ -11,6 +11,8 @@ public class BattleManager : MonoBehaviour
     public List<GameObject> Players;
     public List<GameObject> Enemies;
     public bool isInBattle;
+
+    public bool movingToPosition;
 
     public PlayableDirector director;
 
@@ -82,6 +84,23 @@ public class BattleManager : MonoBehaviour
             {
                 // end battle as player victory
                 EndBattle(true);
+                // skip everything else
+                return;
+
+            }
+            else { }
+            bool isPlayerLoss = true;
+            foreach (GameObject player in Players)
+            {
+                if (!player.GetComponent<Battler>().isDown)
+                {
+                    isPlayerLoss = false;
+                }
+            }
+            if (isPlayerLoss)
+            {
+                // end battle as player loss
+                EndBattle(false);
             }
 
         }
@@ -143,12 +162,31 @@ public class BattleManager : MonoBehaviour
                 LevelUpController levelUpController = player.GetComponent<LevelUpController>();
                 levelUpController.currentEXP += battleRewardData.totalEXP;
 
+                
+
                 player.GetComponent<Animator>().SetTrigger("BattleEnd");
             }
 
             InkManager.instance.DisplayVictoryData();
 
             OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
+        }
+        else
+        {
+            OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
+
+            AudioManager.playSound("defeatsong");
+            VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
+            if (Directory.GetFiles(Application.persistentDataPath + "/tempsave").Length <= 0)
+            {
+                losingBackground.Q<Button>("continue").SetEnabled(false);
+            }
+            else
+            {
+                losingBackground.Q<Button>("continue").SetEnabled(true);
+            }
+
+            losingBackground.visible = true;
         }
     }
     private void ResumeGameWorld()
@@ -184,6 +222,7 @@ public class BattleManager : MonoBehaviour
     /// </summary>
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
     {
+        movingToPosition = true;
         InkManager.instance.DisableTextboxUI();
         // start transitioning the background
         int i = 0;
@@ -207,6 +246,8 @@ public class BattleManager : MonoBehaviour
         {
             SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
             sprite.sortingLayerName = "Characters";
+            Battler battler = player.GetComponent<Battler>();
+            player.GetComponent<Animator>().Play(battler.animationSaveData.name, 0, battler.animationSaveData.normilizedtime);
             StartCoroutine(TransitionToOriginalPositions(player, player.GetComponent<Battler>().oldPosition, i == 0, .5f));
             i++;
         }
@@ -214,6 +255,8 @@ public class BattleManager : MonoBehaviour
         {
             SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
             sprite.sortingLayerName = "Battlers";
+            Battler battler = enemy.GetComponent<Battler>();
+            enemy.GetComponent<Animator>().Play(battler.animationSaveData.name, 0, battler.animationSaveData.normilizedtime);
             StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
         }
         StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
@@ -231,6 +274,7 @@ public class BattleManager : MonoBehaviour
 
         BattleMusic.Play();
         isInBattle = true;
+        
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
@@ -294,7 +338,12 @@ public class BattleManager : MonoBehaviour
 
             Battler battler = player.GetComponent<Battler>();
             battler.oldPosition = player.transform.position;
-            
+            battler.animationSaveData = new AnimationSaveData
+            {
+                name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
+                normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
+            };
+
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
@@ -328,6 +377,11 @@ public class BattleManager : MonoBehaviour
 
             Battler battler = enemy.GetComponent<Battler>();
             battler.oldPosition = enemy.transform.position;
+            battler.animationSaveData = new AnimationSaveData
+            {
+                name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
+                normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
+            };
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
             
@@ -342,6 +396,7 @@ public class BattleManager : MonoBehaviour
     }
     IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
+        movingToPosition = true;
         // disable collision
         if(transformy.GetComponent<Collider2D>() != null)
         {
@@ -363,11 +418,12 @@ public class BattleManager : MonoBehaviour
         {
             inBattlePositon?.Invoke();
         }
+        movingToPosition = false;
     }
 
     IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
-        
+        movingToPosition = true;
 
         Transform transform = transformy.transform;
         Vector3 oldPosition = transform.position;
@@ -386,7 +442,7 @@ public class BattleManager : MonoBehaviour
             Collider2D collider = transformy.GetComponent<Collider2D>();
             collider.enabled = true;
         }
-
+        movingToPosition = false;
         inOverworldPosition?.Invoke();
     }
 

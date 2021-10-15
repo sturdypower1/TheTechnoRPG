@@ -32,6 +32,7 @@ public class Technoblade : MonoBehaviour
         
 
         SaveAndLoadManager.instance.OnStartSave += Save;
+        SaveAndLoadManager.instance.OnReLoadSave += Load;
         
         UIManager.instance.OnTitleReturn += DestroyTechno;
 
@@ -144,6 +145,9 @@ public class Technoblade : MonoBehaviour
         string savePath = Application.persistentDataPath + "/tempsave" + "/techno";
         if (File.Exists(savePath))
         {
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.enabled = true;
+
             string jsonString = File.ReadAllText(savePath);
             TechnoSaveData saveData = JsonUtility.FromJson<TechnoSaveData>(jsonString);
             stats.stats = saveData.characterStats.stats;
@@ -173,6 +177,7 @@ public class Technoblade : MonoBehaviour
         // makes sure that all subribed events are unsubscribed
         SaveAndLoadManager.instance.OnStartSave -= Save;
         UIManager.instance.OnTitleReturn -= DestroyTechno;
+        SaveAndLoadManager.instance.OnReLoadSave -= Load;
     }
     public void DestroyTechno()
     {

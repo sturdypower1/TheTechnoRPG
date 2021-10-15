@@ -29,6 +29,7 @@ public class BasicSkill : Skill
         Battler battler = user.GetComponent<Battler>();
         battler.useTime = 0;
         battler.maxUseTime = useTime;
+        battler.target = target;
 
         Animator animator = user.GetComponent<Animator>();
         animator.Play(skillAnimation.name);
@@ -45,7 +46,7 @@ public class BasicSkill : Skill
                 totalDamage = user.GetComponent<CharacterStats>().equipedWeapon.CalculateDamage(new Damage { damageAmount = damage, damageType = damageType }, target, user);
                 break;
         }
-        target.GetComponent<Battler>().TakeDamage(totalDamage);
+        user.GetComponent<Battler>().DealDamage(totalDamage);
 
 
         BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);

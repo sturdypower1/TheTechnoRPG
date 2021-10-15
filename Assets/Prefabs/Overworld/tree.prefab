@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1985873549406254566}
   - component: {fileID: 1985873549406254565}
   - component: {fileID: 1985873549406254564}
-  - component: {fileID: 1985873549406254567}
+  - component: {fileID: 9061422146773046329}
   m_Layer: 0
   m_Name: tree
   m_TagString: Untagged
@@ -103,8 +103,9 @@ MonoBehaviour:
   cutsceneData:
     director: {fileID: 0}
     playables: []
+    battles: []
     inkPath: aintro.tree
---- !u!60 &1985873549406254567
+--- !u!60 &9061422146773046329
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,7 +121,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.3971808, y: 0.032338336}
+    pivot: {x: 0.40625, y: 0.0625}
     oldSize: {x: 2, y: 2}
     newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
@@ -129,13 +130,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.04436159, y: 0.18532336}
-      - {x: -0.13811159, y: 0.12282336}
-      - {x: -0.20061159, y: 0.09157336}
-      - {x: -0.20061159, y: 0.029073358}
-      - {x: -0.07561159, y: -0.033426642}
-      - {x: 0.11188841, y: -0.033426642}
-      - {x: 0.20563841, y: 0.029073358}
-      - {x: 0.23688841, y: 0.09157336}
-      - {x: 0.17438841, y: 0.12282336}
-      - {x: 0.11188841, y: 0.18532336}
+    - - {x: -0.0625, y: 0.125}
+      - {x: -0.15625, y: 0.0625}
+      - {x: -0.21875, y: 0.03125}
+      - {x: -0.21875, y: -0.03125}
+      - {x: -0.09375, y: -0.09375}
+      - {x: 0.09375, y: -0.09375}
+      - {x: 0.1875, y: -0.03125}
+      - {x: 0.21875, y: 0.03125}
+      - {x: 0.15625, y: 0.0625}
+      - {x: 0.09375, y: 0.125}

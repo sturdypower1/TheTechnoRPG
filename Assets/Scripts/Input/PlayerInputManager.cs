@@ -84,4 +84,8 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
         movement.move(new Vector2(0,0));
         InputActions.Overworld.Disable();
     }
+    private void OnDestroy()
+    {
+        InputActions.Overworld.Disable();
+    }
 }
