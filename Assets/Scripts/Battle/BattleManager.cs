@@ -111,6 +111,7 @@ public class BattleManager : MonoBehaviour
     /// <param name="isPlayerVictor"></param>
     public void EndBattle(bool isPlayerVictor)
     {
+        AudioManager.UnpauseCurrentSong();
         BattleMusic.Stop();
         isInBattle = false;
 
@@ -254,7 +255,7 @@ public class BattleManager : MonoBehaviour
         foreach (GameObject enemy in Enemies)
         {
             SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
-            sprite.sortingLayerName = "Battlers";
+            sprite.sortingLayerName = "Characters";
             Battler battler = enemy.GetComponent<Battler>();
             enemy.GetComponent<Animator>().Play(battler.animationSaveData.name, 0, battler.animationSaveData.normilizedtime);
             StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
@@ -300,6 +301,7 @@ public class BattleManager : MonoBehaviour
     }
     public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
     {
+        AudioManager.PauseCurrentSong();
         BattleBackground = battleBackground;
 
         BattleMusic = battleMusic;
@@ -307,7 +309,7 @@ public class BattleManager : MonoBehaviour
 
         StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground, .5f));
 
-        Camera cam = FindObjectOfType<Camera>();
+        Camera cam = Camera.main;
         float positionRatio = 1280.0f / cam.pixelWidth;
         // transition all of the characters
 
@@ -345,7 +347,7 @@ public class BattleManager : MonoBehaviour
             };
 
 
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / Players.Count)) - cam.pixelHeight / (Players.Count * 2), 0));
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
             i++;
         }
@@ -383,7 +385,9 @@ public class BattleManager : MonoBehaviour
                 normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
             };
 
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (cam.pixelHeight / enemies.Length)) - cam.pixelHeight / (enemies.Length * 2), 0));
+            float spawnzone = cam.scaledPixelHeight * .7f;
+            float startingIncrement = cam.scaledPixelHeight * .1f;
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (spawnzone / (enemies.Length + 1)) + startingIncrement), 0));
             
             StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false, .5f));
             i++;
@@ -443,7 +447,11 @@ public class BattleManager : MonoBehaviour
             collider.enabled = true;
         }
         movingToPosition = false;
-        inOverworldPosition?.Invoke();
+        if (triggerEvent)
+        {
+            inOverworldPosition?.Invoke();
+        }
+        
     }
 
     IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)

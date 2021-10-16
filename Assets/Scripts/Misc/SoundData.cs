@@ -9,4 +9,6 @@ public class SoundData{
     [HideInInspector]
     public AudioSource audioSource;
     public string soundName;
+    [Range(0,1)]
+    public float volume = 1;
 }

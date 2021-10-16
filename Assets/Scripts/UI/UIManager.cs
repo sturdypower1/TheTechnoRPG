@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
     public UIDocument UIDoc;
     // will be used to enable/ disable interactive button
     [HideInInspector]
+    bool wasInteractiveEnabled;
     public bool isInteractiveEnabled;
     public bool isStartingOnTitle;
     
@@ -228,9 +229,15 @@ public class UIManager : MonoBehaviour
         if (isInteractiveEnabled)
         {
             isInteractiveEnabled = false;
+            if (!wasInteractiveEnabled)
+            {
+                AudioManager.playSound("menuavailable");
+            }
+            wasInteractiveEnabled = true;
         }
         else
         {
+            wasInteractiveEnabled = false;
             isInteractivePressed = false;
             interactiveButton.SetEnabled(false);
         }
@@ -287,6 +294,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void EnableInteractive(){
         isInteractiveEnabled = true;
+        
         interactiveButton.SetEnabled(true);
     }
     /// <summary>

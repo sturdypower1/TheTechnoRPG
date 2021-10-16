@@ -245,7 +245,10 @@ public class InkManager : MonoBehaviour
                 // add stuff for character animations
                 if(letter != ' ')
                 {
-                    currentDialogueSound.Play();
+                    if(currentDialogueSound != null)
+                    {
+                        currentDialogueSound.Play();
+                    }
                 }
                 yield return new WaitForSecondsRealtime(1 / textSpeed);
 
@@ -269,7 +272,6 @@ public class InkManager : MonoBehaviour
             inkStory.Continue();
             if(inkStory.currentText == "\n" || inkStory.currentText == "")
             {
-                Debug.Log("skipping");
                 ContinueStory();
             }
             else if (inkStory.currentTags.Contains("battle"))
@@ -299,6 +301,10 @@ public class InkManager : MonoBehaviour
                 PauseManager.instance.Pause();
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
+                if (inkStory.currentTags.Contains("soundless"))
+                {
+                    currentDialogueSound = null;
+                }
                 if (inkStory.currentTags.Contains("unskipable"))
                 {
                     unSkipable = true;
@@ -327,7 +333,7 @@ public class InkManager : MonoBehaviour
             
             }
         }
-        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText)
+        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText && !BattleManager.instance.movingToPosition)
         {
             if(inkStory.currentFlowName == "victory")
             {
@@ -445,7 +451,7 @@ public class InkManager : MonoBehaviour
         PauseManager.instance.Pause();
         Button textBoxUI = UIManager.instance.textBoxUI;
         Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
-        string displayText = "Technoblade obtained <color=green>" + ItemName + "</color>.";
+        string displayText = "Technoblade obtained <color=red>" + ItemName + "</color>.";
         isDisplayingChoices = false;
         PlayerInputManager.instance.DisableInput();
         UIManager.instance.overworldOverlay.visible = false;

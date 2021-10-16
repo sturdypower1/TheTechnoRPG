@@ -12,7 +12,7 @@ TagManager:
   - Water
   - UI
   - BattleBackground
-  - 
+  - 3dobject
   - 
   - 
   - 
@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: water
+    uniqueID: 891173125
+    locked: 0
   - name: Background
     uniqueID: 4088272493
     locked: 0

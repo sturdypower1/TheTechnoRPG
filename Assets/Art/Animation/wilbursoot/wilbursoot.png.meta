@@ -140,7 +140,7 @@ TextureImporter:
       name: wilbursoot_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 96
         width: 45
         height: 32
@@ -292,7 +292,7 @@ TextureImporter:
         width: 45
         height: 32
       alignment: 9
-      pivot: {x: 0.62, y: 0.082}
+      pivot: {x: 0.62222224, y: 0.09375}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

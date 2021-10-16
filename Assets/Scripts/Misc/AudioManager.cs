@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     private static List<SoundData> gameMusic = new List<SoundData>();
     private static SoundData currentSong;
 
-    public static float volume = .1f;
+    //public static float volume = 1f;
    
 
     private void Awake() {
@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     }
 
     public static void changeVolume(float newVolume){
-        volume = newVolume;
+        //volume = newVolume;
 
         foreach(SoundData sound in gameSounds)
         {
@@ -51,6 +51,7 @@ public class AudioManager : MonoBehaviour
         foreach( SoundData dialogue in dialoguess){
             dialogue.audioSource = gameObject.AddComponent<AudioSource>();
             dialogue.audioSource.clip = dialogue.clip;
+            dialogue.audioSource.volume = dialogue.volume;
             dialogues.Add(dialogue);
         }
 
@@ -58,12 +59,14 @@ public class AudioManager : MonoBehaviour
             music.audioSource = gameObject.AddComponent<AudioSource>();
             music.audioSource.clip = music.clip;
             music.audioSource.loop = true;
+            music.audioSource.volume = music.volume;
             gameMusic.Add(music);
         }
 
         foreach(SoundData sound in gameSoundss){
             sound.audioSource = gameObject.AddComponent<AudioSource>();
             sound.audioSource.clip = sound.clip;
+            sound.audioSource.volume = sound.volume;
             gameSounds.Add(sound);
         }
     }
@@ -79,7 +82,7 @@ public class AudioManager : MonoBehaviour
         foreach(SoundData dialogue in dialogues){
             if(dialogue.soundName == soundName){
                 try{
-                    dialogue.audioSource.volume = volume;
+                    //dialogue.audioSource.volume = volume;
                     dialogue.audioSource.Play();
                     
                 }
@@ -138,7 +141,7 @@ public class AudioManager : MonoBehaviour
         foreach(SoundData sound in gameSounds){
             if(sound.soundName == name){
                 try{
-                    sound.audioSource.volume = volume;
+                    //sound.audioSource.volume = volume;
                     sound.audioSource.Play();
                 }
                 catch(Exception e){
@@ -180,6 +183,14 @@ public class AudioManager : MonoBehaviour
             Debug.Log("sound effect not found");
         }
     }
+    public static void UnpauseCurrentSong()
+    {
+        currentSong.audioSource.UnPause();
+    }
+    public static void PauseCurrentSong()
+    {
+        currentSong.audioSource.Pause();
+    }
     public static void stopCurrentSong(){
         if(currentSong != null){
             stopSong(currentSong.soundName);
@@ -191,11 +202,16 @@ public class AudioManager : MonoBehaviour
     /// <param name="name">the name of the sound</param>
     public static void playSong(string name){
         bool wasFound = false;
+        if(currentSong != null && currentSong.audioSource != null && name == currentSong.soundName)
+        {
+            currentSong.audioSource.UnPause();
+            return;
+        }
         foreach(SoundData sound in gameMusic){
             //Debug.Log("found matching name");
             if(sound.soundName == name){
                 try{
-                    sound.audioSource.volume = volume;
+                    //sound.audioSource.volume = volume;
                     stopCurrentSong();
                     sound.audioSource.Play();
                     

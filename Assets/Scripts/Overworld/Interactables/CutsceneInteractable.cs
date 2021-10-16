@@ -5,6 +5,7 @@ using UnityEngine;
 public class CutsceneInteractable : Interactable
 {
     public CutsceneData cutsceneData;
+    
     public override void Interact()
     {
         if (!InkManager.instance.isCurrentlyDisplaying)

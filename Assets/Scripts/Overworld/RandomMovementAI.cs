@@ -34,7 +34,7 @@ public class RandomMovementAI : MonoBehaviour
                 }
                 else
                 {
-                    currentDirection = (Direction)Random.Range(1, 4);
+                    currentDirection = (Direction)Random.Range(0, 4);
                     state = RandomMovementState.RandomMovement;
                     // how long it will walk for
                     waitTime = Random.Range(1f, 2f);

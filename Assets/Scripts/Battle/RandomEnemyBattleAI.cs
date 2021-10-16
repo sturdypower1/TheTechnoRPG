@@ -24,7 +24,7 @@ public class RandomEnemyBattleAI : MonoBehaviour
         {
             if (!battler.isDown && battler.useTime >= battler.maxUseTime)
             {
-                float randomValue = Random.Range(0, 1);
+                float randomValue = Random.Range(0f, 1f);
                 foreach (Skill skill in characterStats.skills)
                 {
                     if (skill.chance >= randomValue)

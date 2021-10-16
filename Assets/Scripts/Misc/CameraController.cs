@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour
         if (!isInBattleCamera)
         {
             battleCamera.Priority = 11;
-            battleCamera.transform.position = overworldCamera.transform.position;
+            battleCamera.transform.position = Camera.main.transform.position;
             animator.SetTrigger("OnBattleSetup");
 
             isInBattleCamera = true;

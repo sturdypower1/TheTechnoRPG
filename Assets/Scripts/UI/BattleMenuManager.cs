@@ -89,9 +89,13 @@ public class BattleMenuManager : MonoBehaviour
             // if it isn't usable, don't let the player use the item
             if (item.GetUseability())
             {
+                button.SetEnabled(true);
+            }
+            else
+            {
                 button.SetEnabled(false);
             }
-            else if(i == 0)
+            if(i == 0)
             {
                 button.Focus();
                 UpdateItemDescription(item.description.ToString());

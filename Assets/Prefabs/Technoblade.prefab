@@ -687,13 +687,12 @@ MonoBehaviour:
     maxHealth: 20
     health: 20
     maxPoints: 15
-    points: 0
+    points: 15
   equipedWeapon: {fileID: 11400000, guid: 26d709bf9bc34e14f956d184dd521437, type: 2}
   equipedArmor: {fileID: 11400000, guid: 8e006f00d5d392e4188ab1bf08962ac3, type: 2}
   skills:
-  - {fileID: 11400000, guid: edf58b195a6818d4fa1bf0ba2b7b15e3, type: 2}
-  - {fileID: 11400000, guid: a88db9a293e1c864ea593786cfc1ca3e, type: 2}
-  - {fileID: 11400000, guid: edf58b195a6818d4fa1bf0ba2b7b15e3, type: 2}
+  - {fileID: 11400000, guid: e152131aee18a9b468b0e893e3345a0a, type: 2}
+  - {fileID: 11400000, guid: 2d32b9acf623f5941834989a0b83ca26, type: 2}
 --- !u!114 &2093283210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,6 +900,9 @@ MonoBehaviour:
   maxUseTime: 0
   headsUpUI: {fileID: 915287397}
   oldPosition: {x: 0, y: 0, z: 0}
+  animationSaveData:
+    name: 
+    normilizedtime: 0
   isDown: 0
   damagedSound: {fileID: 2093283211}
   characterStats: {fileID: 1222542915304947601}

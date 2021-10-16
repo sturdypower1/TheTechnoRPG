@@ -6,7 +6,7 @@ public class TriggerCutscene : MonoBehaviour
 {
     public CutsceneData cutsceneData;
     public bool isSingleUse;
-    public bool isEnabled;
+    public bool isEnabled = true;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player" && isEnabled)

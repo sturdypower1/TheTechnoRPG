@@ -56,6 +56,25 @@ public abstract class Battler : MonoBehaviour
 
     public abstract void DealDamage(Damage damage);
 
+    public virtual void Heal(int recovery)
+    {
+        characterStats.stats.health += recovery;
+        if(characterStats.stats.health > characterStats.stats.maxHealth)
+        {
+            characterStats.stats.health = characterStats.stats.maxHealth;
+        }
+        Label label = new Label();
+        label.text = recovery.ToString();
+        label.AddToClassList("message_green");
+        headsUpUI.ui.Q<VisualElement>("messages").Add(label);
+
+        float random = Random.value * 360;
+        Vector2 messageDirection = new Vector2(Mathf.Cos(random), Mathf.Sin(random));
+
+        Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection };
+        headsUpUI.messages.Add(newMessage);
+    }
+
     public virtual void AddBleeding(int levelGain, int Limit)
     {
         if(GetComponent<Bleeding>() != null)

@@ -98,7 +98,7 @@ public class TechnobladeBattler : Battler
             characterStats.stats.points -= damage.damageAmount;
         }
         // character should be down
-        if (characterStats.stats.points <= 0)
+        else if (characterStats.stats.points <= 0)
         {
             visualEffect.enabled = false;
             isInCarnageMode = false;

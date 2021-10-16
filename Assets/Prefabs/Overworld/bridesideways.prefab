@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8289781281880251308}
   - component: {fileID: 7119953346588179346}
   - component: {fileID: 5970997548390229422}
+  - component: {fileID: 1901056007603076871}
   m_Layer: 0
   m_Name: bridesideways
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845615245120102571}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 14.37, y: 14.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -115,6 +116,37 @@ PolygonCollider2D:
       - {x: -1.5, y: 0.058750033}
       - {x: 1.46875, y: 0.058750033}
       - {x: 1.46875, y: -0.0037499666}
+--- !u!114 &1901056007603076871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845615245120102571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 6d16aef3000000006d4eec6d7d4a8bd16b349490db26ccbbe7221924
+  m_ShapePath:
+  - {x: -1.4976978, y: 0.40529633, z: 0}
+  - {x: -1.4990902, y: 0.010620117, z: 0}
+  - {x: 1.4611683, y: -0.006760597, z: 0}
+  - {x: 1.4585724, y: 0.39028454, z: 0}
+  - {x: 1.3824673, y: 0.39303112, z: 0}
+  - {x: 1.3867111, y: 0.2233305, z: 0}
+  - {x: -1.4133472, y: 0.20635033, z: 0}
+  - {x: -1.4133453, y: 0.40150547, z: 0}
+  m_ShapePathHash: 730917557
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -51938
 --- !u!1 &7596796049853463061
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +158,7 @@ GameObject:
   - component: {fileID: 5010293388573524992}
   - component: {fileID: 1074780560389745507}
   - component: {fileID: 3283229041202157340}
+  - component: {fileID: 4436261452207445192}
   m_Layer: 0
   m_Name: bridesideways1_0
   m_TagString: Untagged
@@ -216,7 +249,7 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.72}
+    pivot: {x: 0.5, y: 0.71428573}
     oldSize: {x: 3, y: 1.75}
     newSize: {x: 3, y: 1.75}
     adaptiveTilingThreshold: 0.5
@@ -229,3 +262,35 @@ PolygonCollider2D:
       - {x: -1.5, y: 0.02125001}
       - {x: 1.46875, y: 0.02125001}
       - {x: 1.46875, y: -0.04124999}
+--- !u!114 &4436261452207445192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7596796049853463061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 6d16aef3000000006d4eec6d7d4a8bd16b349490db26ccbbe7221924
+  m_ShapePath:
+  - {x: -1.4933815, y: -0.026039124, z: 0}
+  - {x: -1.4965, y: 0.3844881, z: 0}
+  - {x: -1.3892231, y: 0.38169956, z: 0}
+  - {x: -1.3927212, y: 0.21018124, z: 0}
+  - {x: 1.2080727, y: 0.21017075, z: 0}
+  - {x: 1.3795776, y: 0.21016693, z: 0}
+  - {x: 1.3795776, y: 0.37118435, z: 0}
+  - {x: 1.4614983, y: 0.36698437, z: 0}
+  - {x: 1.4544945, y: -0.021367073, z: 0}
+  m_ShapePathHash: 1063583727
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -83110

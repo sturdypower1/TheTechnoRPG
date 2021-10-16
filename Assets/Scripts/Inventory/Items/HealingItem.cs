@@ -10,9 +10,13 @@ using UnityEngine;
 public class HealingItem : Item
 {
     public int HealingAmount;
-    public void UseItem()
+    public override void UseItem(GameObject target)
     {
-        Debug.Log("using item");
+        AudioManager.playSound("Heal");
+        Battler battler = target.GetComponent<Battler>();
+        battler.Heal(HealingAmount);
+
+        InventoryManager.instance.RemoveItem(this);
     }
     public override bool GetUseability()
     {

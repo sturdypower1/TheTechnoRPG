@@ -66,7 +66,7 @@ public class Technoblade : MonoBehaviour
             VisualElement bloodBarBase = technoSelectorUI.Q<VisualElement>("blood_bar_base");
             VisualElement bloodBar = technoSelectorUI.Q<VisualElement>("blood_bar");
 
-            healthBar.style.width = healthBarBase.contentRect.width * (stats.stats.health / stats.stats.maxHealth);
+            healthBar.style.width = healthBarBase.contentRect.width * ((float) stats.stats.health / (float)stats.stats.maxHealth);
             healthText.text = "HP: " + stats.stats.health.ToString() + "/" + stats.stats.maxHealth.ToString();
 
             bloodBar.style.width = bloodBarBase.contentRect.width * ((float)stats.stats.points / stats.stats.maxPoints);
