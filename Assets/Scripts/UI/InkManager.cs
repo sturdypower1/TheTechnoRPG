@@ -18,6 +18,10 @@ public class InkManager : MonoBehaviour
         isCurrentlyPlaying = false;
         ContinueStory();
     }
+    /// <summary>
+    /// after text is finished, continue the story. Don't skip line 
+    /// </summary>
+    //bool isContinuingAfter = false;
 
     public TextAsset inkAsset;
     public Story inkStory;
@@ -189,6 +193,7 @@ public class InkManager : MonoBehaviour
         else
         {
             textBoxText.text = "";
+
             isFinishedPage = false;
             StartCoroutine(TextCoroutine(textBoxText));
         }
@@ -286,7 +291,6 @@ public class InkManager : MonoBehaviour
             }
             else if (inkStory.currentTags.Contains("playable"))
             {
-
                 CameraController.instance.ToBattleCamera();
                 PauseManager.instance.Pause();
                 DisableTextboxUI();
@@ -301,6 +305,7 @@ public class InkManager : MonoBehaviour
                 PauseManager.instance.Pause();
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
+                
                 if (inkStory.currentTags.Contains("soundless"))
                 {
                     currentDialogueSound = null;
@@ -330,7 +335,7 @@ public class InkManager : MonoBehaviour
                     instant = false;
                 }
                 UpdateTextBox();
-            
+                //ContinuingAfter = !inkStory.currentTags.Contains("EndLine");
             }
         }
         else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText && !BattleManager.instance.movingToPosition)
