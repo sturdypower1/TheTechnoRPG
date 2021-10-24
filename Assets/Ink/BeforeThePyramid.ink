@@ -1,21 +1,43 @@
 == steveintro
-    ~displayPortrait("Steve", "default")
-    ~playSound("rawr")
-    raaaaaaaauuugh
+    VAR dice_roll = 0
+    ~dice_roll = RANDOM(1, 10)
+    {
+    - dice_roll == 1:
+        ~displayPortrait("Steve", "fish")
+        ~playSound("rawr")
+        raaaaaaaauuugh
+    - else: 
+        ~displayPortrait("Steve", "default")
+        ~playSound("rawr")
+        raaaaaaaauuugh
+    
+    }
     ->DONE
+
 == intro ==
         ~displayPortrait("Technoblade", "default")
         ~setTextSound("technoblade")
         Staaarting the streeeam
         technolate?
-        Look, you can't blame me. I was inches from hitting the go live button, then my door flung open.
-        The super volcano underneath Yellow Stone Park is about to erupt. You gotta believe me.
-        Luckily, the stuation is sorted. No ancient volcano is going to stop Technoblade from streaming Minecraft.
-        Anyways, the note I got last time said to go here for some free fresh cookies.
+        Look, you can't blame me. I was inches from hitting the go live button, then my door flung open
+        The super volcano underneath Yellow Stone Park is about to erupt
+        You gotta believe me
+        Luckily, the stuation is sorted
+        No ancient volcano is going to stop Technoblade from streaming Minecraft
+        Anyways, the note I got last time said to go here for some free fresh cookies
         It's a trap?
         Look it could be a trap and I'm ganged up on by 5 people and I lose one of my three lives.  
-        Or I could get cookies. I think the benefits vastly outweigh the potential downsides.
-        Well Eret's pyramid is just around the corner, I just need to follow the path.
+        Or I could get cookies
+        I think the benefits vastly outweigh the potential downsides
+        And even if this is all a rouse
+        Steve is close by to provide back up
+        ~displayPortrait("Steve", "default")
+        ~playSound("rawr")
+        raaaaaaaauuugh
+        ~displayPortrait("Technoblade", "default")
+        ~setTextSound("technoblade")
+        There isn't anyway this could backfire
+        Well Eret's pyramid is just around the corner, I just need to follow the path
         -> DONE
 == tutorial ==
     =textbox1   
@@ -38,7 +60,9 @@
         This button is for running! However I haven't yet implemented it... But once it is it'll probably be used to run from insignificant battles
         ->DONE
     =techno6
-        Technoblade doesn't die once his hp drops to 0. Instead the blood meter will used for his health instead. He will then only die once his blood reaches 0. 
+        Technoblade doesn't die once his hp drops to 0
+        Instead the blood meter will used for his health instead
+        He will then only die once his blood reaches 0
         ->DONE
 == wilbur ==
         #playable
@@ -102,7 +126,9 @@
         If you want to go so bad, you could just follow me in
         ~displayPortrait("Wilbur", "disgusted")
         ~setTextSound("Wilbur")
-        Its not that man. The problem is that my savior is a pig who has quite literally gone on the record on being an atheist. It just doesn't sit right
+        Its not that man
+        The problem is that my savior is a pig who has quite literally gone on the record on being an atheist
+        It just doesn't sit right
         ~displayPortrait("Technoblade", "default")
         ~setTextSound("technoblade")
         would a cookies help?

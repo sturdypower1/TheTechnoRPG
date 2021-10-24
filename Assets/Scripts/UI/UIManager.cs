@@ -263,6 +263,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     private void SaveBackButton(){
         //TODO: unpause
+        AudioManager.playSound("menuback");
         PauseManager.instance.UnPause();
         InkManager.instance.isCurrentlyDisplaying = false;
         InkManager.instance.isDisplayingChoices = false;
@@ -301,6 +302,7 @@ public class UIManager : MonoBehaviour
     /// activate the pause menu, setting all the character values
     /// </summary>
     private void ActivatePauseMenu(){
+        AudioManager.playSound("menuchange");
         // add pause to the game
         PlayerInputManager.instance.DisableInput();
 
@@ -339,6 +341,7 @@ public class UIManager : MonoBehaviour
     /// start the game
     /// </summary>
     public void StartButton(){
+        AudioManager.playSound("menuselect");
         titleBackground.visible = false;
         overworldOverlay.visible = true;
         // start new game from load and save system
@@ -395,7 +398,7 @@ public class UIManager : MonoBehaviour
     /// quit the application
     /// </summary>
     public void ExitButton(){
-
+        Application.Quit();
     }
     /// <summary>
     /// from the credits menu, return to the tile screen
@@ -410,6 +413,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     /// <param name="saveFileNubmer">the save file number</param>
     public void ContinueGameButton(int saveFileNubmer){
+        AudioManager.playSound("menuselect");
         overworldOverlay.visible = true;
         titleBackground.visible = false;
         fileSelectBackground.visible = false;
@@ -468,6 +472,7 @@ public class UIManager : MonoBehaviour
     /// <param name="equipmentButton"></param>
     /// <param name="equipmentType"></param>
     private void CurrentEquipmentButton(Button equipmentButton, Equipment equipmentType){
+        AudioManager.playSound("menuchange");
         equipmentQuickMenu.visible = true;
         placeQuickMenu(equipmentButton, equipmentQuickMenu);
         switch(equipmentType){
