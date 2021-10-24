@@ -33,12 +33,26 @@ public class Movement : MonoBehaviour
     /// how much faster the character moves when sprinting
     /// </summary>
     public float sprintBoost;
+
+    bool isSprinting = false;
+
+    Vector2 lastDirection = new Vector2(0,0);
+
+    public AudioSource footStepSound;
     // Start is called before the first frame update
     public void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
     }
-    public void move(Vector2 direction){
+
+    public void activateSprint(bool shouldSprint)
+    {
+        isSprinting = shouldSprint;
+        move(lastDirection);
+    }
+    public void move(Vector2 direction)
+    {
+        lastDirection = direction;
         if(Mathf.Abs(direction.x) > Mathf.Abs(direction.y))
         {
             if(direction.x > 0)
@@ -73,7 +87,13 @@ public class Movement : MonoBehaviour
         {
             animator.SetBool("IsWalking", false);
         }
-        rb2D.velocity = direction* speed;
+        rb2D.velocity = isSprinting ? direction * speed + direction *  sprintBoost : direction* speed;
+
+    }
+
+    public void playFootStep()
+    {
+        //footStepSound.Play();
     }
 }
 public enum Direction

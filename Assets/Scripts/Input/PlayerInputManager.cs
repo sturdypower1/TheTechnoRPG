@@ -50,6 +50,7 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
 
     public void OnSprint(InputAction.CallbackContext context)
     {
+        movement.activateSprint(context.ReadValue<float>() > 0);
     }
 
     private void Start()
