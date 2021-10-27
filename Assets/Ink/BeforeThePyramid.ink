@@ -1,3 +1,15 @@
+==sandbag1
+    a big bag of fine sand. Its half eaten.
+    -> DONE
+== burningboat
+    ~displayPortrait("Technoblade", "default")
+    looks like somebody was moving the boat so fast they reenabled the old mechanics
+    -> DONE
+== nametag
+    A nametag is burried into the ground. 
+    The only letters visiable are "sky"
+->DONE
+
 == steveintro
     VAR dice_roll = 0
     ~dice_roll = RANDOM(1, 10)
