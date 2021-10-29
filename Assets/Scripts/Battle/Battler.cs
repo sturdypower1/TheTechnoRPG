@@ -30,6 +30,11 @@ public abstract class Battler : MonoBehaviour
 
     public bool isDown;
 
+    /// <summary>
+    /// whether or not the character is defending
+    /// </summary>
+    public bool isDefending;
+
     public AudioSource damagedSound;
 
     public CharacterStats characterStats;
@@ -42,6 +47,8 @@ public abstract class Battler : MonoBehaviour
     public Transform BattleOffset;
     [HideInInspector]
     public bool isInBattle;
+    bool isUsingSkill;
+
     private void Start()
     {
         characterStats = GetComponent<CharacterStats>();
@@ -75,6 +82,55 @@ public abstract class Battler : MonoBehaviour
         headsUpUI.messages.Add(newMessage);
     }
 
+    public virtual void Defend()
+    {
+        isDefending = true;
+        animator.SetBool("Defending", true);
+
+    }
+
+    IEnumerator WaitCouroutine(float waitTime)
+    {
+        Debug.Log(waitTime);
+        if (isUsingSkill)
+        {
+            yield break;
+        }
+        isUsingSkill = true;
+        
+        maxUseTime = waitTime;
+        useTime = 0;
+        while(useTime < maxUseTime && !isDown)
+        {
+            UpdateMenu();
+            yield return null;
+            // only move if your not in a skill
+            if (!BattleManager.instance.IsWaitingForSkill)
+            {
+                useTime += Time.deltaTime;
+            }
+            
+            
+        }
+        // just ensures that the sound only plays if the player is in battle
+        if (BattleManager.instance.isInBattle)
+        {
+            ReEnableMenu();
+        }
+        isUsingSkill = false;
+    }
+    public void StartWaitCouroutine(float waitTime)
+    {
+        StartCoroutine(WaitCouroutine(waitTime));
+    }
+    public virtual void ReEnableMenu()
+    {
+
+    }
+    public virtual void UpdateMenu()
+    {
+
+    }
     public virtual void AddBleeding(int levelGain, int Limit)
     {
         if(GetComponent<Bleeding>() != null)

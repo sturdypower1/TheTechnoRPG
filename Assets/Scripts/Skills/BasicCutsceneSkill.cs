@@ -19,9 +19,10 @@ public class BasicCutsceneSkill : Skill
     public override void UseSkill(GameObject target, GameObject user)
     {
         Battler battler = user.GetComponent<Battler>();
-        battler.useTime = 0;
-        battler.maxUseTime = useTime;
         battler.target = target;
+        battler.StartWaitCouroutine(useTime);
+        
+        
 
         Battler enemyBattler = target.GetComponent<Battler>();
 

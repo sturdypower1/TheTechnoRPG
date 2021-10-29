@@ -9,8 +9,41 @@ public class TechnobladeBattler : Battler
     public bool isInCarnageMode;
 
     public VisualEffect visualEffect;
+
+    public VisualElement technoSelectorUI;
+
+    public float defendTime;
     private void Update()
     {
+        if (BattleManager.instance.isInBattle)
+        {
+            InventoryManager inventory = InventoryManager.instance;
+            // there are no items, so don't let them go into the menu
+            if (inventory.items.Count == 0)
+            {
+                technoSelectorUI.Q<Button>("items").SetEnabled(false);
+            }
+            else
+            {
+                technoSelectorUI.Q<Button>("items").SetEnabled(true);
+            }
+
+            Label healthText = technoSelectorUI.Q<Label>("health_text");
+            VisualElement healthBarBase = technoSelectorUI.Q<VisualElement>("health_bar_base");
+            VisualElement healthBar = technoSelectorUI.Q<VisualElement>("health_bar");
+
+            Label bloodText = technoSelectorUI.Q<Label>("blood_text");
+            VisualElement bloodBarBase = technoSelectorUI.Q<VisualElement>("blood_bar_base");
+            VisualElement bloodBar = technoSelectorUI.Q<VisualElement>("blood_bar");
+
+            healthBar.style.width = healthBarBase.contentRect.width * ((float)characterStats.stats.health / (float)characterStats.stats.maxHealth);
+            healthText.text = "HP: " + characterStats.stats.health.ToString() + "/" + characterStats.stats.maxHealth.ToString();
+
+            bloodBar.style.width = bloodBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
+            bloodText.text = "Blood: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
+        }
+
+
         // ensures that if he is healed, that he won't be in carnage mode
         if (characterStats.stats.health > 0)
         {
@@ -54,10 +87,15 @@ public class TechnobladeBattler : Battler
         }
 
 
-
+        if (isDefending)
+        {
+            Debug.Log("defended");
+            trueDamage.damageAmount = 0;
+            trueDamage.damageAmount =(int) (((float)trueDamage.damageAmount*  0));
+        }
 
         Label label = new Label();
-        label.text = damage.damageAmount.ToString();
+        label.text = trueDamage.damageAmount.ToString();
         switch (damage.damageType)
         {
             case DamageType.Bleeding:
@@ -81,7 +119,7 @@ public class TechnobladeBattler : Battler
         headsUpUI.messages.Add(newMessage);
         if (characterStats.stats.health > 0)
         {
-            characterStats.stats.health -= damage.damageAmount;
+            characterStats.stats.health -= trueDamage.damageAmount;
             //VFX
             visualEffect.enabled = false;
             isInCarnageMode = false;
@@ -95,7 +133,7 @@ public class TechnobladeBattler : Battler
         }
         else if (characterStats.stats.points > 0)
         {
-            characterStats.stats.points -= damage.damageAmount;
+            characterStats.stats.points -= trueDamage.damageAmount;
         }
         // character should be down
         else if (characterStats.stats.points <= 0)
@@ -116,5 +154,29 @@ public class TechnobladeBattler : Battler
         }
 
 
+    }
+
+    public override void ReEnableMenu()
+    {
+        isDefending = false;
+        base.ReEnableMenu();
+       
+
+        AudioManager.playSound("menuavailable");
+        technoSelectorUI.SetEnabled(true);
+    }
+    public override void UpdateMenu()
+    {
+        base.UpdateMenu();
+        VisualElement useBar = technoSelectorUI.Q<VisualElement>("use_bar");
+
+        useBar.style.width = technoSelectorUI.contentRect.width * ((useTime) / maxUseTime);
+    }
+
+    public override void Defend()
+    {
+        base.Defend();
+        isDefending = true;
+        StartWaitCouroutine(defendTime);
     }
 }

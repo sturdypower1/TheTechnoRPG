@@ -212,8 +212,8 @@ MonoBehaviour:
     characterName: Zombie
     attack: 0
     defence: 0
-    maxHealth: 20
-    health: 20
+    maxHealth: 15
+    health: 15
     maxPoints: 0
     points: 0
   equipedWeapon: {fileID: 11400000, guid: defe2cdb3ed65a548a51bc932e82be70, type: 2}
@@ -241,6 +241,7 @@ MonoBehaviour:
   RightAnimationName: ZombieWalkRight
   speed: 1
   sprintBoost: 0
+  footStepSound: {fileID: 0}
 --- !u!50 &1740613084597167320
 Rigidbody2D:
   serializedVersion: 4

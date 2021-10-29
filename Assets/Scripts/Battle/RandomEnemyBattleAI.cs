@@ -32,6 +32,7 @@ public class RandomEnemyBattleAI : MonoBehaviour
                         skill.UseSkill(BattleManager.instance.Players[Target], this.gameObject);
                         battler.useTime = 0;
                         float temp = Random.Range(1, 2);
+
                         battler.maxUseTime = skill.useTime * temp;
                     }
                 }

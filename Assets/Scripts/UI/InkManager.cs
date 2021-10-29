@@ -100,6 +100,10 @@ public class InkManager : MonoBehaviour
             inkStory.BindExternalFunction("GetNextBattleItem", () => {
                 GetNextBattleItem();
             });
+        inkStory.BindExternalFunction("healPlayers", () =>
+        {
+            PlayerPartyManager.instance.HealPlayers();
+        });
         
     }
 
@@ -212,7 +216,7 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="startPoint">the point in the ink asset to read the text from</param>
     public void StartCutScene(CutsceneData cutsceneData){
-        if (!isCurrentlyDisplaying)
+        if (!isCurrentlyDisplaying || isDisplayingChoices)
         {
             DisplayPortriat("empty", "default");
             currentCutsceneData = cutsceneData;

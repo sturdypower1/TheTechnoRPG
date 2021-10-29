@@ -19,6 +19,7 @@ EXTERNAL GetNextBattleItem()
 EXTERNAL displayPortrait(characterName, feeling)
 EXTERNAL setTextSound(soundName)
 EXTERNAL playSong(songName)
+EXTERNAL healPlayers()
 
 == aintro ==
     =tree
@@ -32,18 +33,7 @@ EXTERNAL playSong(songName)
     And will Technoblade get his cookies
     I hope you enjoyed what little I had to show you and that you will one day come back to play a more finished game
     -> END
-== thebell ==
-    = thefirstbell
-        ~playSound("sellouttimer")
-        ~displayPortrait("Technoblade", "default")
-        ~setTextSound("technoblade")
-        #unskipable
-        #slow
-        . . .
-        ~setTextSound("bell")
-        #technoblade
-        subscribe to Technoblade!!!!!
-        -> DONE
+
 === function updateLevelInfo(name, SkillName, AttackBonus, DefenceBonus, PointBonus, HealthBonus)
      ~ characterName = name
      ~ healthBonus = HealthBonus

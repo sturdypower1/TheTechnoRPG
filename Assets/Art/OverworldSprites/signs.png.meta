@@ -113,15 +113,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: signs_0
+      name: signs_5
       rect:
         serializedVersion: 2
-        x: 0
+        x: 170
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -146,7 +146,7 @@ TextureImporter:
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -163,15 +163,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: signs_2
+      name: signs_3
       rect:
         serializedVersion: 2
-        x: 68
+        x: 102
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -188,15 +188,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: signs_3
+      name: signs_0
       rect:
         serializedVersion: 2
-        x: 102
+        x: 0
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -213,15 +213,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: signs_4
+      name: signs_6
       rect:
         serializedVersion: 2
-        x: 136
+        x: 204
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -238,15 +238,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: signs_5
+      name: signs_4
       rect:
         serializedVersion: 2
-        x: 170
+        x: 136
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -263,15 +263,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: signs_6
+      name: signs_2
       rect:
         serializedVersion: 2
-        x: 204
+        x: 68
         y: 0
         width: 34
         height: 36
       alignment: 9
-      pivot: {x: 0.5, y: 0.11111111}
+      pivot: {x: 0.5, y: 0.1111111}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape:
@@ -287,6 +287,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: signs_7
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 0
+        width: 34
+        height: 36
+      alignment: 9
+      pivot: {x: 0.5, y: 0.11111111}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef436c4c1e161db4ca0db2dda9f71a53
+      internalID: 846727441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -298,13 +319,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      signs_5: -520509936069157319
+      signs_5: 1014312589259936113
       signs_1: 7774597396905839976
-      signs_3: -6303612653606922692
-      signs_0: 1014312589259936113
-      signs_6: 570369605437288408
-      signs_4: -3183823387430515487
-      signs_2: 7143536599680955399
+      signs_3: 7143536599680955399
+      signs_0: -6303612653606922692
+      signs_6: -3183823387430515487
+      signs_7: 846727441
+      signs_4: -520509936069157319
+      signs_2: 570369605437288408
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -21,7 +21,7 @@ public class SaveInteractive : Interactable
             ringButton.text = "ring the bell";
             //ringButton.focusable = true;
             // when the ring button is pressed, display a cutscene to ring the bell
-            ringButton.clicked += () => { Debug.Log("ello"); InkManager.instance.StartCutScene(ringBellCutscene); };
+            ringButton.clicked += () => { InkManager.instance.StartCutScene(ringBellCutscene); };
 
             Button saveButton = new Button();
             saveButton.AddToClassList("player_choice");

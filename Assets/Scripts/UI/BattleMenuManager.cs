@@ -11,6 +11,8 @@ public class BattleMenuManager : MonoBehaviour
 {
     public static BattleMenuManager instance;
     Action cachedHandler;
+    Action technoDefendCachedHandler;
+
     public event EventHandler OnContinue;
     [HideInInspector]
     public VisualElement battleUI;
@@ -275,6 +277,18 @@ public class BattleMenuManager : MonoBehaviour
         skillSelector.visible = false;
         battleUI.visible = true;
     }
+
+
+    public void DefendButton(Battler defender)
+    {
+        if(defender is TechnobladeBattler)
+        {
+            TechnobladeBattler technoBattler = defender as TechnobladeBattler;
+            technoBattler.technoSelectorUI.SetEnabled(false);
+            if (technoBattler.isInCarnageMode) return;
+        }
+        defender.Defend();
+    }
     /// <summary>
     /// use the first skill in the list of the character's skills to target an enemy
     /// </summary>
@@ -378,7 +392,14 @@ public class BattleMenuManager : MonoBehaviour
             losingBackground = root.Q<VisualElement>("losing_screen");
 
         technobladeSelectorUI = battleUI.Q<VisualElement>("character1");
-        Technoblade.instance.technoSelectorUI = technobladeSelectorUI;
+        TechnobladeBattler technoBattler = Technoblade.instance.gameObject.GetComponent<TechnobladeBattler>();
+        technoBattler.technoSelectorUI = technobladeSelectorUI;
+
+        technoDefendCachedHandler = null;
+        technoDefendCachedHandler += () => DefendButton(technoBattler);
+
+        technobladeSelectorUI.Q<Button>("defend").clicked -= technoDefendCachedHandler;
+        technobladeSelectorUI.Q<Button>("defend").clicked += technoDefendCachedHandler;
 
         battleUI.visible = true;
         battleUI.Focus();

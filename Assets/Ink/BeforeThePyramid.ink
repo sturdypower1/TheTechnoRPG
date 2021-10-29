@@ -1,3 +1,27 @@
+
+
+== parkedboats
+    A set of boats that were meticulous for decoration 
+    ->DONE
+== partysign
+    Welcome to Eret's birthday party!
+    ->DONE
+== thefirstbell
+    ~playSound("sellouttimer")
+    ~displayPortrait("Technoblade", "default")
+    ~setTextSound("technoblade")
+    #unskipable
+    #slow
+    . . .
+    ~setTextSound("bell")
+    #technoblade
+    subscribe to Technoblade!!!!!
+    #instant
+    ~playSound("Heal")
+    ~healPlayers()
+    ~displayPortrait("empty", "default")
+    Technoblade was somehow healed by this
+    -> DONE
 ==sandbag1
     a big bag of fine sand. Its half eaten.
     -> DONE
@@ -52,15 +76,15 @@
         Well Eret's pyramid is just around the corner, I just need to follow the path
         -> DONE
 == tutorial ==
-    =textbox1   
-        works how you'd think a text box would work. Just remember that you can skip to the end of dialogue by clicking with your mouse.
-        Also if your afraid of losing progress you can save at any bell!
+    =textbox1
+    
+    {TURNS_SINCE(-> thefirstbell) > 0:<color=red>ONE OF US! ONE OF US! ONE OF US! ONE OF US! ONE OF US!</color>|<color=red>works how you'd think a text box would work. Just remember that you can skip to the end of dialogue by clicking with your mouse.</color>} 
         ->DONE
     =techno1
-        This button is for a basic attack! Dealing a small amount of damage and inflicting the bleeding status effect
+        <color=red>This button is for a basic attack! Dealing a small amount of damage and inflicting the bleeding status effect</color>
         -> DONE
     =techno2
-        This button is for your skills! Use blood to perform special attacks on your opponents
+        <color=red>This button is for your skills! Use blood to perform special attacks on your opponents</color>
         ->DONE
     =techno3
         This indicates that an enemy is affected by the bleeding status effect. Every so often they will take bleeding damage accorrding to how many times they've been afflitcted with the bleeding status effect. All damage done from bleeding is put into Technoblade blood meter, allowing him to perform his skills.
@@ -72,10 +96,22 @@
         This button is for running! However I haven't yet implemented it... But once it is it'll probably be used to run from insignificant battles
         ->DONE
     =techno6
-        Technoblade doesn't die once his hp drops to 0
+        <color=red>Technoblade doesn't die once his hp drops to 0</color>
         Instead the blood meter will used for his health instead
         He will then only die once his blood reaches 0
         ->DONE
+    =E1
+        ~displayPortrait("Technoblade", "default")
+        Chat's actually being useful for a change I'm even learning things I didn't know about myself
+        ~displayPortrait("empty", "default")
+        <color=red>E</color>
+        ~displayPortrait("Technoblade", "default")
+        . . . 
+        ~displayPortrait("empty", "default")
+        <color=red>EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE</color>
+        ~displayPortrait("Technoblade", "default")
+        I regret saying anything positive about the chat
+    ->DONE
 == wilbur ==
         #playable
         0
