@@ -21,7 +21,7 @@ public class Technoblade : MonoBehaviour
     private void Awake() {
         if(instance == null || instance == this){
             instance = this;
-            PlayerPartyManager.instance.AddPlayer("Technoblade");
+            
             DontDestroyOnLoad(this.gameObject);
         }
         else{
@@ -30,8 +30,8 @@ public class Technoblade : MonoBehaviour
     }
     private void Start()
     {
-        
 
+        PlayerPartyManager.instance.AddPlayer("Technoblade");
         SaveAndLoadManager.instance.OnStartSave += Save;
         SaveAndLoadManager.instance.OnReLoadSave += Load;
         

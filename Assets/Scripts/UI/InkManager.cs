@@ -29,6 +29,8 @@ public class InkManager : MonoBehaviour
     public bool isDisplayingChoices;
     public bool isScrollingText;
 
+    public Action continueAction;
+
     public CharacterPortraitReference[] characterPortraits;
 
     CinemachineVirtualCamera overoworldCinemachine;
@@ -225,8 +227,16 @@ public class InkManager : MonoBehaviour
             UIManager.instance.overworldOverlay.visible = false;
 
             // ensures that if it was added, it won't be done twice
-            currentCutsceneData.director.stopped -= tempContinueStory;
-            currentCutsceneData.director.stopped += tempContinueStory;
+            if (currentCutsceneData.director == null)
+            {
+                // set up default
+            }
+            else
+            {
+                currentCutsceneData.director.stopped -= tempContinueStory;
+                currentCutsceneData.director.stopped += tempContinueStory;
+            }
+            
 
             inkStory.ChoosePathString(cutsceneData.inkPath);
             ContinueStory();

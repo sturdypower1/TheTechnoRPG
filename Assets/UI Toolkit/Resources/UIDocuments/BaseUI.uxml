@@ -45,6 +45,10 @@
             <ui:Label text="Fonts:  ELFBOYCLASSIC and Press Start 2P" display-tooltip-when-elided="true" style="-unity-font: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7&apos;);" />
             <ui:Label text="Art&#10;" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0); font-size: 30px; -unity-text-align: upper-center;" />
             <ui:Label text="Suzuki.artz: Wilbursoot character portraits&#10;" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0);" />
+            <ui:VisualElement style="flex-direction: row;">
+                <ui:VisualElement style="width: 48px; height: 48px; background-image: url(&apos;project://database/Assets/Art/Icons/beeicon.png?fileID=2800000&amp;guid=0cc09086d4b794343829c90b87031f32&amp;type=3#beeicon&apos;);" />
+                <ui:Label text="Beeboy Storyels: STEVE and Eret character portraits&#10;" display-tooltip-when-elided="true" style="color: rgb(0, 0, 0);" />
+            </ui:VisualElement>
         </ui:ScrollView>
     </ui:VisualElement>
     <ui:VisualElement name="file_select" style="position: absolute; width: 100%; height: 100%; visibility: hidden; background-color: rgb(60, 60, 60); align-items: flex-start;">
@@ -301,6 +305,6 @@
                 <ui:Label text="&#10;" display-tooltip-when-elided="true" name="item_desc" style="width: 601px; font-size: 20px; left: 35px; flex-wrap: wrap; white-space: normal;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:Label text="Label" display-tooltip-when-elided="true" name="battle_text" class="selector" style="position: absolute; bottom: 0; width: 100%; height: 30%; background-color: rgb(63, 63, 63); visibility: hidden;" />
+        <ui:Label text="Label" display-tooltip-when-elided="true" name="battle_text" class="selector" style="position: absolute; bottom: 0; width: 100%; height: 30%; background-color: rgb(63, 63, 63); visibility: hidden; font-size: 30px; -unity-text-align: upper-center; white-space: normal;" />
     </ui:VisualElement>
 </ui:UXML>

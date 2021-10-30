@@ -91,7 +91,6 @@ public abstract class Battler : MonoBehaviour
 
     IEnumerator WaitCouroutine(float waitTime)
     {
-        Debug.Log(waitTime);
         if (isUsingSkill)
         {
             yield break;

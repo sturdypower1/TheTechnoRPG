@@ -10,6 +10,8 @@ public class InventoryManager : MonoBehaviour
     public List<Weapon> weapons = new List<Weapon>();
     public List<Armor> armors = new List<Armor>();
     public List<Item> items = new List<Item>();
+    // currently useless
+    public int gold;
     private void Awake()
     {
         if(instance == null)

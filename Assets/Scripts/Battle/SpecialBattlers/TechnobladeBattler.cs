@@ -89,9 +89,8 @@ public class TechnobladeBattler : Battler
 
         if (isDefending)
         {
-            Debug.Log("defended");
             trueDamage.damageAmount = 0;
-            trueDamage.damageAmount =(int) (((float)trueDamage.damageAmount*  0));
+            trueDamage.damageAmount =(int) (((float)trueDamage.damageAmount*  .5));
         }
 
         Label label = new Label();
@@ -158,6 +157,7 @@ public class TechnobladeBattler : Battler
 
     public override void ReEnableMenu()
     {
+        animator.SetBool("Defending", false);
         isDefending = false;
         base.ReEnableMenu();
        

@@ -21,19 +21,22 @@ EXTERNAL setTextSound(soundName)
 EXTERNAL playSong(songName)
 EXTERNAL healPlayers()
 
+== defaultbell
+hearing the sell out time go off, Technoblade rings the bell
+~playSound("Heal")
+~healPlayers()
+#instant
+Through the power of subscribers, The party was healed
+->DONE
 == aintro ==
     =tree
     it's just a tree
-    -> END
+    -> DONE
 == devdoor ==
     Sadly this is the current end of this story
-    Quite pitful isn't it...
-    What's is inside the pyramid
-    Will Wilbursoot form a cult that last more than a one episode
-    And will Technoblade get his cookies
-    I hope you enjoyed what little I had to show you and that you will one day come back to play a more finished game
-    -> END
-
+    I have alot of the work for the next level already done, I just need to get a few things done
+    Hopefully I get it done soon so you can enjoy a much more finished game
+    -> DONE
 === function updateLevelInfo(name, SkillName, AttackBonus, DefenceBonus, PointBonus, HealthBonus)
      ~ characterName = name
      ~ healthBonus = HealthBonus

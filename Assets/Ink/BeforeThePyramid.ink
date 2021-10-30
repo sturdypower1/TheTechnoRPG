@@ -4,7 +4,12 @@
     A set of boats that were meticulous for decoration 
     ->DONE
 == partysign
-    Welcome to Eret's birthday party!
+    <color=red>Welcome to </color> <color=orange>Eret's birthday party!</color>
+    <color=yellow>Follow the path <color=green>to the pyramid!</color> 
+    <color=blue>I'll open the doors</color> <color=purple>around 6:00pm</color> 
+    ~displayPortrait("Technoblade", "default")
+    Seems like Erets having a party in about an hour
+    I'd be worried about social interaction, but the note seems completely irrelevant to this
     ->DONE
 == thefirstbell
     ~playSound("sellouttimer")
@@ -36,7 +41,7 @@
 
 == steveintro
     VAR dice_roll = 0
-    ~dice_roll = RANDOM(1, 10)
+    ~dice_roll = RANDOM(1, 5)
     {
     - dice_roll == 1:
         ~displayPortrait("Steve", "fish")
@@ -78,7 +83,7 @@
 == tutorial ==
     =textbox1
     
-    {TURNS_SINCE(-> thefirstbell) > 0:<color=red>ONE OF US! ONE OF US! ONE OF US! ONE OF US! ONE OF US!</color>|<color=red>works how you'd think a text box would work. Just remember that you can skip to the end of dialogue by clicking with your mouse.</color>} 
+    {TURNS_SINCE(-> thefirstbell) > 0:<color=red>ONE OF US! ONE OF US! ONE OF US! ONE OF US! ONE OF US!</color>|<color=red>Use a bell to save progress or heal your party!</color>} 
         ->DONE
     =techno1
         <color=red>This button is for a basic attack! Dealing a small amount of damage and inflicting the bleeding status effect</color>
@@ -87,18 +92,22 @@
         <color=red>This button is for your skills! Use blood to perform special attacks on your opponents</color>
         ->DONE
     =techno3
-        This indicates that an enemy is affected by the bleeding status effect. Every so often they will take bleeding damage accorrding to how many times they've been afflitcted with the bleeding status effect. All damage done from bleeding is put into Technoblade blood meter, allowing him to perform his skills.
+        <color=red>This indicates that an enemy is affected by the bleeding status effect.</color>
+            <color=red>Every so often they will take bleeding damage accorrding to how many times they've been afflitcted with the bleeding status effect.</color> 
+            <color=red>All damage done from bleeding is put into Technoblade blood meter, allowing him to perform his skills.</color>
         ->DONE
     =techno4
-        This button is for items! Using a item will typically end up healing Technoblade.
+        <color=red>This button is for items! Using a item will typically end up healing Technoblade.
         ->DONE
     =techno5
-        This button is for running! However I haven't yet implemented it... But once it is it'll probably be used to run from insignificant battles
+        <color=red>This button is for defending! 
+        <color=red>Try and guess when an enemy attacks to cut the damage in half!
         ->DONE
     =techno6
         <color=red>Technoblade doesn't die once his hp drops to 0</color>
-        Instead the blood meter will used for his health instead
-        He will then only die once his blood reaches 0
+        <color=red>Instead he will enter carnage mode and the blood meter will used for his health instead
+        <color=red>While In carnage mode all damage is doubled, but Technoblade can't defend.
+        <color=red>He will then only die once his blood reaches 0
         ->DONE
     =E1
         ~displayPortrait("Technoblade", "default")
@@ -182,5 +191,5 @@
         would a cookies help?
         ~displayPortrait("Wilbur", "disgusted")
         ~setTextSound("Wilbur")
-        you've ruined my appetite, JUST GO!
+        I already ate about a minute ago, JUST GO!
         -> DONE
