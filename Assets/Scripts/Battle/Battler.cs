@@ -22,8 +22,10 @@ public abstract class Battler : MonoBehaviour
 
     public HeadsUpUI headsUpUI;
     [HideInInspector]
-
+    
     public Vector3 oldPosition;
+
+    public Vector3 battlePosition;
 
     public AnimationSaveData animationSaveData;
     [HideInInspector]

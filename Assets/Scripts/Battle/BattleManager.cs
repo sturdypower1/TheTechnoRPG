@@ -348,6 +348,10 @@ public class BattleManager : MonoBehaviour
 
 
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / Players.Count)) - cam.pixelHeight / (Players.Count * 2), 0));
+            tempPos.z = 0;
+
+            battler.battlePosition = tempPos;
+
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
             i++;
         }

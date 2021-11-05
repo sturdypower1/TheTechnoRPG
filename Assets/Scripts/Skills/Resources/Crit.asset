@@ -20,4 +20,5 @@ MonoBehaviour:
   userTracks:
   - Animation
   - Damage
+  - move
   targetTracks: []
