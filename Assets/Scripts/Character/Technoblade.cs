@@ -37,6 +37,7 @@ public class Technoblade : MonoBehaviour
         
         UIManager.instance.OnTitleReturn += DestroyTechno;
 
+        
         levelUpController = this.gameObject.GetComponent<LevelUpController>();
         animator = this.gameObject.GetComponent<Animator>();
         battler = this.gameObject.GetComponent<Battler>();
@@ -85,7 +86,7 @@ public class Technoblade : MonoBehaviour
             characterStats = new CharacterStatsSaveData {stats = stats.stats, 
                 armorName = stats.equipedArmor.name, 
                 weaponName = stats.equipedWeapon.name, 
-                skillNames = skillNames 
+                skillNames = skillNames
             }, 
             animationSave = animationSaveData, 
             transform = transform.position,

@@ -45,6 +45,10 @@ public class PlayerPartyManager : MonoBehaviour
         {
             currentPlayer = Technoblade.instance.gameObject;
         }
+        if(playerName == "Steve")
+        {
+            currentPlayer = STEVE.instance.gameObject;
+        }
         // adds player if there is one and if it does already have that player
         if(currentPlayer != null && !players.Contains(currentPlayer))
         {
@@ -53,7 +57,6 @@ public class PlayerPartyManager : MonoBehaviour
             {
                 Leader = currentPlayer;
             }
-            Leader = currentPlayer;
         }
     }
 
@@ -64,6 +67,13 @@ public class PlayerPartyManager : MonoBehaviour
             if (players.Contains(Technoblade.instance.gameObject))
             {
                 players.Remove(Technoblade.instance.gameObject);
+            }
+        }
+        if(playerName == "Steve")
+        {
+            if (players.Contains(STEVE.instance.gameObject))
+            {
+                players.Remove(STEVE.instance.gameObject);
             }
         }
     }

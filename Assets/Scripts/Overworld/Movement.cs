@@ -36,7 +36,7 @@ public class Movement : MonoBehaviour
 
     bool isSprinting = false;
 
-    Vector2 lastDirection = new Vector2(0,0);
+    public Vector2 lastDirection = new Vector2(0,0);
 
     public AudioSource footStepSound;
     // Start is called before the first frame update

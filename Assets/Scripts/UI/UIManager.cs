@@ -302,6 +302,7 @@ public class UIManager : MonoBehaviour
     /// activate the pause menu, setting all the character values
     /// </summary>
     private void ActivatePauseMenu(){
+        PauseManager.instance.Pause();
         AudioManager.playSound("menuchange");
         // add pause to the game
         PlayerInputManager.instance.DisableInput();
@@ -756,6 +757,7 @@ public class UIManager : MonoBehaviour
     private void PauseBackButton(){
         overworldOverlay.visible = true;
         RestartPauseMenu();
+        PauseManager.instance.UnPause();
 
         AudioManager.playSound("menuback");
         //Todo unpause game

@@ -22,6 +22,7 @@ public class MoveToTargetMixer : PlayableBehaviour
                 MoveToTargetBehaviour input = inputPlayable.GetBehaviour();
 
                 transform.position = Vector3.Lerp(transform.gameObject.GetComponent<Battler>().battlePosition, transform.gameObject.GetComponent<Battler>().target.transform.position + input.offset, inputWeight);
+
             }
         }
     }
