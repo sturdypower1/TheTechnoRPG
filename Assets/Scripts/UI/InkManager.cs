@@ -312,6 +312,19 @@ public class InkManager : MonoBehaviour
                 isCurrentlyPlaying = true ;
 
                 currentCutsceneData.director.playableAsset = currentCutsceneData.playables[int.Parse(inkStory.currentText)];
+
+                foreach (var output in currentCutsceneData.director.playableAsset.outputs)
+                {
+                    // identify the tracks that you want to bind
+                    if (output.streamName.StartsWith("Techno"))
+                    {
+                        // go.GetComponent<> may be necessary if the track uses a component and
+                        // not a game object
+                        currentCutsceneData.director.SetGenericBinding(output.sourceObject,  Technoblade.instance.gameObject.GetComponent(output.outputTargetType));
+                    }
+                    
+                }
+
                 currentCutsceneData.director.Play();
             }
             else

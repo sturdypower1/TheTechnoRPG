@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 /// </summary>
 public class HeadsUpUI : MonoBehaviour
 {
+    public bool disableHealthBar = true;
     public static VisualTreeAsset overHeadUITemplate;
 
     public TemplateContainer ui;
@@ -48,7 +49,7 @@ public class HeadsUpUI : MonoBehaviour
             }
 
             VisualElement healthbarBase = ui.Q<VisualElement>("healthbar_base");
-            //healthbarBase.visible = true;
+            healthbarBase.visible = disableHealthBar;
             VisualElement healthbar = healthbarBase.Q<VisualElement>("healthbar");
             healthbar.style.width = healthbarBase.contentRect.width * ((float)characaterStats.stats.health / characaterStats.stats.maxHealth);
 

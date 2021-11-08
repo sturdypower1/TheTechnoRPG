@@ -142,13 +142,13 @@ public class BattleMenuManager : MonoBehaviour
         battleUI.visible = false;
         UIManager.instance.ResetFocus();
         List<Button> skillButtons = new List<Button>();
-        CharacterStats technoStats = Technoblade.instance.stats;
+        CharacterStats stats = BattleManager.instance.Players[characterNumber].GetComponent<CharacterStats>();
         int i = 1;
         ScrollView skillList = skillSelector.Q<ScrollView>("skill_list");
         skillList.Clear();
-        while (i < technoStats.skills.Count)
+        while (i < stats.skills.Count)
         {
-            Skill skill = technoStats.skills[i];
+            Skill skill = stats.skills[i];
             int z = i;
             Button skillButton = new Button();
             skillButton.focusable = true;
@@ -394,6 +394,15 @@ public class BattleMenuManager : MonoBehaviour
         technobladeSelectorUI = battleUI.Q<VisualElement>("character1");
         TechnobladeBattler technoBattler = Technoblade.instance.gameObject.GetComponent<TechnobladeBattler>();
         technoBattler.technoSelectorUI = technobladeSelectorUI;
+
+
+        PlayerPartyManager.instance.AddPlayer("Steve");
+        if (STEVE.instance != null && PlayerPartyManager.instance.HasPlayer(STEVE.instance.gameObject))
+        {
+            STEVEBattler steveBattler = STEVE.instance.GetComponent<STEVEBattler>();
+            steveBattler.SteveSelectorUI = battleUI.Q<VisualElement>("character2");
+        }
+        
 
         technoDefendCachedHandler = null;
         technoDefendCachedHandler += () => DefendButton(technoBattler);

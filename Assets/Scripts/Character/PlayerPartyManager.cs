@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerPartyManager : MonoBehaviour
 {
     public static PlayerPartyManager instance;
-    List<GameObject> players= new List<GameObject>();
+    public List<GameObject> players= new List<GameObject>();
     GameObject Leader;
 
     private void Awake()
@@ -43,21 +43,25 @@ public class PlayerPartyManager : MonoBehaviour
 
         if(playerName == "Technoblade")
         {
+            Leader = Technoblade.instance.gameObject;
+            players.Insert(0, Technoblade.instance.gameObject);
             currentPlayer = Technoblade.instance.gameObject;
         }
-        if(playerName == "Steve")
+        if(playerName == "Steve" && STEVE.instance != null)
         {
+            players.Insert((players.Count == 0 ? 0 : 1) , STEVE.instance.gameObject);
             currentPlayer = STEVE.instance.gameObject;
         }
         // adds player if there is one and if it does already have that player
-        if(currentPlayer != null && !players.Contains(currentPlayer))
+        /*if(currentPlayer != null && !players.Contains(currentPlayer))
         {
+            
             players.Add(currentPlayer);
             if(players.Count == 0)
             {
                 Leader = currentPlayer;
             }
-        }
+        }*/
     }
 
     public void RemovePlayer(string playerName)
@@ -76,5 +80,10 @@ public class PlayerPartyManager : MonoBehaviour
                 players.Remove(STEVE.instance.gameObject);
             }
         }
+    }
+
+    public bool HasPlayer(GameObject player)
+    {
+        return players.Contains(player);
     }
 }

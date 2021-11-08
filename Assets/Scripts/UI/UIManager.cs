@@ -192,6 +192,12 @@ public class UIManager : MonoBehaviour
             technobladeBattleUI.Q<Button>("skills").clicked += () => BattleMenuManager.instance.SkillsButton(0);
             technobladeBattleUI.Q<Button>("items").clicked += () => BattleMenuManager.instance.ItemsButton(0);
 
+            // should be steve
+            VisualElement steveBattleUI = battleUI.Q<VisualElement>("character2");
+            steveBattleUI.Q<Button>("fight").clicked += () => BattleMenuManager.instance.AttackButton(1);
+            steveBattleUI.Q<Button>("skills").clicked += () => BattleMenuManager.instance.SkillsButton(1);
+            steveBattleUI.Q<Button>("items").clicked += () => BattleMenuManager.instance.ItemsButton(1);
+
             battleBackground.Q<Button>("selector_back_button").clicked += BattleMenuManager.instance.EnemySelectBack;
             battleBackground.Q<Button>("skills_back_button").clicked += BattleMenuManager.instance.SkillsBackButton;
             battleBackground.Q<Button>("items_back_button").clicked += BattleMenuManager.instance.ItemsBackButton;

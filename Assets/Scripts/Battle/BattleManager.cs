@@ -272,8 +272,8 @@ public class BattleManager : MonoBehaviour
     }
     public void StartBattle()
     {
+        if(BattleMusic != null) BattleMusic.Play();
 
-        BattleMusic.Play();
         isInBattle = true;
         
 
@@ -316,7 +316,7 @@ public class BattleManager : MonoBehaviour
         CameraController.instance.ToBattleCamera();
 
         Players.Clear();
-        Players.Add(Technoblade.instance.gameObject);
+        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject);
         int i = 0;
 
         // need to start trasition of the new camera
@@ -346,11 +346,13 @@ public class BattleManager : MonoBehaviour
                 normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
             };
 
-
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (cam.pixelHeight / Players.Count)) - cam.pixelHeight / (Players.Count * 2), 0));
+            float spawnzone = cam.scaledPixelHeight * .7f;
+            float startingIncrement = cam.scaledPixelHeight * .1f;
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (spawnzone / (Players.Count + 1)) + startingIncrement), 0));
             tempPos.z = 0;
 
             battler.battlePosition = tempPos;
+
 
             StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
             i++;

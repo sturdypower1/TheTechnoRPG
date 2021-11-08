@@ -42,6 +42,7 @@ public class FollowPlayer : MonoBehaviour
     {
         if (PauseManager.isPaused)
         {
+            animator.SetBool("IsWalking", false);
             rb.velocity = Vector2.zero;
             aiPath.enabled = false;
             return;

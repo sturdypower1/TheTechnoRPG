@@ -15,16 +15,15 @@ public class STEVE : MonoBehaviour
     [HideInInspector]
     public Animator animator;
 
-    public FollowPlayer follow;
-
     [HideInInspector]
     public LevelUpController levelUpController;
 
     // Start is called before the first frame update
     private void Awake()
     {
-        if(instance != null)
+        if(instance == null)
         {
+            Debug.Log("set");
             instance = this;
 
             DontDestroyOnLoad(this.gameObject);
@@ -36,15 +35,18 @@ public class STEVE : MonoBehaviour
     }
     void Start()
     {
-        SaveAndLoadManager.instance.OnStartSave += Save;
-        SaveAndLoadManager.instance.OnReLoadSave += Load;
+        //SaveAndLoadManager.instance.OnStartSave += Save;
+        //SaveAndLoadManager.instance.OnReLoadSave += Load;
 
-        follow = this.gameObject.GetComponent<FollowPlayer>();
         levelUpController = this.gameObject.GetComponent<LevelUpController>();
         animator = this.gameObject.GetComponent<Animator>();
         battler = this.gameObject.GetComponent<Battler>();
         stats = this.gameObject.GetComponent<CharacterStats>();
-        Load();
+        //Load();
+        if (isInTeam)
+        {
+            PlayerPartyManager.instance.AddPlayer("Steve");
+        }
     }
 
     // Update is called once per frame

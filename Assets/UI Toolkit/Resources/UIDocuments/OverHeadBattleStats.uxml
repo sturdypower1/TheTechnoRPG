@@ -1,8 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/Resources/StyleSheet/HeadsUpStyleSheet.uss?fileID=7433441132597879392&amp;guid=3246c17e239fe86418ab0330146693f2&amp;type=3#HeadsUpStyleSheet" />
     <ui:VisualElement name="base" style="width: 106px; height: 160px; position: absolute; left: 222px; bottom: 248px;">
-        <ui:VisualElement name="healthbar_base" style="flex-grow: 1; background-color: rgb(132, 12, 12);">
-            <ui:VisualElement name="healthbar" style="flex-grow: 1; width: 100%; background-color: rgb(45, 188, 80);" />
+        <ui:VisualElement name="healthbar_base" style="flex-grow: 1; background-color: rgba(132, 12, 12, 0.78);">
+            <ui:VisualElement name="healthbar" style="flex-grow: 1; width: 100%; background-color: rgba(45, 188, 80, 0.78);" />
         </ui:VisualElement>
         <ui:VisualElement name="status_icons" style="flex-grow: 1; flex-direction: row; align-items: center; height: 20px;">
             <ui:VisualElement name="bleeding_icon" style="width: 30px; height: 30px; background-image: url(&apos;project://database/Assets/Art/Icons/BleedingIcon.png?fileID=21300000&amp;guid=87c2f7c0b3b3062418b5d253d6e165a1&amp;type=3#BleedingIcon&apos;); visibility: hidden;" />

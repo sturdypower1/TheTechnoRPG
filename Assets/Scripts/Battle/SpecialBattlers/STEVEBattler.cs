@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class STEVEBattler : Battler
 {
     public float defendTime;
-    VisualElement SteveSelectorUI;
+    public VisualElement SteveSelectorUI;
     private void Update()
     {
         if (BattleManager.instance.isInBattle)

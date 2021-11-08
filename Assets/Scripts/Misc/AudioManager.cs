@@ -189,7 +189,11 @@ public class AudioManager : MonoBehaviour
     }
     public static void PauseCurrentSong()
     {
-        currentSong.audioSource.Pause();
+        if(currentSong != null)
+        {
+            currentSong.audioSource.Pause();
+        }
+        
     }
     public static void stopCurrentSong(){
         if(currentSong != null){

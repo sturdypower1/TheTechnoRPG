@@ -288,10 +288,10 @@
                         <ui:VisualElement name="health_bar" style="flex-grow: 1; background-color: rgb(62, 209, 68); width: 46%; flex-shrink: 0;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="blood" style="flex-grow: 1; height: 30px; width: 100%;">
-                    <ui:Label text="MP: 50/100" display-tooltip-when-elided="true" name="blood_text" class="text" style="font-size: 12px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-                    <ui:VisualElement name="blood_bar_base" style="flex-grow: 1; background-color: rgb(115, 115, 115); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
-                        <ui:VisualElement name="blood_bar" style="flex-grow: 1; background-color: rgb(0, 27, 255); width: 84px;" />
+                <ui:VisualElement name="mp" style="flex-grow: 1; height: 30px; width: 100%;">
+                    <ui:Label text="MP: 50/100" display-tooltip-when-elided="true" name="mp_text" class="text" style="font-size: 12px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+                    <ui:VisualElement name="mp_bar_base" style="flex-grow: 1; background-color: rgb(115, 115, 115); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                        <ui:VisualElement name="mp_bar" style="flex-grow: 1; background-color: rgb(0, 27, 255); width: 84px;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement name="use_bar" style="flex-grow: 0; background-color: rgba(154, 154, 154, 0.6); flex-shrink: 0; height: 8px;" />
