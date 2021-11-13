@@ -13,6 +13,7 @@ public class Technoblade : MonoBehaviour
 
     public Animator animator;
 
+    bool isSetup =false;
     
 
     public LevelUpController levelUpController;
@@ -20,8 +21,7 @@ public class Technoblade : MonoBehaviour
 
     private void Awake() {
         if(instance == null || instance == this){
-            instance = this;
-            
+            instance = this;   
             DontDestroyOnLoad(this.gameObject);
         }
         else{
@@ -30,7 +30,7 @@ public class Technoblade : MonoBehaviour
     }
     private void Start()
     {
-
+        isSetup = true;
         PlayerPartyManager.instance.AddPlayer("Technoblade");
         SaveAndLoadManager.instance.OnStartSave += Save;
         SaveAndLoadManager.instance.OnReLoadSave += Load;
@@ -132,6 +132,7 @@ public class Technoblade : MonoBehaviour
     }
     private void OnDestroy()
     {
+        if (!isSetup) return;
         // makes sure that all subribed events are unsubscribed
         PlayerPartyManager.instance.RemovePlayer("Technoblade");
         SaveAndLoadManager.instance.OnStartSave -= Save;

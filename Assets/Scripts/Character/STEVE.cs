@@ -7,7 +7,7 @@ using System.IO;
 public class STEVE : MonoBehaviour
 {
     public static STEVE instance;
-    public bool isInTeam;
+    public bool isInTeam = true;
 
     public CharacterStats stats;
     [HideInInspector]
@@ -23,7 +23,6 @@ public class STEVE : MonoBehaviour
     {
         if(instance == null)
         {
-            Debug.Log("set");
             instance = this;
 
             DontDestroyOnLoad(this.gameObject);
@@ -47,12 +46,6 @@ public class STEVE : MonoBehaviour
         {
             PlayerPartyManager.instance.AddPlayer("Steve");
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void DestroySteve()

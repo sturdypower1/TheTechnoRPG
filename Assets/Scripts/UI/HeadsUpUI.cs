@@ -81,6 +81,8 @@ public class HeadsUpUI : MonoBehaviour
         else
         {
             ui.visible = false;
+            VisualElement healthbarBase = ui.Q<VisualElement>("healthbar_base");
+            healthbarBase.visible = false;
             ui.Q<VisualElement>("bleeding_icon").visible = false;
         }
     }

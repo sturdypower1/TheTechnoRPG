@@ -112,7 +112,8 @@ public class BattleManager : MonoBehaviour
     public void EndBattle(bool isPlayerVictor)
     {
         AudioManager.UnpauseCurrentSong();
-        BattleMusic.Stop();
+        if(BattleMusic != null) BattleMusic.Stop();
+
         isInBattle = false;
 
         UIManager.instance.ResetFocus();

@@ -37,7 +37,15 @@ public class BasicCutsceneSkill : Skill
             {
                 director.SetGenericBinding(playableAssetOutput.sourceObject, user.GetComponent(playableAssetOutput.outputTargetType));
             }
-            if (targetTracks.Contains(playableAssetOutput.streamName))
+            else if (targetTracks.Contains(playableAssetOutput.streamName))
+            {
+                director.SetGenericBinding(playableAssetOutput.sourceObject, target.GetComponent(playableAssetOutput.outputTargetType));
+            }
+            else if (playableAssetOutput.streamName.StartsWith("user"))
+            {
+                director.SetGenericBinding(playableAssetOutput.sourceObject, user.GetComponent(playableAssetOutput.outputTargetType));
+            }
+            else if (playableAssetOutput.streamName.StartsWith("target"))
             {
                 director.SetGenericBinding(playableAssetOutput.sourceObject, target.GetComponent(playableAssetOutput.outputTargetType));
             }

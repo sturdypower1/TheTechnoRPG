@@ -53,7 +53,7 @@ Through the power of subscribers, The party was healed
 ~updateEXPGold()
 ~displayPortrait("empty", "default")
 You Won
-Technoblade gained {totalEXP} EXP and {totalGold} gold
+Technoblade's team gained {totalEXP} EXP and {totalGold} gold
 -> items
     = items
         ~GetNextBattleItem()

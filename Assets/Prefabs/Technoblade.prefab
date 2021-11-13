@@ -373,6 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39201496ab5a2164ca56bd228ea79c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disableHealthBar: 1
   characaterStats: {fileID: 1222542915304947601}
   battler: {fileID: 9210509367474330029}
 --- !u!1 &1475370610
@@ -628,8 +629,9 @@ MonoBehaviour:
   UpAnimationName: TechnobladeWalkUp
   LeftAnimationName: TechnobladeWalkLeft
   RightAnimationName: TechnobladeWalkRight
-  speed: 3
+  speed: 2
   sprintBoost: 1
+  lastDirection: {x: 0, y: 0}
   footStepSound: {fileID: 2140178110}
 --- !u!114 &4605097411875545085
 MonoBehaviour:
@@ -902,10 +904,12 @@ MonoBehaviour:
   maxUseTime: 0
   headsUpUI: {fileID: 915287397}
   oldPosition: {x: 0, y: 0, z: 0}
+  battlePosition: {x: 0, y: 0, z: 0}
   animationSaveData:
     name: 
     normilizedtime: 0
   isDown: 0
+  isDefending: 0
   damagedSound: {fileID: 2093283211}
   characterStats: {fileID: 1222542915304947601}
   animator: {fileID: 4332425643559129223}
@@ -914,6 +918,7 @@ MonoBehaviour:
   isInBattle: 0
   isInCarnageMode: 0
   visualEffect: {fileID: 4332425644609888543}
+  defendTime: 0
 --- !u!82 &2140178110
 AudioSource:
   m_ObjectHideFlags: 0

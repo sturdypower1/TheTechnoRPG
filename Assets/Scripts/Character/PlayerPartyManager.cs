@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Pathfinding;
 using UnityEngine;
 
 public class PlayerPartyManager : MonoBehaviour
@@ -50,6 +51,8 @@ public class PlayerPartyManager : MonoBehaviour
         if(playerName == "Steve" && STEVE.instance != null)
         {
             players.Insert((players.Count == 0 ? 0 : 1) , STEVE.instance.gameObject);
+            AIDestinationSetter aiSetter = STEVE.instance.gameObject.GetComponent<AIDestinationSetter>();
+            aiSetter.target = Technoblade.instance.gameObject.transform;
             currentPlayer = STEVE.instance.gameObject;
         }
         // adds player if there is one and if it does already have that player
@@ -66,18 +69,20 @@ public class PlayerPartyManager : MonoBehaviour
 
     public void RemovePlayer(string playerName)
     {
-        if(playerName == "Technoblade")
+        if(playerName == "Technoblade" && Technoblade.instance != null)
         {
             if (players.Contains(Technoblade.instance.gameObject))
             {
                 players.Remove(Technoblade.instance.gameObject);
             }
         }
-        if(playerName == "Steve")
+        if(playerName == "Steve" && STEVE.instance != null)
         {
             if (players.Contains(STEVE.instance.gameObject))
             {
                 players.Remove(STEVE.instance.gameObject);
+                
+                
             }
         }
     }

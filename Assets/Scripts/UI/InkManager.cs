@@ -111,43 +111,43 @@ public class InkManager : MonoBehaviour
 
     public void LevelUp(){
         //level up the character and change the data in the ink story to reflect that
-        LevelUpController levelData = Technoblade.instance.gameObject.GetComponent<LevelUpController>();
-
-        LevelUpRewardData levelUpRewardData = levelData.LevelUpRewardData;
-
-        if (levelData.currentEXP >= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10)))
+        foreach(GameObject player in PlayerPartyManager.instance.players)
         {
+            LevelUpController levelData = player.GetComponent<LevelUpController>();
+            LevelUpRewardData levelUpRewardData = levelData.LevelUpRewardData;
 
-            // leveled up
-            levelData.currentEXP -= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
-            levelData.currentLVL += 1;
-            levelData.requiredEXP = ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
-
-
-            LevelReward levelReward = levelUpRewardData.levelRewards[levelData.currentLVL - levelUpRewardData.startingLevel - 1];
-            CharacterStats characterStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
-            characterStats.stats.attack += levelReward.attackBonus;
-            characterStats.stats.defence += levelReward.defenceBonus;
-            characterStats.stats.maxPoints += levelReward.pointsBonus;
-            characterStats.stats.maxHealth += levelReward.healthBonus;
-
-            if (levelReward.skill == null)
+            if (levelData.currentEXP >= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10)))
             {
-                inkStory.EvaluateFunction("updateLevelInfo", "Technoblade", "", levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
-            }
-            else
-            {
-                characterStats.skills.Insert(1, levelReward.skill);
-                inkStory.EvaluateFunction("updateLevelInfo", "Technoblade", levelReward.skill.name, levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
-            }
+
+                // leveled up
+                levelData.currentEXP -= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
+                levelData.currentLVL += 1;
+                levelData.requiredEXP = ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
 
 
+                LevelReward levelReward = levelUpRewardData.levelRewards[levelData.currentLVL - levelUpRewardData.startingLevel - 1];
+                CharacterStats characterStats = player.GetComponent<CharacterStats>();
+                characterStats.stats.attack += levelReward.attackBonus;
+                characterStats.stats.defence += levelReward.defenceBonus;
+                characterStats.stats.maxPoints += levelReward.pointsBonus;
+                characterStats.stats.maxHealth += levelReward.healthBonus;
+
+                if (levelReward.skill == null)
+                {
+                    inkStory.EvaluateFunction("updateLevelInfo", characterStats.stats.characterName, "", levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+                }
+                else
+                {
+                    characterStats.skills.Insert(1, levelReward.skill);
+                    inkStory.EvaluateFunction("updateLevelInfo", characterStats.stats.characterName, levelReward.skill.name, levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+                }
+                return;
+
+            }
         }
-        else
-        {
-            // no more level ups
-            inkStory.EvaluateFunction("updateLevelInfo", "", "", 0, 0, 0, 0);
-        }
+        // no more level ups
+        inkStory.EvaluateFunction("updateLevelInfo", "", "", 0, 0, 0, 0);
+
     }
     public void UpdateEXPGold(){
         // update the EXP and Gold in the ink story

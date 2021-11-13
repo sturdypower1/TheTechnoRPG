@@ -185,7 +185,8 @@ public class AudioManager : MonoBehaviour
     }
     public static void UnpauseCurrentSong()
     {
-        currentSong.audioSource.UnPause();
+        if(currentSong != null) currentSong.audioSource.UnPause();
+
     }
     public static void PauseCurrentSong()
     {

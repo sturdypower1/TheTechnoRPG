@@ -127,21 +127,10 @@ public class STEVEBattler : Battler
         if (characterStats.stats.health > 0)
         {
             characterStats.stats.health -= trueDamage.damageAmount;
-            //VFX
-            animator.SetBool("isInCarnageMode", false);
-            if (characterStats.stats.health <= 0 && characterStats.stats.points > 0)
-            {
-                animator.SetBool("isInCarnageMode", true);
-            }
-        }
-        else if (characterStats.stats.points > 0)
-        {
-            characterStats.stats.points -= trueDamage.damageAmount;
         }
         // character should be down
-        else if (characterStats.stats.points <= 0)
+        else if (characterStats.stats.health <= 0)
         {
-            animator.SetBool("isInCarnageMode", false);
 
             isDown = true;
             animator.SetTrigger("Down");

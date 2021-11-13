@@ -27,6 +27,8 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     VisualElement technobladeSelectorUI;
 
+    VisualElement steveSelectorUI;
+
     bool hasBattleStarted = false;
     private int currentPlayer;
 
@@ -176,9 +178,9 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="skillNumber">the currently selected skill</param>
     public void SkillButton(int skillNumber){
-        CharacterStats technoStats = Technoblade.instance.stats;
+        CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
         //checking if there have enough points to use the move
-        if (technoStats.stats.points >= technoStats.skills[skillNumber].cost)
+        if (stats.stats.points >= stats.skills[skillNumber].cost)
         {
             AudioManager.playSound("menuchange");
             int i = 0;
@@ -212,21 +214,30 @@ public class BattleMenuManager : MonoBehaviour
         AudioManager.playSound("menuselect");
         battleUI.Focus();
 
-        technobladeSelectorUI.SetEnabled(false);
-
-        CharacterStats technoStats = Technoblade.instance.stats;
-
-        Skill skill = technoStats.skills[currentSkill];
-        if (technoStats.stats.points >= skill.cost)
+        switch (currentCharacterSelected)
         {
-            technoStats.stats.points -= skill.cost;
+            case 0:
+                technobladeSelectorUI.SetEnabled(false);
+                break;
+            case 1:
+                steveSelectorUI.SetEnabled(false);
+                break;
+        }
+        
+
+        CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
+
+        Skill skill = stats.skills[currentSkill];
+        if (stats.stats.points >= skill.cost)
+        {
+            stats.stats.points -= skill.cost;
         }
         else
         {
-            technoStats.stats.points = 0;
+            stats.stats.points = 0;
         }
             //deal damage to the enemy
-            skill.UseSkill( BattleManager.instance.Enemies[enemyNumber], technoStats.gameObject);
+            skill.UseSkill( BattleManager.instance.Enemies[enemyNumber], stats.gameObject);
 
             battleUI.visible = true;
             enemySelector.visible = false;
@@ -319,9 +330,9 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="selectButton">the button used</param>
     private void AttackEnemySelectButton(int EnemyNumber, Button selectButton){
         UIManager.instance.ResetFocus();
-        CharacterStats technoStats = Technoblade.instance.stats;
+        CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
         
-        Skill skill = technoStats.skills[0];
+        Skill skill = stats.skills[0];
         battleUI.visible = true;
         technobladeSelectorUI.SetEnabled(false);
         //makes sure that nothing is selected
@@ -330,7 +341,7 @@ public class BattleMenuManager : MonoBehaviour
             enemySelectorUI.UnSelectUI();
         }
         // the attack button will always use the first skill
-        skill.UseSkill(BattleManager.instance.Enemies[EnemyNumber], technoStats.gameObject);
+        skill.UseSkill(BattleManager.instance.Enemies[EnemyNumber], stats.gameObject);
 
         battleUI.visible = true;
         enemySelector.visible = false;
@@ -399,7 +410,9 @@ public class BattleMenuManager : MonoBehaviour
         PlayerPartyManager.instance.AddPlayer("Steve");
         if (STEVE.instance != null && PlayerPartyManager.instance.HasPlayer(STEVE.instance.gameObject))
         {
+
             STEVEBattler steveBattler = STEVE.instance.GetComponent<STEVEBattler>();
+            steveSelectorUI = battleUI.Q<VisualElement>("character2");
             steveBattler.SteveSelectorUI = battleUI.Q<VisualElement>("character2");
         }
         
