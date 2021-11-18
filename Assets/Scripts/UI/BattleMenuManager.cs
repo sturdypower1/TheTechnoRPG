@@ -405,14 +405,14 @@ public class BattleMenuManager : MonoBehaviour
         technobladeSelectorUI = battleUI.Q<VisualElement>("character1");
         TechnobladeBattler technoBattler = Technoblade.instance.gameObject.GetComponent<TechnobladeBattler>();
         technoBattler.technoSelectorUI = technobladeSelectorUI;
+        steveSelectorUI = battleUI.Q<VisualElement>("character2");
+        steveSelectorUI.visible = false;
 
-
-        PlayerPartyManager.instance.AddPlayer("Steve");
         if (STEVE.instance != null && PlayerPartyManager.instance.HasPlayer(STEVE.instance.gameObject))
         {
-
+            steveSelectorUI.visible = true;
             STEVEBattler steveBattler = STEVE.instance.GetComponent<STEVEBattler>();
-            steveSelectorUI = battleUI.Q<VisualElement>("character2");
+            
             steveBattler.SteveSelectorUI = battleUI.Q<VisualElement>("character2");
         }
         

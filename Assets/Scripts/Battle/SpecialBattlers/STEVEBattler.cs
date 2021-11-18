@@ -11,6 +11,7 @@ public class STEVEBattler : Battler
     {
         if (BattleManager.instance.isInBattle)
         {
+            
             InventoryManager inventory = InventoryManager.instance;
             // there are no items, so don't let them go into the menu
             if (inventory.items.Count == 0)
@@ -35,6 +36,10 @@ public class STEVEBattler : Battler
 
             mpBar.style.width = mpBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
             mpText.text = "MP: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
+        }
+        if (PlayerPartyManager.instance.HasPlayer(this.gameObject))
+        {
+            SteveSelectorUI.visible = SteveSelectorUI.parent.visible;
         }
     }
     public override void ReEnableMenu()

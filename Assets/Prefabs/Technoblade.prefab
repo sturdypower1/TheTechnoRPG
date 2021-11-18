@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39201496ab5a2164ca56bd228ea79c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableHealthBar: 1
+  disableHealthBar: 0
   characaterStats: {fileID: 1222542915304947601}
   battler: {fileID: 9210509367474330029}
 --- !u!1 &1475370610

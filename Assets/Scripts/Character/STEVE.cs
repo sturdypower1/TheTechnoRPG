@@ -17,7 +17,7 @@ public class STEVE : MonoBehaviour
 
     [HideInInspector]
     public LevelUpController levelUpController;
-
+    
     // Start is called before the first frame update
     private void Awake()
     {
