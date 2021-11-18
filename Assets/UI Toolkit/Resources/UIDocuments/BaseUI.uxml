@@ -162,8 +162,8 @@
                 <ui:Label display-tooltip-when-elided="true" name="skill_desc" class="text" style="font-size: 18px; -unity-font-definition: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7 SDF&apos;); flex-wrap: wrap; white-space: normal;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="character_selection" style="position: absolute; top: 60%; width: 100%; height: 40%; visibility: visible;">
-            <ui:VisualElement name="character1" class="character_unselected" style="width: 258px; height: 367px; flex-grow: 0; flex-shrink: 1; bottom: 0; position: absolute; border-top-width: 5px; border-right-width: 5px;">
+        <ui:VisualElement name="character_selection" style="position: absolute; top: 60%; width: 100%; height: 40%;">
+            <ui:VisualElement name="character1" class="character_unselected" style="width: 258px; height: 367px; flex-grow: 0; flex-shrink: 1; bottom: 0; position: absolute; border-top-width: 5px; border-right-width: 5px; left: 42px; border-left-width: 5px;">
                 <ui:Label text="Technoblade" display-tooltip-when-elided="true" name="character_name" class="text" style="-unity-text-align: upper-center; font-size: 22px; -unity-font-definition: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7 SDF&apos;); margin-top: 5px;" />
                 <ui:VisualElement name="character_portrait" style="height: auto; align-items: center; border-bottom-color: rgb(34, 34, 34); border-bottom-width: 5px;">
                     <ui:VisualElement name="character_image" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Art/Icons/technoface.png?fileID=21300000&amp;guid=7e746a1b698ffb635a21b081a9fcb9f7&amp;type=3#technoface&apos;); margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; width: 100px; height: 100px;" />
@@ -199,7 +199,7 @@
                 <ui:Label text="DEF: 1" display-tooltip-when-elided="true" name="current_defence" style="border-bottom-width: 12px;" />
                 <ui:Label text="EXP needed: " display-tooltip-when-elided="true" name="EXP" />
             </ui:VisualElement>
-            <ui:VisualElement name="character2" class="character_unselected" style="width: 258px; height: 367px; flex-grow: 0; flex-shrink: 1; bottom: 0; position: absolute; border-top-width: 5px; border-right-width: 5px; left: 258px;">
+            <ui:VisualElement name="character2" class="character_unselected" style="width: 258px; height: 367px; flex-grow: 0; flex-shrink: 1; bottom: -4px; position: absolute; border-top-width: 5px; border-right-width: 5px; left: 515px; border-left-width: 5px;">
                 <ui:Label text="Steve" display-tooltip-when-elided="true" name="character_name" class="text" style="-unity-text-align: upper-center; font-size: 22px; -unity-font-definition: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7 SDF&apos;); margin-top: 5px;" />
                 <ui:VisualElement name="character_portrait" style="height: auto; align-items: center; border-bottom-color: rgb(34, 34, 34); border-bottom-width: 5px;">
                     <ui:VisualElement name="character_image" style="flex-grow: 1; background-image: url(&apos;project://database/Assets/Art/CharacterPortraits/stevehead.png?fileID=21300000&amp;guid=2634cce60c9ddaf4a953fb48785bd4c3&amp;type=3#stevehead&apos;); margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; width: 100px; height: 100px;" />
@@ -224,10 +224,10 @@
                         <ui:VisualElement name="health_bar" style="flex-grow: 1; background-color: rgb(62, 209, 68); width: 100%;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
-                <ui:VisualElement name="blood" style="height: 15%;">
-                    <ui:Label text="Blood: 10/100" display-tooltip-when-elided="true" name="blood_text" class="text" style="font-size: 18px; -unity-text-align: upper-center; -unity-font-definition: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7 SDF&apos;); margin-top: 5px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
-                    <ui:VisualElement name="blood_bar_base" style="flex-grow: 1; background-color: rgb(173, 173, 173); margin-left: 1%; margin-right: 2%; margin-top: 1%; margin-bottom: 1%;">
-                        <ui:VisualElement name="blood_bar" style="flex-grow: 1; background-color: rgb(188, 9, 0); width: 10%;" />
+                <ui:VisualElement name="mana" style="height: 15%;">
+                    <ui:Label text="Blood: 10/100" display-tooltip-when-elided="true" name="mana_text" class="text" style="font-size: 18px; -unity-text-align: upper-center; -unity-font-definition: resource(&apos;Fonts &amp; Materials/press-start-2p-font/PressStart2P-vaV7 SDF&apos;); margin-top: 5px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+                    <ui:VisualElement name="mana_bar_base" style="flex-grow: 1; background-color: rgb(173, 173, 173); margin-left: 1%; margin-right: 2%; margin-top: 1%; margin-bottom: 1%;">
+                        <ui:VisualElement name="mana_bar" style="flex-grow: 1; background-color: rgb(188, 9, 0); width: 10%;" />
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:Label text="LVL 1" display-tooltip-when-elided="true" name="current_level" style="padding-top: 12px; padding-bottom: 12px; font-size: 14px;" />

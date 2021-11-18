@@ -37,7 +37,7 @@ public class STEVEBattler : Battler
             mpBar.style.width = mpBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
             mpText.text = "MP: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
         }
-        if (PlayerPartyManager.instance.HasPlayer(this.gameObject))
+        if (PlayerPartyManager.instance.HasPlayer(this.gameObject) && SteveSelectorUI != null)
         {
             SteveSelectorUI.visible = SteveSelectorUI.parent.visible;
         }

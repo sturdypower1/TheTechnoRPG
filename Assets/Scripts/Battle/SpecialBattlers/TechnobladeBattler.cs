@@ -42,8 +42,6 @@ public class TechnobladeBattler : Battler
             bloodBar.style.width = bloodBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
             bloodText.text = "Blood: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
         }
-
-
         // ensures that if he is healed, that he won't be in carnage mode
         if (characterStats.stats.health > 0)
         {

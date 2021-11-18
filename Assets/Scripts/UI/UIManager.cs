@@ -316,33 +316,56 @@ public class UIManager : MonoBehaviour
         overworldOverlay.visible = false;
         pauseBackground.visible = true;
 
-        VisualElement currentCharacterUI = pauseBackground.Q<VisualElement>("character" + (1).ToString());
+        for(int i = 1; i <= PlayerPartyManager.instance.players.Count; i++)
+        {
+            VisualElement currentCharacterUI = pauseBackground.Q<VisualElement>("character" + i.ToString());
 
-        Label healthBarText = currentCharacterUI.Q<Label>("health_text");
-        VisualElement healthBarBase = currentCharacterUI.Q<VisualElement>("health_bar_base");
-        VisualElement healthBar = currentCharacterUI.Q<VisualElement>("health_bar");
+            Label healthBarText = currentCharacterUI.Q<Label>("health_text");
+            VisualElement healthBarBase = currentCharacterUI.Q<VisualElement>("health_bar_base");
+            VisualElement healthBar = currentCharacterUI.Q<VisualElement>("health_bar");
 
-        VisualElement bloodBar = currentCharacterUI.Q<VisualElement>("blood_bar");
-        VisualElement bloodBarBase = currentCharacterUI.Q<VisualElement>("blood_bar_base");
-        Label bloodBarText = currentCharacterUI.Q<Label>("blood_text");
+            CharacterStats currentStats = PlayerPartyManager.instance.players[i - 1].GetComponent<CharacterStats>();
+            LevelUpController levelData = PlayerPartyManager.instance.players[i - 1].GetComponent<LevelUpController>();
+            switch (i)
+            {
+                case 1:
+                    VisualElement bloodBar = currentCharacterUI.Q<VisualElement>("blood_bar");
+                    VisualElement bloodBarBase = currentCharacterUI.Q<VisualElement>("blood_bar_base");
+                    Label bloodBarText = currentCharacterUI.Q<Label>("blood_text");
 
-        Label currentLevel = currentCharacterUI.Q<Label>("current_level");
-        Label currentAttack = currentCharacterUI.Q<Label>("current_attack");
-        Label currentDefence = currentCharacterUI.Q<Label>("current_defence");
-        Label neededEXP = currentCharacterUI.Q<Label>("EXP");
+                    bloodBar.style.width = bloodBarBase.contentRect.width * ((float)currentStats.stats.points / (float)currentStats.stats.maxPoints);
+                    bloodBarText.text = "Blood: " + currentStats.stats.points.ToString() + "/" + currentStats.stats.maxPoints.ToString();
+                    break;
+                case 2:
+                    VisualElement manaBar = currentCharacterUI.Q<VisualElement>("mana_bar");
+                    VisualElement manaBarBase = currentCharacterUI.Q<VisualElement>("mana_bar_base");
+                    Label manaBarText = currentCharacterUI.Q<Label>("mana_text");
 
-        CharacterStats technoStats = Technoblade.instance.stats;
+                    manaBar.style.width = manaBarBase.contentRect.width * ((float)currentStats.stats.points / (float)currentStats.stats.maxPoints);
+                    manaBarText.text = "Mana: " + currentStats.stats.points.ToString() + "/" + currentStats.stats.maxPoints.ToString();
+                    break;
+            }
+            
 
-        //currentLevel.text = "LVL " + levelData.currentLVL.ToString();
-        currentAttack.text = "ATK: " + (technoStats.stats.attack + technoStats.equipedWeapon.attack);
-        currentDefence.text = "DEF: " + (technoStats.stats.defence + technoStats.equipedArmor.defence);
-        //neededEXP.text = "EXP needed: " + (levelData.requiredEXP - levelData.currentEXP).ToString();
+            Label currentLevel = currentCharacterUI.Q<Label>("current_level");
+            Label currentAttack = currentCharacterUI.Q<Label>("current_attack");
+            Label currentDefence = currentCharacterUI.Q<Label>("current_defence");
+            Label neededEXP = currentCharacterUI.Q<Label>("EXP");
 
-        healthBar.style.width = healthBarBase.contentRect.width * ((float)technoStats.stats.health / (float)technoStats.stats.maxHealth);
-        healthBarText.text = "HP: " + technoStats.stats.health.ToString() + "/" + technoStats.stats.maxHealth.ToString();
+            
 
-        bloodBar.style.width = bloodBarBase.contentRect.width * ((float)technoStats.stats.points / (float)technoStats.stats.maxPoints);
-        bloodBarText.text = "Blood: " + technoStats.stats.points.ToString() + "/" + technoStats.stats.maxPoints.ToString();
+            currentLevel.text = "LVL " + levelData.currentLVL.ToString();
+            currentAttack.text = "ATK: " + (currentStats.stats.attack + currentStats.equipedWeapon.attack);
+            currentDefence.text = "DEF: " + (currentStats.stats.defence + currentStats.equipedArmor.defence);
+            neededEXP.text = "EXP needed: " + (levelData.requiredEXP - levelData.currentEXP).ToString();
+
+            healthBar.style.width = healthBarBase.contentRect.width * ((float)currentStats.stats.health / (float)currentStats.stats.maxHealth);
+            healthBarText.text = "HP: " + currentStats.stats.health.ToString() + "/" + currentStats.stats.maxHealth.ToString();
+
+            
+        }
+
+        
     }
     /// <summary>
     /// start the game

@@ -8,7 +8,7 @@ public class NormalWeapon : Weapon
 {
     public override Damage CalculateDamage(Damage damage, GameObject target, GameObject user)
     {
-        damage.damageAmount += attack;
+        damage.damageAmount += attack + user.GetComponent<CharacterStats>().stats.attack;
         return damage;
     }
 }
