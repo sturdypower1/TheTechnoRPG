@@ -1,5 +1,7 @@
 -> DONE
 INCLUDE BeforeThePyramid.ink
+INCLUDE InsideThePyramid
+
 
 EXTERNAL levelUp()
 
