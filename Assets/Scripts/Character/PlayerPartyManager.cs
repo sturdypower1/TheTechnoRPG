@@ -91,4 +91,9 @@ public class PlayerPartyManager : MonoBehaviour
     {
         return players.Contains(player);
     }
+
+    public void AddExperiance(int experiance)
+    {
+        Debug.Log("not implemented");
+    }
 }

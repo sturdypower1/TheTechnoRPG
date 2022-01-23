@@ -1,0 +1,39 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="character1" class="techno_battleUI" style="width: 33%; top: 70%;">
+        <ui:VisualElement name="character_details" style="height: 50px; flex-direction: row; justify-content: flex-start; align-items: stretch; width: 100%;">
+            <ui:VisualElement name="character_image" style="background-image: url(&apos;project://database/Assets/Art/Icons/technoface.png?fileID=21300000&amp;guid=7e746a1b698ffb635a21b081a9fcb9f7&amp;type=3#technoface&apos;); width: 40px; height: 36px; flex-grow: 0; margin-left: 0.5%; margin-right: 0.5%; margin-top: 0.5%; margin-bottom: 0.5%;" />
+            <ui:Label text="Technoblade" display-tooltip-when-elided="true" name="character_name" class="text" style="font-size: 18px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="character_health" style="flex-grow: 1; height: 30px; width: 100%;">
+            <ui:Label text="HP: 50/100" display-tooltip-when-elided="true" name="health_text" class="text" style="font-size: 12px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            <ui:VisualElement name="health_bar_base" style="flex-grow: 1; background-color: rgb(245, 66, 72); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                <ui:VisualElement name="health_bar" style="flex-grow: 1; background-color: rgb(62, 209, 68); width: 46%; flex-shrink: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="blood" style="flex-grow: 1; height: 30px; width: 100%;">
+            <ui:Label text="Blood: 50/100" display-tooltip-when-elided="true" name="blood_text" class="text" style="font-size: 12px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            <ui:VisualElement name="blood_bar_base" style="flex-grow: 1; background-color: rgb(115, 115, 115); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;">
+                <ui:VisualElement name="blood_bar" style="flex-grow: 1; background-color: rgb(221, 13, 0); width: 84px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="use_bar" style="flex-grow: 0; background-color: rgba(154, 154, 154, 0.6); flex-shrink: 0; height: 8px;" />
+        <ui:VisualElement name="choice_bar" focusable="true" class="itembar" style="flex-grow: 1; flex-direction: row; height: 84px; width: 100%; justify-content: space-between;">
+            <ui:Button display-tooltip-when-elided="true" name="fight" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; min-height: 71px; max-height: 84px; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:VisualElement name="attack_image" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/basicsword.png?fileID=21300000&amp;guid=dd5d532594d511769834e0928f9ffd52&amp;type=3#basicsword&apos;); width: 58px;" />
+                <ui:Label text="attack" display-tooltip-when-elided="true" name="choice_name" style="max-width: 0; max-height: 0;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="skills" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:VisualElement name="skills_image" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/BloodIcon.png?fileID=21300000&amp;guid=00a3af4af1eda29458b63e510e78ea94&amp;type=3#BloodIcon&apos;); width: 58px;" />
+                <ui:Label text="skill" display-tooltip-when-elided="true" name="choice_name" style="max-width: 0; max-height: 0;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="items" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:VisualElement name="itemloader" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/itemIcon.png?fileID=21300000&amp;guid=9e09ce17990673e4fa6eb67d0b1cd8bb&amp;type=3#itemIcon&apos;); width: 58px;" />
+                <ui:Label text="items" display-tooltip-when-elided="true" name="choice_name" style="max-width: 0; max-height: 0; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:Button>
+            <ui:Button display-tooltip-when-elided="true" name="defend" focusable="true" class="battle_choice" style="-unity-text-align: lower-center; align-items: center; justify-content: space-between; margin-left: 6px; margin-right: 6px; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;">
+                <ui:VisualElement name="defend_image" style="flex-grow: 0; height: 58px; background-image: url(&apos;project://database/Assets/Art/Icons/SheildIcon.png?fileID=21300000&amp;guid=a3dc68074f2a47e4fb8c9b7b1b7bf284&amp;type=3#SheildIcon&apos;); width: 58px;" />
+                <ui:Label text="defend" display-tooltip-when-elided="true" name="choice_name" style="max-width: 0; max-height: 0;" />
+            </ui:Button>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

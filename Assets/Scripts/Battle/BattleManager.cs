@@ -8,8 +8,8 @@ using UnityEngine.Playables;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
-    public List<GameObject> Players;
-    public List<GameObject> Enemies;
+    public List<Battler> Players;
+    public List<Battler> Enemies;
     public bool isInBattle;
 
     public bool movingToPosition;
@@ -73,9 +73,9 @@ public class BattleManager : MonoBehaviour
             }
 
             bool isPlayerVictory = true;
-            foreach(GameObject enemy in Enemies)
+            foreach(Battler enemy in Enemies)
             {
-                if (!enemy.GetComponent<Battler>().isDown)
+                if (!enemy.isDown)
                 {
                     isPlayerVictory = false;
                 }
@@ -90,9 +90,9 @@ public class BattleManager : MonoBehaviour
             }
             else { }
             bool isPlayerLoss = true;
-            foreach (GameObject player in Players)
+            foreach (Battler player in Players)
             {
-                if (!player.GetComponent<Battler>().isDown)
+                if (!player.isDown)
                 {
                     isPlayerLoss = false;
                 }
@@ -119,7 +119,7 @@ public class BattleManager : MonoBehaviour
         UIManager.instance.ResetFocus();
 
 
-        foreach (GameObject player in Players)
+        foreach (Battler player in Players)
         {
             CharacterStats stats = player.GetComponent<CharacterStats>();
             Battler battler = player.GetComponent<Battler>();
@@ -129,10 +129,9 @@ public class BattleManager : MonoBehaviour
                 stats.stats.health = isPlayerVictor ? 1 : stats.stats.maxHealth;
             }
         }
-        foreach (GameObject enemy in Players)
+        foreach (Battler enemy in Enemies)
         {
-            Battler battler = enemy.GetComponent<Battler>();
-            battler.isDown = false;
+            enemy.isDown = false;
         }
 
         if (isPlayerVictor)
@@ -141,7 +140,7 @@ public class BattleManager : MonoBehaviour
             battleRewardData = new BattleRewardData();
             battleRewardData.items = new List<Item>();
             //add total exp, total gold and items
-            foreach (GameObject enemy in Enemies)
+            /*foreach (GameObject enemy in Enemies)
             {
                 Battler battledata = enemy.GetComponent<Battler>();
                 battledata.isInBattle = false;
@@ -155,18 +154,12 @@ public class BattleManager : MonoBehaviour
                     if (enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
                 }
                 enemy.GetComponent<Animator>().SetTrigger("BattleEnd");
-            }
-            foreach (GameObject player in Players)
+            }*/
+            foreach (Battler battleData in Players)
             {
-                Battler battledata = player.GetComponent<Battler>();
-                battledata.isInBattle = false;
+                battleData.isInBattle = false;
 
-                LevelUpController levelUpController = player.GetComponent<LevelUpController>();
-                levelUpController.currentEXP += battleRewardData.totalEXP;
-
-                
-
-                player.GetComponent<Animator>().SetTrigger("BattleEnd");
+                //player.GetComponent<Animator>().SetTrigger("BattleEnd");
             }
 
             InkManager.instance.DisplayVictoryData();
@@ -281,15 +274,14 @@ public class BattleManager : MonoBehaviour
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
         
-        foreach (GameObject battler in Players)
+        foreach (Battler battler in Players)
         {
             Animator animator = battler.GetComponent<Animator>();
             animator.SetTrigger("BattleStart");
 
             // set up heads up display
-            Battler battledata = battler.GetComponent<Battler>();
-            battledata.isInBattle = true;
-            TemplateContainer headsupUI = battledata.headsUpUI.ui;        
+            battler.isInBattle = true;
+            TemplateContainer headsupUI = battler.headsUpUI.ui;        
         }
         foreach (GameObject battler in Enemies)
         {

@@ -16,11 +16,10 @@ public class BasicCutsceneSkill : Skill
     /// </summary>
     public List<string> targetTracks;
 
-    public override void UseSkill(GameObject target, GameObject user)
+    public override void UseSkill(Battler target, Battler user)
     {
-        Battler battler = user.GetComponent<Battler>();
-        battler.target = target;
-        battler.StartWaitCouroutine(useTime);
+        user.target = target;
+        user.StartWaitCouroutine(useTime);
         
         
 

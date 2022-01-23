@@ -27,7 +27,7 @@ public abstract class Skill : ScriptableObject
     /// <summary>
     /// use the skill
     /// </summary>
-    public abstract void UseSkill(GameObject target, GameObject user);
+    public abstract void UseSkill(Battler target, Battler user);
 }
 
 

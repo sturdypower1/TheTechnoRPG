@@ -132,6 +132,13 @@ public abstract class Battler : MonoBehaviour
     {
 
     }
+    
+    public virtual void UseSkill(Battler target, int skillNumber)
+
+    public virtual TemplateContainer GetSelectionTemplate()
+    {
+        return new TemplateContainer();
+    }
     public virtual void AddBleeding(int levelGain, int Limit)
     {
         if(GetComponent<Bleeding>() != null)

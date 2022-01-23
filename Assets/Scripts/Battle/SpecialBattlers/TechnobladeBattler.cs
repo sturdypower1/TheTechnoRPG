@@ -67,7 +67,6 @@ public class TechnobladeBattler : Battler
                     totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
                     break;
             }
-
             totalDamage.damageAmount *= isInCarnageMode ? 2 : 1;
             target.GetComponent<Battler>().TakeDamage(totalDamage);
         }
