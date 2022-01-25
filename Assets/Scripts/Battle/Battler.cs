@@ -41,8 +41,9 @@ public abstract class Battler : MonoBehaviour
 
     public CharacterStats characterStats;
     public Animator animator;
+    
     [HideInInspector]
-    public GameObject target;
+    public Battler target;
     /// <summary>
     /// the target position 
     /// </summary>
@@ -51,10 +52,12 @@ public abstract class Battler : MonoBehaviour
     public bool isInBattle;
     bool isUsingSkill;
 
-    private void Start()
+    public virtual void Start()
     {
         characterStats = GetComponent<CharacterStats>();
         animator = GetComponent<Animator>();
+        
+
         if(BattleOffset == null)
         {
             BattleOffset = this.transform;
@@ -134,7 +137,45 @@ public abstract class Battler : MonoBehaviour
     }
     
     public virtual void UseSkill(Battler target, int skillNumber)
+    {
+        Skill skill = characterStats.skills[skillNumber];
+        skill.UseSkill(target, this);
+    }
 
+    public virtual void BattleSetup(Vector2 newPosition)
+    {
+        animator.SetTrigger("BattleSetup");
+
+        // makes it so the sprite is above the battle background
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sortingLayerName = "Battlers";
+
+        // sets its layer to battler
+
+        oldPosition = transform.position;
+        animationSaveData = new AnimationSaveData
+        {
+            name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
+            normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
+        };
+        
+
+        battlePosition = newPosition;
+        StartCoroutine(TransitionToBattlePosition( newPosition, .5f));
+    }
+    public virtual void BattleStart()
+    {
+        animator.SetTrigger("BattleStart");
+        isInBattle = true;
+    }
+    public virtual void BattleEnd()
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        sprite.sortingLayerName = "Characters";
+        animator.Play(animationSaveData.name, 0, animationSaveData.normilizedtime);
+        StartCoroutine(TransitionToOriginalPositions(oldPosition, .5f));
+    }
+    
     public virtual TemplateContainer GetSelectionTemplate()
     {
         return new TemplateContainer();
@@ -160,5 +201,46 @@ public abstract class Battler : MonoBehaviour
         {
             this.gameObject.AddComponent<Bleeding>();
         }
+    }
+    IEnumerator TransitionToBattlePosition(Vector3 newPosition, float duration)
+    {
+        // disable collision
+        if (GetComponent<Collider2D>() != null)
+        {
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.enabled = false;
+        }
+
+        Vector3 oldPosition = transform.position;
+        newPosition.z = 0;
+        float timePassed = 0;
+        while (transform.position != newPosition)
+        {
+            timePassed += Time.unscaledDeltaTime;
+            transform.position = Vector3.Lerp(oldPosition, newPosition, timePassed / duration);
+            yield return null;
+        }
+        Debug.Log("need to add in position invoke");
+    }
+    IEnumerator TransitionToOriginalPositions(Vector3 newPosition, float duration)
+    {
+        Vector3 oldPosition = transform.position;
+
+        float totalTime = 0;
+
+        while (transform.position != newPosition)
+        {
+            totalTime += Time.unscaledDeltaTime;
+            transform.position = Vector3.Lerp(oldPosition, newPosition, totalTime / duration);
+            yield return null;
+        }
+        // enable collision
+        if (GetComponent<Collider2D>() != null)
+        {
+            Collider2D collider = GetComponent<Collider2D>();
+            collider.enabled = true;
+        }
+        Debug.Log("need to add in position invoke");
+            //inOverworldPosition?.Invoke();
     }
 }

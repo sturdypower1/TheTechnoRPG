@@ -9,7 +9,8 @@ public class STEVEBattler : Battler
     public VisualElement SteveSelectorUI;
     private void Update()
     {
-        if (BattleManager.instance.isInBattle)
+        Debug.Log("need to set up steve battle ui");
+        /*if (BattleManager.instance.isInBattle)
         {
             
             InventoryManager inventory = InventoryManager.instance;
@@ -36,10 +37,10 @@ public class STEVEBattler : Battler
 
             mpBar.style.width = mpBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
             mpText.text = "MP: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
-        }
+        }*/
         if (PlayerPartyManager.instance.HasPlayer(this.gameObject) && SteveSelectorUI != null)
         {
-            SteveSelectorUI.visible = SteveSelectorUI.parent.visible;
+            //SteveSelectorUI.visible = SteveSelectorUI.parent.visible;
         }
     }
     public override void ReEnableMenu()
@@ -68,7 +69,6 @@ public class STEVEBattler : Battler
 
     public override void DealDamage(Damage damage)
     {
-
         // make sure to set this, since it could record use an old value later
         if (target != null)
         {
@@ -77,14 +77,14 @@ public class STEVEBattler : Battler
             {
                 case DamageType.Bleeding:
                     target.GetComponent<Battler>().AddBleeding(1, 10);
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
                 case DamageType.Physical:
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
             }
 
-            target.GetComponent<Battler>().TakeDamage(totalDamage);
+            target.TakeDamage(totalDamage);
         }
     }
     public override void TakeDamage(Damage damage)

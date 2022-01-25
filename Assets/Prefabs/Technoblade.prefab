@@ -981,6 +981,7 @@ MonoBehaviour:
   isInCarnageMode: 0
   visualEffect: {fileID: 4332425644609888543}
   defendTime: 0
+  battleUI: {fileID: 2253730734701959865}
 --- !u!82 &2140178110
 AudioSource:
   m_ObjectHideFlags: 0

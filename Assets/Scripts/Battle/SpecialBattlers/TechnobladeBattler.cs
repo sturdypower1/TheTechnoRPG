@@ -13,6 +13,13 @@ public class TechnobladeBattler : Battler
     public VisualElement technoSelectorUI;
 
     public float defendTime;
+    public CharacterBattleUI battleUI;
+
+    public override void Start()
+    {
+        base.Start();
+        battleUI.targetSelected += e => UseSkill(e.target, e.skillNumber);
+    }
     private void Update()
     {
         if (BattleManager.instance.isInBattle)
@@ -21,26 +28,14 @@ public class TechnobladeBattler : Battler
             // there are no items, so don't let them go into the menu
             if (inventory.items.Count == 0)
             {
-                technoSelectorUI.Q<Button>("items").SetEnabled(false);
+                battleUI.SetItemsOption(false);
             }
             else
             {
-                technoSelectorUI.Q<Button>("items").SetEnabled(true);
+                battleUI.SetItemsOption(true);
             }
-
-            Label healthText = technoSelectorUI.Q<Label>("health_text");
-            VisualElement healthBarBase = technoSelectorUI.Q<VisualElement>("health_bar_base");
-            VisualElement healthBar = technoSelectorUI.Q<VisualElement>("health_bar");
-
-            Label bloodText = technoSelectorUI.Q<Label>("blood_text");
-            VisualElement bloodBarBase = technoSelectorUI.Q<VisualElement>("blood_bar_base");
-            VisualElement bloodBar = technoSelectorUI.Q<VisualElement>("blood_bar");
-
-            healthBar.style.width = healthBarBase.contentRect.width * ((float)characterStats.stats.health / (float)characterStats.stats.maxHealth);
-            healthText.text = "HP: " + characterStats.stats.health.ToString() + "/" + characterStats.stats.maxHealth.ToString();
-
-            bloodBar.style.width = bloodBarBase.contentRect.width * ((float)characterStats.stats.points / characterStats.stats.maxPoints);
-            bloodText.text = "Blood: " + characterStats.stats.points.ToString() + "/" + characterStats.stats.maxPoints.ToString();
+            battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
+            battleUI.UpdatePoints(characterStats.stats.points, characterStats.stats.maxPoints);
         }
         // ensures that if he is healed, that he won't be in carnage mode
         if (characterStats.stats.health > 0)
@@ -52,7 +47,6 @@ public class TechnobladeBattler : Battler
     }
     public override void DealDamage(Damage damage)
     {
-
         // make sure to set this, since it could record use an old value later
         if (target != null)
         {
@@ -61,10 +55,10 @@ public class TechnobladeBattler : Battler
             {
                 case DamageType.Bleeding:
                     target.GetComponent<Battler>().AddBleeding(1, 10);
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
                 case DamageType.Physical:
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
             }
             totalDamage.damageAmount *= isInCarnageMode ? 2 : 1;
@@ -152,6 +146,12 @@ public class TechnobladeBattler : Battler
 
     }
 
+    public override void BattleSetup(Vector2 newPosition)
+    {
+        base.BattleSetup(newPosition);
+        battleUI.EnableUI();
+    }
+
     public override void ReEnableMenu()
     {
         animator.SetBool("Defending", false);
@@ -160,14 +160,11 @@ public class TechnobladeBattler : Battler
        
 
         AudioManager.playSound("menuavailable");
-        technoSelectorUI.SetEnabled(true);
     }
     public override void UpdateMenu()
     {
         base.UpdateMenu();
-        VisualElement useBar = technoSelectorUI.Q<VisualElement>("use_bar");
-
-        useBar.style.width = technoSelectorUI.contentRect.width * ((useTime) / maxUseTime);
+        battleUI.UpdateUseBar(useTime, maxUseTime);
     }
 
     public override void Defend()

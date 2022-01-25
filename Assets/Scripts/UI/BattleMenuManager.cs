@@ -121,7 +121,7 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="itemNumber">the currently selected item</param>
     private void ItemButton(int itemNumber){
-        AudioManager.playSound("menuchange");
+        /*AudioManager.playSound("menuchange");
         GameObject currentCharacter = BattleManager.instance.Players[currentPlayer];
         InventoryManager inventory = InventoryManager.instance;
 
@@ -131,7 +131,7 @@ public class BattleMenuManager : MonoBehaviour
         item.UseItem(Technoblade.instance.gameObject);
 
         battleUI.visible = true;
-        itemSelector.visible = false;
+        itemSelector.visible = false;*/
     }
     /// <summary>
     /// activate the battle menu skill tab
@@ -178,7 +178,7 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="skillNumber">the currently selected skill</param>
     public void SkillButton(int skillNumber){
-        CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
+        /*CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
         //checking if there have enough points to use the move
         if (stats.stats.points >= stats.skills[skillNumber].cost)
         {
@@ -188,7 +188,7 @@ public class BattleMenuManager : MonoBehaviour
             skillSelector.visible = false;
             enemySelector.visible = true;
             
-            foreach(GameObject enemy in BattleManager.instance.Enemies)
+            foreach(Battler enemy in BattleManager.instance.Enemies)
             {
                 int z = i;
 
@@ -199,7 +199,7 @@ public class BattleMenuManager : MonoBehaviour
                 button.clicked += cachedHandler;
                 i++;
             }
-        }
+        }*/
     }
     /// <summary>
     /// attacks the selected enemy with the selected skill
@@ -208,7 +208,7 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="currentSkill">the selected skill</param>
     /// <param name="selectButton">the button that is pressed</param>
     public void SkillEnemySelectButton(int enemyNumber, int currentSkill, Button selectButton){
-        // doesn't do anything if the enemy isn't selected yet
+        /*// doesn't do anything if the enemy isn't selected yet
         selectButton.clicked -= cachedHandler;
         cachedHandler = null;
         AudioManager.playSound("menuselect");
@@ -241,7 +241,7 @@ public class BattleMenuManager : MonoBehaviour
 
             battleUI.visible = true;
             enemySelector.visible = false;
-        // waits until the animation is over to resume the battle
+        // waits until the animation is over to resume the battle*/
     }
     /// <summary>
     /// go back to the previous battle menu tab
@@ -305,7 +305,7 @@ public class BattleMenuManager : MonoBehaviour
     /// </summary>
     /// <param name="characterNumber">the character </param>
     public void AttackButton(int characterNumber){
-        AudioManager.playSound("menuchange");
+        /*AudioManager.playSound("menuchange");
         previousUI = battleUI;
         battleUI.visible = false;
         enemySelector.visible = true;
@@ -321,7 +321,7 @@ public class BattleMenuManager : MonoBehaviour
             cachedHandler = () => AttackEnemySelectButton(z, button);
             button.clicked += cachedHandler;
             i++;
-        }
+        }*/
     }
     /// <summary>
     /// use first skill to attack an enemy
@@ -329,7 +329,7 @@ public class BattleMenuManager : MonoBehaviour
     /// <param name="EnemyNumber">the selected enemy</param>
     /// <param name="selectButton">the button used</param>
     private void AttackEnemySelectButton(int EnemyNumber, Button selectButton){
-        UIManager.instance.ResetFocus();
+        /*UIManager.instance.ResetFocus();
         CharacterStats stats = BattleManager.instance.Players[currentCharacterSelected].GetComponent<CharacterStats>();
         
         Skill skill = stats.skills[0];
@@ -350,7 +350,7 @@ public class BattleMenuManager : MonoBehaviour
         {
             selectorUI.ui.Q<Button>("Base").clicked -= cachedHandler;
         }
-        cachedHandler = null;
+        cachedHandler = null;*/
 
     }
 
@@ -374,7 +374,7 @@ public class BattleMenuManager : MonoBehaviour
     /// disable all the menus that were in the battle
     /// </summary>
     private void DisableMenu_OnBattleEnd(OnBattleEndEventArgs e){
-        battleUI.visible = false;
+        /*battleUI.visible = false;
         enemySelector.visible = false;
         skillSelector.visible = false;
         itemSelector.visible = false;
@@ -385,13 +385,13 @@ public class BattleMenuManager : MonoBehaviour
         if (e.isPlayerVictor)
         {
            //get ready to transition all the game objects
-        }
+        }*/
     }
     /// <summary>
     /// after the first battle transition is over, set up the battle menus
     /// </summary>
     private void EnableMenu_OnTransitionEnd(){
-            // enables all the features of the menu
+       /*     // enables all the features of the menu
             Camera cam = FindObjectOfType<Camera>();
             float positionRatio = 1280.0f / cam.pixelWidth;
 
@@ -455,7 +455,7 @@ public class BattleMenuManager : MonoBehaviour
 
             headsUpUI.ui.Q<VisualElement>("base").style.bottom = uiPosition.y;
             headsUpUI.ui.Q<VisualElement>("base").style.left = uiPosition.x;
-        }
+        }*/
     }
 
     /// <summary>

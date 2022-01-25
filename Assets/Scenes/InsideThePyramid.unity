@@ -201,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 1112990736}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.864
+      value: -0.86397046
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.504
+      value: 0.5101239
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_RootOrder
@@ -3034,9 +3034,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enemies:
-  - {fileID: 728951585}
+  - {fileID: 728951587}
   battleBackground: {fileID: 1247328461}
   battleMusic: {fileID: 728951591}
+--- !u!114 &728951587 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1740613084597167304, guid: d58a345b9a2edda46879a934e9ceff27, type: 3}
+  m_PrefabInstance: {fileID: 728951584}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728951585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 089af06bb69982d4ba5da74f587bc3f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!82 &728951591 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 1740613084597167308, guid: d58a345b9a2edda46879a934e9ceff27, type: 3}

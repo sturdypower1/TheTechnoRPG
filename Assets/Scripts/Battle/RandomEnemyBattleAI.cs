@@ -29,7 +29,7 @@ public class RandomEnemyBattleAI : MonoBehaviour
                 {
                     if (skill.chance >= randomValue)
                     {
-                        skill.UseSkill(BattleManager.instance.Players[Target], this.gameObject);
+                        skill.UseSkill(BattleManager.instance.Players[Target], battler);
                         battler.useTime = 0;
                         float temp = Random.Range(1, 2);
 

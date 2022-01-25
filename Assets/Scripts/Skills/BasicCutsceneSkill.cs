@@ -50,7 +50,7 @@ public class BasicCutsceneSkill : Skill
             }
         }
 
-        BattleManager.instance.SetUserTargetTransforms(enemyBattler.BattleOffset, battler.BattleOffset);
+        BattleManager.instance.SetUserTargetTransforms(enemyBattler.BattleOffset, user.BattleOffset);
 
         director.Play();
 

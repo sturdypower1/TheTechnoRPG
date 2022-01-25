@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBattlers : MonoBehaviour
 {
-    public GameObject[] Enemies;
+    public Battler[] Enemies;
 
     public SpriteRenderer battleBackground;
 

@@ -24,12 +24,11 @@ public class BasicSkill : Skill
     /// attack the enemy 
     /// </summary>
     /// <param name="target"></param>
-    public override void UseSkill(GameObject target, GameObject user)
+    public override void UseSkill(Battler target, Battler user)
     {
-        Battler battler = user.GetComponent<Battler>();
-        battler.useTime = 0;
-        battler.maxUseTime = useTime;
-        battler.target = target;
+        user.useTime = 0;
+        user.maxUseTime = useTime;
+        user.target = target;
 
         Animator animator = user.GetComponent<Animator>();
         animator.Play(skillAnimation.name);

@@ -15,10 +15,10 @@ public class BasicBattler : Battler
             {
                 case DamageType.Bleeding:
                     target.GetComponent<Battler>().AddBleeding(1, 10);
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
                 case DamageType.Physical:
-                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this.gameObject);
+                    totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
             }
             Battler battler = target.GetComponent<Battler>();

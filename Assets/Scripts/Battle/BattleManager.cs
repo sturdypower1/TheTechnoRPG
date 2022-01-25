@@ -190,7 +190,7 @@ public class BattleManager : MonoBehaviour
     }
     public void PauseBattle(string attackName, string userName, string targetName)
     {
-        Label battleText = UIManager.instance.root.Q<Label>("battle_text");
+        /*Label battleText = UIManager.instance.root.Q<Label>("battle_text");
         battleText.visible = true;
         battleText.text = userName + " used " + attackName + " on " + targetName;
 
@@ -198,11 +198,11 @@ public class BattleManager : MonoBehaviour
         BattleMenuManager.instance.battleUI.SetEnabled(false);
         BattleMenuManager.instance.skillSelector.SetEnabled(false);
         BattleMenuManager.instance.enemySelector.SetEnabled(false);
-        BattleMenuManager.instance.itemSelector.SetEnabled(false);
+        BattleMenuManager.instance.itemSelector.SetEnabled(false);*/
     }
     public void UnPauseBattle()
     {
-        Label battleText = UIManager.instance.root.Q<Label>("battle_text");
+        /*Label battleText = UIManager.instance.root.Q<Label>("battle_text");
         battleText.visible = false;
 
 
@@ -210,7 +210,7 @@ public class BattleManager : MonoBehaviour
         BattleMenuManager.instance.battleUI.SetEnabled(true);
         BattleMenuManager.instance.skillSelector.SetEnabled(true);
         BattleMenuManager.instance.enemySelector.SetEnabled(true);
-        BattleMenuManager.instance.itemSelector.SetEnabled(true);
+        BattleMenuManager.instance.itemSelector.SetEnabled(true);*/
     }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
@@ -223,9 +223,13 @@ public class BattleManager : MonoBehaviour
         int i = 0;
         while(i < Enemies.Count)
         {
-            GameObject enemy = Enemies[i];
+            Battler enemy = Enemies[i];
             EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
-            if (enemyRewardData.destroyOnDefeat)
+            Debug.Log("Need to implement new exp system");
+            /*
+             * 
+             * 
+             * if (enemyRewardData.destroyOnDefeat)
             {
                 Destroy(enemy);
                 Enemies.Remove(enemy);
@@ -233,26 +237,18 @@ public class BattleManager : MonoBehaviour
             else
             {
                 i++;
-            }
+            }*/
         }
         i = 0;
         // transition back once the writer is done
-        foreach (GameObject player in Players)
+        foreach (Battler player in Players)
         {
-            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
-            sprite.sortingLayerName = "Characters";
-            Battler battler = player.GetComponent<Battler>();
-            player.GetComponent<Animator>().Play(battler.animationSaveData.name, 0, battler.animationSaveData.normilizedtime);
-            StartCoroutine(TransitionToOriginalPositions(player, player.GetComponent<Battler>().oldPosition, i == 0, .5f));
+            player.BattleEnd();
             i++;
         }
-        foreach (GameObject enemy in Enemies)
+        foreach (Battler enemy in Enemies)
         {
-            SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
-            sprite.sortingLayerName = "Characters";
-            Battler battler = enemy.GetComponent<Battler>();
-            enemy.GetComponent<Animator>().Play(battler.animationSaveData.name, 0, battler.animationSaveData.normilizedtime);
-            StartCoroutine(TransitionToOriginalPositions(enemy, enemy.GetComponent<Battler>().oldPosition, false, .5f));
+            enemy.BattleEnd();
         }
         StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
 
@@ -276,23 +272,14 @@ public class BattleManager : MonoBehaviour
         
         foreach (Battler battler in Players)
         {
-            Animator animator = battler.GetComponent<Animator>();
-            animator.SetTrigger("BattleStart");
-
-            // set up heads up display
-            battler.isInBattle = true;
-            TemplateContainer headsupUI = battler.headsUpUI.ui;        
+            battler.BattleStart();   
         }
-        foreach (GameObject battler in Enemies)
+        foreach (Battler battler in Enemies)
         {
-            Battler battledata = battler.GetComponent<Battler>();
-            battledata.isInBattle = true;
-
-            Animator animator = battler.GetComponent<Animator>();
-            animator.SetTrigger("BattleStart");
+            battler.BattleStart();
         }
     }
-    public void SetupBattle(GameObject[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
+    public void SetupBattle(Battler[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
     {
         AudioManager.PauseCurrentSong();
         BattleBackground = battleBackground;
@@ -309,93 +296,50 @@ public class BattleManager : MonoBehaviour
         CameraController.instance.ToBattleCamera();
 
         Players.Clear();
-        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject);
-        int i = 0;
+        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject.GetComponent<Battler>());
 
         // need to start trasition of the new camera
-
-        foreach (GameObject player in Players)
+        int i = 0;
+        foreach (Battler player in Players)
         {
-            Animator animator = player.GetComponent<Animator>();
-            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-            animator.SetTrigger("BattleSetup");
-
-            // makes it so the sprite is above the battle background
-            SpriteRenderer sprite = player.GetComponent<SpriteRenderer>();
-            sprite.sortingLayerName = "Battlers";
-
-            bool triggerEvent = false;
-            if(i == 0)
-            {
-                triggerEvent = true;
-            }
-            // sets its layer to battler
-
-            Battler battler = player.GetComponent<Battler>();
-            battler.oldPosition = player.transform.position;
-            battler.animationSaveData = new AnimationSaveData
-            {
-                name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
-                normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
-            };
-
             float spawnzone = cam.scaledPixelHeight * .7f;
             float startingIncrement = cam.scaledPixelHeight * .1f;
             Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (spawnzone / (Players.Count + 1)) + startingIncrement), 0));
             tempPos.z = 0;
-
-            battler.battlePosition = tempPos;
-
-
-            StartCoroutine(TransitionToBattlePosition(player, tempPos, triggerEvent, .5f));
+            player.BattleSetup(tempPos);
             i++;
         }
 
         Enemies.Clear();
         enemySelectorUI.Clear();
-        i = 0;
 
         VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
-        foreach (GameObject enemy in enemies)
+        i = 0;
+        foreach (Battler enemy in enemies)
         {
-            // makes it so the sprite is above the battle background
-            SpriteRenderer sprite = enemy.GetComponent<SpriteRenderer>();
-            sprite.sortingLayerName = "Battlers";
+            // makes it so the sprite is above the battle backgroun
 
             Enemies.Add(enemy);
-            EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>(), enemy = enemy.GetComponent<Battler>()};
+
+            float spawnzone = cam.scaledPixelHeight * .7f;
+            float startingIncrement = cam.scaledPixelHeight * .1f;
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (spawnzone / (enemies.Length + 1)) + startingIncrement), 0));
+            tempPos.z = 0;
+
+            enemy.BattleSetup(tempPos);
+            i++;
+            /*EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>(), enemy = enemy.GetComponent<Battler>()};
             enemySelectorUI.Add(enemySelector);
             enemySelectorGroup.Add(enemySelector.ui);
 
             //making it so when it's focused, the enemy glows
             enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusEvent>(ev => enemySelector.SelectUI());
             // making it so when it's un focused, it no longer glows
-            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusOutEvent>(ev => enemySelector.UnSelectUI());
-
-            Animator animator = enemy.GetComponent<Animator>();
-            animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-            animator.SetTrigger("BattleSetup");
-
-            Battler battler = enemy.GetComponent<Battler>();
-            battler.oldPosition = enemy.transform.position;
-            battler.animationSaveData = new AnimationSaveData
-            {
-                name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
-                normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
-            };
-
-            float spawnzone = cam.scaledPixelHeight * .7f;
-            float startingIncrement = cam.scaledPixelHeight * .1f;
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (spawnzone / (enemies.Length + 1)) + startingIncrement), 0));
-            
-            StartCoroutine(TransitionToBattlePosition(enemy, tempPos, false, .5f));
-            i++;
+            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusOutEvent>(ev => enemySelector.UnSelectUI());*/
         }
 
         UIManager.instance.overworldOverlay.visible = false;
         UIManager.instance.ResetFocus();
-
-
     }
     IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
     {
@@ -456,7 +400,7 @@ public class BattleManager : MonoBehaviour
     IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)
     {
         float timePassed = 0;
-        while(timePassed < 1)
+        while(timePassed < duration)
         {
             timePassed += Time.unscaledDeltaTime;
             MaterialPropertyBlock myMatBlock = new MaterialPropertyBlock();
@@ -464,6 +408,10 @@ public class BattleManager : MonoBehaviour
             myMatBlock.SetFloat("Alpha", Mathf.Lerp(a, b, timePassed/ duration));
             background.SetPropertyBlock(myMatBlock);
             yield return null;
+        }
+        if (!isInBattle)
+        {
+            StartBattle();
         }
     }
 

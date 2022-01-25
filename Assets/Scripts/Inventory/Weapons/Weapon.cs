@@ -10,7 +10,7 @@ public abstract class Weapon :  IObtainable
     /// <summary>
     /// from the special properties of the sword, calculate the damage
     /// </summary>
-    public abstract Damage CalculateDamage(Damage damage, GameObject target, GameObject user);
+    public abstract Damage CalculateDamage(Damage damage, Battler target, Battler user);
     public override void Obtain()
     {
         
@@ -21,7 +21,7 @@ public abstract class Weapon :  IObtainable
 //[CreateAssetMenu(menuName = "Weapon/Special Weapon")]
 public class SpecialWeapon : Weapon
 {
-    public override Damage CalculateDamage(Damage damage, GameObject target, GameObject user)
+    public override Damage CalculateDamage(Damage damage, Battler target, Battler user)
     {
         return new Damage();
     }
