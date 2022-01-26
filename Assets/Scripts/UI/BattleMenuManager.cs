@@ -295,7 +295,7 @@ public class BattleMenuManager : MonoBehaviour
         if(defender is TechnobladeBattler)
         {
             TechnobladeBattler technoBattler = defender as TechnobladeBattler;
-            technoBattler.technoSelectorUI.SetEnabled(false);
+            //technoBattler.technoSelectorUI.SetEnabled(false);
             if (technoBattler.isInCarnageMode) return;
         }
         defender.Defend();

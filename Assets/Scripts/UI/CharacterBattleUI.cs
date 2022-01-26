@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class CharacterBattleUI : MonoBehaviour
 {
+    public Battler battler;
+
+    public event SelectedEventHandler targetSelected;
+
     UIDocument UIDoc;
     VisualElement root;
     VisualElement baseUI;
@@ -15,9 +20,9 @@ public class CharacterBattleUI : MonoBehaviour
     Button skillsChoice;
     Button itemsChoice;
     Button defendChoice;
-    // the ui for selecting the enemy, it will be cleared every time an enemy is selected
+    // the ui for selecting the enemies, items, and skills
     VisualElement selectionMenu;
-    // the scroll for all the enemies to escape
+    Label selectionDescription;
     ScrollView selectionScroll;
 
     VisualElement useBar;
@@ -29,14 +34,44 @@ public class CharacterBattleUI : MonoBehaviour
     Label pointText;
     VisualElement pointBarBase;
     VisualElement pointBar;
+
+    public void UpdateHealth(int health, int maxHealth)
+    {
+        var newWidth = healthBarBase.contentRect.width * ((float)health / (float)maxHealth);
+        DOVirtual.Float(healthBar.contentRect.width, newWidth, .5f, v =>
+        {
+            healthBar.style.width = v;
+        });
+        //healthBar.style.width = healthBarBase.contentRect.width * ((float)health / (float)maxHealth);
+        healthText.text = "HP: " + health.ToString() + "/" + maxHealth.ToString();
+    }
+
+    public void UpdatePoints(int points, int maxPoints)
+    {
+        pointBar.style.width = pointBarBase.contentRect.width * ((float)points / maxPoints);
+        pointText.text = "Blood: " + points.ToString() + "/" + maxPoints.ToString();
+    }
     
+    public void UpdateUseBar(float useTime, float maxUseTime)
+    {
+        useBar.style.width = baseUI.contentRect.width * ((useTime) / maxUseTime);
+    }
 
-    Action cachedHandler;
+    public void EnableUI()
+    {
+        root.visible = true;
 
-    public event SelectedEventHandler targetSelected;
+    }
 
-    Battler battler;
+    public void SetItemsOption(bool isEnabled)
+    {
+        itemsChoice.SetEnabled(isEnabled);
+    }
 
+    public void DisableUI()
+    {
+        root.visible = false;
+    }
     private void Start()
     {
         UIDoc = GetComponent<UIDocument>();
@@ -46,11 +81,16 @@ public class CharacterBattleUI : MonoBehaviour
         optionSelect = root.Q<VisualElement>("choice_bar");
         fightChoice = optionSelect.Q<Button>("fight");
         fightChoice.clicked += AttackButton;
-        skillsChoice = optionSelect.Q<Button>("items");
+        skillsChoice = optionSelect.Q<Button>("skills");
+        skillsChoice.clicked += SkillsButton;
+        itemsChoice = optionSelect.Q<Button>("items");
+        itemsChoice.clicked += ItemsButton;
         defendChoice = optionSelect.Q<Button>("defend");
+        defendChoice.clicked += DefendButton;
 
         selectionMenu = root.Q<VisualElement>("selection_menu");
         selectionScroll = selectionMenu.Q<ScrollView>("scroll_view");
+        selectionDescription = selectionMenu.Q<Label>("description");
 
         useBar = root.Q<VisualElement>("use_bar");
 
@@ -65,21 +105,9 @@ public class CharacterBattleUI : MonoBehaviour
         DisableUI();
     }
 
-    public void UpdateHealth(int health, int maxHealth)
+    private void UpdateSelectionDescription(string description)
     {
-        healthBar.style.width = healthBarBase.contentRect.width * ((float)health / (float)maxHealth);
-        healthText.text = "HP: " + health.ToString() + "/" + maxHealth.ToString();
-    }
-
-    public void UpdatePoints(int points, int maxPoints)
-    {
-        pointBar.style.width = pointBarBase.contentRect.width * ((float)points / maxPoints);
-        pointText.text = "Blood: " + points.ToString() + "/" + maxPoints.ToString();
-    }
-    
-    public void UpdateUseBar(float useTime, float maxUseTime)
-    {
-        useBar.style.width = baseUI.contentRect.width * ((useTime) / maxUseTime);
+        selectionDescription.text = description;
     }
     
     //Attack needs to first wait to be pressed to do anything
@@ -88,7 +116,7 @@ public class CharacterBattleUI : MonoBehaviour
     /// <summary>
     /// use the first skill in the list of the character's skills to target an enemy
     /// </summary>
-    public void AttackButton()
+    private void AttackButton()
     {
         AudioManager.playSound("menuchange");
         DisableOptionMenu();
@@ -105,7 +133,6 @@ public class CharacterBattleUI : MonoBehaviour
             selectionScroll.Add(button);
         }
     }
-
     private void AttackEnemySelectButton(Battler enemy, Button selectButton)
     {
         AudioManager.playSound("menuchange");
@@ -116,13 +143,153 @@ public class CharacterBattleUI : MonoBehaviour
         // clearing the enemies since they aren't needed anymore
         DisableSelection();
     }
+    
+    public void SkillsButton()
+    {
+        AudioManager.playSound("menuchange");
+        EnableSelection();
+        DisableOptionMenu();
+        UIManager.instance.ResetFocus();
+        CharacterStats stats = battler.characterStats;
+        int i = 1;
+        while (i < stats.skills.Count)
+        {
+            Skill skill = stats.skills[i];
+            int z = i;
+            Button skillButton = new Button();
+            skillButton.focusable = true;
+
+            skillButton.text = skill.name.ToString();
+            skillButton.clicked += () => SkillButton(z);
+            skillButton.RegisterCallback<FocusEvent>(ev => UpdateSelectionDescription(skill.description.ToString()));
+            skillButton.RegisterCallback<PointerEnterEvent>(ev => UpdateSelectionDescription(skill.description.ToString()));
+
+            skillButton.AddToClassList("item_button");
+            selectionScroll.Add(skillButton);
+            if (i == 1)
+            {
+                UpdateSelectionDescription(skill.description.ToString());
+                skillButton.Focus();
+            }
+            i++;
+        }
+    }
+    private void SkillButton(int skillNumber)
+    {
+        CharacterStats stats = battler.characterStats;
+        //checking if there have enough points to use the move
+        selectionScroll.Clear();
+        if (stats.stats.points >= stats.skills[skillNumber].cost)
+        {
+            AudioManager.playSound("menuchange");
+            int i = 0;
+            foreach(Battler enemy in BattleManager.instance.Enemies)
+            {
+                
+
+                Button button = new Button();//template.Q<Button>("Base");
+                button.text = enemy.characterStats.name;
+                button.clicked += () => SkillEnemySelectButton(enemy, skillNumber);
+                Debug.Log("make sure the enemy description updaetes");
+                selectionScroll.Add(button);
+
+                if (i == 0)
+                {
+                    UpdateSelectionDescription("");
+                }
+                i++;
+            }
+        }
+    }
+    private void SkillEnemySelectButton(Battler enemy, int currentSkill)
+    {
+        AudioManager.playSound("menuselect");
+        DisableSelection();
+
+        var stats = battler.characterStats;
+        targetSelected.Invoke(new OnSelectedEventArgs { skillNumber = currentSkill, target = enemy });
+    }
+    
+    private void ItemsButton()
+    {
+        EnableSelection();
+        DisableOptionMenu();
+
+        AudioManager.playSound("menuchange");
+
+        InventoryManager inventory = InventoryManager.instance;
+        int i = 0;
+        selectionScroll.Clear();
+        
+        // changing the names of the items
+        while (i < inventory.items.Count)
+        {
+            int z = i;
+            Item item = inventory.items[i];
+            Button button = new Button();
+            button.focusable = true;
+            button.text = item.name;
+            //button.AddToClassList("item_button");
+            button.clicked += () => ItemButton(z);
+            selectionScroll.Add(button);
+            //button.RegisterCallback<FocusEvent>(ev => UpdateSelectionDescription(item.description));
+            //button.RegisterCallback<PointerEnterEvent>(ev => UpdateSelectionDescription(item.description));
+            // if it isn't usable, don't let the player use the item
+            //item.GetUseability()
+            if (true)
+            {
+                button.SetEnabled(true);
+            }
+            else
+            {
+                button.SetEnabled(false);
+            }
+            if (i == 0)
+            {
+                button.Focus();
+                UpdateSelectionDescription(item.description);
+            }
+            i++;
+        }
+    }
+    private void ItemButton(int itemNumber)
+    {
+        AudioManager.playSound("menuchange");
+        DisableSelection();
+        EnableOptionMenu();
+
+        InventoryManager inventory = InventoryManager.instance;
+
+        Item item = inventory.items[itemNumber];
+
+        // need to change this when multiple players are added
+        item.UseItem(battler.gameObject);
+
+    }
+
+    public void DefendButton()
+    {
+        DisableOptionMenu();
+        if (battler is TechnobladeBattler)
+        {
+            TechnobladeBattler technoBattler = battler as TechnobladeBattler;
+            if (technoBattler.isInCarnageMode) return;
+        }
+        battler.Defend();
+    }
+    
+
     /// <summary>
     /// plays an animation for disabling the option menu
     /// </summary>
     private void DisableOptionMenu()
     {
         // TODO: add ui animation
-        optionSelect.style.display = DisplayStyle.None;
+        DOVirtual.Float(0, 84, .25f, v =>
+        {
+            optionSelect.localBound.Set(optionSelect.localBound.x, v, optionSelect.localBound.width, optionSelect.localBound.height);
+        });
+        //optionSelect.style.display = DisplayStyle.None;
     }
     /// <summary>
     /// plays an animation for disabling the selection menu
@@ -143,23 +310,11 @@ public class CharacterBattleUI : MonoBehaviour
     private void EnableSelection()
     {
         //TODO: add ui animation
-        selectionMenu.style.display = DisplayStyle.Flex;
-    }
-    public void EnableUI()
-    {
-        root.visible = true;
-             
-    }
+        //selectionMenu.experimental.animation.
 
-    public void SetItemsOption(bool isEnabled)
-    {
-        Debug.Log("need to implement items disable");
+        //selectionMenu.style.display = DisplayStyle.Flex;
     }
-
-    public void DisableUI()
-    {
-        root.visible = false;
-    }
+    
     public delegate void SelectedEventHandler(OnSelectedEventArgs e);
     public class OnSelectedEventArgs : EventArgs
     {

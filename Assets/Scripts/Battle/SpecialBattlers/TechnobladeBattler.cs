@@ -6,14 +6,13 @@ using UnityEngine.VFX;
 
 public class TechnobladeBattler : Battler
 {
-    public bool isInCarnageMode;
-
     public VisualEffect visualEffect;
-
-    public VisualElement technoSelectorUI;
 
     public float defendTime;
     public CharacterBattleUI battleUI;
+
+    [HideInInspector]
+    public bool isInCarnageMode = false;
 
     public override void Start()
     {
@@ -34,7 +33,7 @@ public class TechnobladeBattler : Battler
             {
                 battleUI.SetItemsOption(true);
             }
-            battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
+            
             battleUI.UpdatePoints(characterStats.stats.points, characterStats.stats.maxPoints);
         }
         // ensures that if he is healed, that he won't be in carnage mode
@@ -110,6 +109,7 @@ public class TechnobladeBattler : Battler
         if (characterStats.stats.health > 0)
         {
             characterStats.stats.health -= trueDamage.damageAmount;
+            battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
             //VFX
             visualEffect.enabled = false;
             isInCarnageMode = false;
@@ -143,12 +143,17 @@ public class TechnobladeBattler : Battler
             headsUpUI.messages.Clear();
         }
 
-
+        
     }
 
     public override void BattleSetup(Vector2 newPosition)
     {
         base.BattleSetup(newPosition);
+        battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
+    }
+    public override void BattleStart()
+    {
+        base.BattleStart();
         battleUI.EnableUI();
     }
 
