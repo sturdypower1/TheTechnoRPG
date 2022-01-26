@@ -24,6 +24,9 @@ public class CharacterBattleUI : MonoBehaviour
     VisualElement selectionMenu;
     Label selectionDescription;
     ScrollView selectionScroll;
+    Button selectionBackButton;
+
+    VisualElement bottomSpacingElement;
 
     VisualElement useBar;
 
@@ -35,6 +38,8 @@ public class CharacterBattleUI : MonoBehaviour
     VisualElement pointBarBase;
     VisualElement pointBar;
 
+    bool isBottomGrowing;
+    Tween bottomTween;
     public void UpdateHealth(int health, int maxHealth)
     {
         var newWidth = healthBarBase.contentRect.width * ((float)health / (float)maxHealth);
@@ -91,6 +96,10 @@ public class CharacterBattleUI : MonoBehaviour
         selectionMenu = root.Q<VisualElement>("selection_menu");
         selectionScroll = selectionMenu.Q<ScrollView>("scroll_view");
         selectionDescription = selectionMenu.Q<Label>("description");
+        selectionBackButton = selectionMenu.Q<Button>("back_button");
+        selectionBackButton.clicked += SelectionBackButton;
+
+        bottomSpacingElement = root.Q<VisualElement>("bottom_spacing");
 
         useBar = root.Q<VisualElement>("use_bar");
 
@@ -267,7 +276,7 @@ public class CharacterBattleUI : MonoBehaviour
 
     }
 
-    public void DefendButton()
+    private void DefendButton()
     {
         DisableOptionMenu();
         if (battler is TechnobladeBattler)
@@ -278,43 +287,104 @@ public class CharacterBattleUI : MonoBehaviour
         battler.Defend();
     }
     
+    private void SelectionBackButton()
+    {
+        EnableOptionMenu();
+        DisableSelection();
+    }
 
     /// <summary>
     /// plays an animation for disabling the option menu
     /// </summary>
     private void DisableOptionMenu()
     {
-        // TODO: add ui animation
-        DOVirtual.Float(0, 84, .25f, v =>
+        optionSelect.SetEnabled(false);
+
+        var tween = DOVirtual.Float(0, optionSelect.contentRect.height, .25f, v =>
         {
-            optionSelect.localBound.Set(optionSelect.localBound.x, v, optionSelect.localBound.width, optionSelect.localBound.height);
+            optionSelect.style.top = v;
         });
-        //optionSelect.style.display = DisplayStyle.None;
+        tween.onComplete += () => optionSelect.style.display = DisplayStyle.None;
+
+        if (bottomTween == null)
+        {
+            bottomTween = DOVirtual.Float(optionSelect.contentRect.height, 0, .25f, v =>
+            {
+                ChangeBottomSpacing(v);
+            });
+            bottomTween.onComplete += () => bottomTween = null;
+        }
+        
     }
     /// <summary>
     /// plays an animation for disabling the selection menu
     /// </summary>
     private void DisableSelection()
     {
-        //TODO: add ui animation
-        selectionMenu.style.display = DisplayStyle.None;
-        selectionScroll.Clear();
+        selectionMenu.SetEnabled(false);
+        var tween = DOVirtual.Float(0, selectionMenu.contentRect.height, .25f, v =>
+        {
+            if(!isBottomGrowing) ChangeBottomSpacing(selectionMenu.contentRect.height - v);
+            selectionMenu.style.top = v;
+        });
+        tween.onComplete += () =>
+        {
+            selectionMenu.style.display = DisplayStyle.None;
+            selectionScroll.Clear();
+        };
+
+        if (bottomTween == null)
+        {
+            bottomTween = DOVirtual.Float(optionSelect.contentRect.height, 0, .25f, v =>
+            {
+                ChangeBottomSpacing(v);
+            });
+            bottomTween.onComplete += () => bottomTween = null;
+        }
     }
 
     private void EnableOptionMenu()
     {
-        // TODO: add ui animation
+        optionSelect.SetEnabled(true);
         optionSelect.style.display = DisplayStyle.Flex;
+        isBottomGrowing = true;
+        var tween = DOVirtual.Float(optionSelect.contentRect.height, 0, .25f, v =>
+        {
+            optionSelect.style.top = v;
+        });
+        bottomTween?.Kill();
+        bottomTween = DOVirtual.Float(bottomSpacingElement.contentRect.height, 84, .25f, v =>
+        {
+            ChangeBottomSpacing(v);
+        });
+        bottomTween.onComplete += () => bottomTween = null;
     }
 
     private void EnableSelection()
     {
-        //TODO: add ui animation
-        //selectionMenu.experimental.animation.
+        selectionMenu.SetEnabled(true);
+        selectionMenu.style.display = DisplayStyle.Flex;
+        var tween = DOVirtual.Float(selectionMenu.contentRect.height, 0, .25f, v =>
+        {
+            selectionMenu.style.top = v;
+        });
 
-        //selectionMenu.style.display = DisplayStyle.Flex;
+        bottomTween?.Kill();
+        // goes from the 
+        bottomTween = DOVirtual.Float(bottomSpacingElement.contentRect.height, 120, .25f, v =>
+        {
+            //Debug.Log(selectionMenu.contentRect.height);
+            ChangeBottomSpacing(v);
+        });
+        bottomTween.onComplete += () => bottomTween = null;
     }
     
+    private void ChangeBottomSpacing(float newSize)
+    {
+        //Debug.Log(newSize);
+        bottomSpacingElement.style.height = new StyleLength(newSize);
+    }
+
     public delegate void SelectedEventHandler(OnSelectedEventArgs e);
     public class OnSelectedEventArgs : EventArgs
     {
