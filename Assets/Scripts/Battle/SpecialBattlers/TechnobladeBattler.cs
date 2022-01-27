@@ -4,12 +4,9 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.VFX;
 
-public class TechnobladeBattler : Battler
+public class TechnobladeBattler : PlayerBattler
 {
     public VisualEffect visualEffect;
-
-    public float defendTime;
-    public CharacterBattleUI battleUI;
 
     [HideInInspector]
     public bool isInCarnageMode = false;
@@ -19,31 +16,7 @@ public class TechnobladeBattler : Battler
         base.Start();
         battleUI.targetSelected += e => UseSkill(e.target, e.skillNumber);
     }
-    private void Update()
-    {
-        if (BattleManager.instance.isInBattle)
-        {
-            InventoryManager inventory = InventoryManager.instance;
-            // there are no items, so don't let them go into the menu
-            if (inventory.items.Count == 0)
-            {
-                battleUI.SetItemsOption(false);
-            }
-            else
-            {
-                battleUI.SetItemsOption(true);
-            }
-            
-            battleUI.UpdatePoints(characterStats.stats.points, characterStats.stats.maxPoints);
-        }
-        // ensures that if he is healed, that he won't be in carnage mode
-        if (characterStats.stats.health > 0)
-        {
-            visualEffect.enabled = false;
-            isInCarnageMode = false;
-            animator.SetBool("isInCarnageMode", false);
-        }
-    }
+    
     public override void DealDamage(Damage damage)
     {
         // make sure to set this, since it could record use an old value later
@@ -66,116 +39,83 @@ public class TechnobladeBattler : Battler
     }
     public override void TakeDamage(Damage damage)
     {
-        Damage trueDamage = new Damage();
-        if (characterStats.equipedArmor != null)
-        {
-            trueDamage = characterStats.equipedArmor.CalculateDamage(damage); ;
-        }
-        else
-        {
-            trueDamage = damage;
-        }
-
-
-        if (isDefending)
-        {
-            trueDamage.damageAmount = 0;
-            trueDamage.damageAmount =(int) (((float)trueDamage.damageAmount*  .5));
-        }
+        Damage trueDamage = CalculateDamageTaken(damage);
 
         Label label = new Label();
         label.text = trueDamage.damageAmount.ToString();
-        switch (damage.damageType)
+        AddDamageMessage(trueDamage);
+        var canPlayDamagedSound = damagedSound != null && !damagedSound.isPlaying;
+        if (canPlayDamagedSound)
         {
-            case DamageType.Bleeding:
-                label.AddToClassList("message_red");
-                Technoblade.instance.AddBlood(damage.damageAmount);
-                break;
-            case DamageType.Physical:
-                if (damagedSound != null)
-                {
-                    damagedSound.Play();
-                }
-                label.AddToClassList("message_white");
-                break;
+            damagedSound.Play();
         }
-        headsUpUI.ui.Q<VisualElement>("messages").Add(label);
 
-        float random = Random.value * 360;
-        Vector2 messageDirection = new Vector2(Mathf.Cos(random), Mathf.Sin(random));
-
-        Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection };
-        headsUpUI.messages.Add(newMessage);
-        if (characterStats.stats.health > 0)
+        if(!isInCarnageMode)
         {
             characterStats.stats.health -= trueDamage.damageAmount;
             battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
             //VFX
-            visualEffect.enabled = false;
-            isInCarnageMode = false;
-            animator.SetBool("isInCarnageMode", false);
-            if (characterStats.stats.health <= 0 && characterStats.stats.points > 0)
+
+            var shouldActivateCarnageMode = characterStats.stats.health <= 0 && characterStats.stats.points > 0;
+            if (shouldActivateCarnageMode)
             {
-                visualEffect.enabled = true;
-                isInCarnageMode = true;
-                animator.SetBool("isInCarnageMode", true);
+                ActivateCarnageMode();
             }
         }
-        else if (characterStats.stats.points > 0)
+        else if (isInCarnageMode)
         {
             characterStats.stats.points -= trueDamage.damageAmount;
         }
-        // character should be down
-        else if (characterStats.stats.points <= 0)
+        
+        var shouldBeDown = characterStats.stats.points <= 0 && characterStats.stats.points <= 0;
+        if (shouldBeDown)
         {
-            visualEffect.enabled = false;
-            isInCarnageMode = false;
-            animator.SetBool("isInCarnageMode", false);
+            DeactivateCarnageMode();
+            DownBattler();
+        }
+    }
+    public override Damage CalculateDamageDealt(Damage damage)
+    {
+        var trueDamage = base.CalculateDamageDealt(damage);
+        trueDamage.damageAmount *= isInCarnageMode ? 2 : 1;
+        return trueDamage;
+    }
 
-            isDown = true;
-            animator.SetTrigger("Down");
-
-            foreach (Message message in headsUpUI.messages)
+    private void Update()
+    {
+        if (BattleManager.instance.isInBattle)
+        {
+            InventoryManager inventory = InventoryManager.instance;
+            // there are no items, so don't let them go into the menu
+            if (inventory.items.Count == 0)
             {
-                headsUpUI.ui.Q<VisualElement>("messages").Remove(message.label);
+                battleUI.SetItemsOption(false);
+            }
+            else
+            {
+                battleUI.SetItemsOption(true);
             }
 
-            headsUpUI.messages.Clear();
+            battleUI.UpdatePoints(characterStats.stats.points, characterStats.stats.maxPoints);
         }
-
-        
+        // ensures that if he is healed, that he won't be in carnage mode
+        if (characterStats.stats.health > 0 && isInCarnageMode)
+        {
+            DeactivateCarnageMode();
+        }
+    }
+    
+    private void ActivateCarnageMode()
+    {
+        visualEffect.enabled = true;
+        isInCarnageMode = true;
+        animator.SetBool("isInCarnageMode", true);
     }
 
-    public override void BattleSetup(Vector2 newPosition)
+    private void DeactivateCarnageMode()
     {
-        base.BattleSetup(newPosition);
-        battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
-    }
-    public override void BattleStart()
-    {
-        base.BattleStart();
-        battleUI.EnableUI();
-    }
-
-    public override void ReEnableMenu()
-    {
-        animator.SetBool("Defending", false);
-        isDefending = false;
-        base.ReEnableMenu();
-       
-
-        AudioManager.playSound("menuavailable");
-    }
-    public override void UpdateMenu()
-    {
-        base.UpdateMenu();
-        battleUI.UpdateUseBar(useTime, maxUseTime);
-    }
-
-    public override void Defend()
-    {
-        base.Defend();
-        isDefending = true;
-        StartWaitCouroutine(defendTime);
+        visualEffect.enabled = false;
+        isInCarnageMode = false;
+        animator.SetBool("isInCarnageMode", false);
     }
 }

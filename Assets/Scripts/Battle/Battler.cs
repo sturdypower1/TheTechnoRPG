@@ -7,6 +7,7 @@ using UnityEngine.Timeline;
 /// <summary>
 /// component that'll be used for all the battlers in a battle
 /// </summary>
+[RequireComponent(typeof(PlayableDirector))]
 public abstract class Battler : MonoBehaviour
 {
     /// <summary>
@@ -17,7 +18,9 @@ public abstract class Battler : MonoBehaviour
     /// how much long it has left before it can do another attack
     /// </summary>
     public float useTime;
-
+    /// <summary>
+    /// how long the character will have to wait after using a skill
+    /// </summary>
     public float maxUseTime;
 
     public HeadsUpUI headsUpUI;
@@ -41,6 +44,7 @@ public abstract class Battler : MonoBehaviour
 
     public CharacterStats characterStats;
     public Animator animator;
+    public PlayableDirector skillDirector;
     
     [HideInInspector]
     public Battler target;
@@ -52,21 +56,89 @@ public abstract class Battler : MonoBehaviour
     public bool isInBattle;
     bool isUsingSkill;
 
+    float _currentSkillWaitTime;
+    bool canMakeAction = false;
+    
+
     public virtual void Start()
     {
         characterStats = GetComponent<CharacterStats>();
         animator = GetComponent<Animator>();
-        
+        skillDirector = GetComponent<PlayableDirector>();
+        skillDirector.stopped += d => WaitOnSkillFinished(_currentSkillWaitTime);
 
         if(BattleOffset == null)
         {
             BattleOffset = this.transform;
         }
     }
+    
+    public virtual void DownBattler()
+    {
+        isDown = true;
+        animator.SetTrigger("Down");
+    }
+   
+    public virtual void ApplyStatusEffect(StatusEffect effect)
+    {
+        effect.ApplyStatus(this);
+    }
+    public virtual void TakeDamage(Damage damage) 
+    {
+        Damage trueDamage = CalculateDamageTaken(damage);
+        AddDamageMessage(damage);
 
-    public abstract void TakeDamage(Damage damage);
+        if (characterStats.stats.health > 0)
+        {
+            characterStats.stats.health -= trueDamage.damageAmount;
+        }
+        CheckIfDown();
+    }
+    public virtual void DealDamage(Damage damage) 
+    {
+        if (target != null)
+        {
+            Damage trueDamage = CalculateDamageDealt(damage);
+            target.GetComponent<Battler>().TakeDamage(trueDamage);
+        }
+    }
+    public virtual Damage CalculateDamageDealt(Damage damage)
+    {
+        Damage trueDamage = new Damage();
 
-    public abstract void DealDamage(Damage damage);
+        switch (damage.damageType)
+        {
+            case DamageType.Bleeding:
+                target.GetComponent<Battler>().AddBleeding(1, 10);
+                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
+                break;
+            case DamageType.Physical:
+                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
+                break;
+        }
+        return trueDamage;
+    }
+    public virtual Damage CalculateDamageTaken(Damage damage)
+    {
+        Damage trueDamage = new Damage();
+        if (characterStats.equipedArmor != null)
+        {
+            trueDamage = characterStats.equipedArmor.CalculateDamage(damage); ;
+        }
+        else
+        {
+            trueDamage = damage;
+        }
+        return trueDamage;
+    }
+    
+    public virtual void CheckIfDown()
+    {
+        if (characterStats.stats.health <= 0)
+        {
+            DownBattler();
+        }
+    }
 
     public virtual void Heal(int recovery)
     {
@@ -86,62 +158,23 @@ public abstract class Battler : MonoBehaviour
         Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection };
         headsUpUI.messages.Add(newMessage);
     }
-
-    public virtual void Defend()
-    {
-        isDefending = true;
-        animator.SetBool("Defending", true);
-
-    }
-
-    IEnumerator WaitCouroutine(float waitTime)
-    {
-        if (isUsingSkill)
-        {
-            yield break;
-        }
-        isUsingSkill = true;
-        
-        maxUseTime = waitTime;
-        useTime = 0;
-        while(useTime < maxUseTime && !isDown)
-        {
-            UpdateMenu();
-            yield return null;
-            // only move if your not in a skill
-            if (!BattleManager.instance.IsWaitingForSkill)
-            {
-                useTime += Time.deltaTime;
-            }
-            
-            
-        }
-        // just ensures that the sound only plays if the player is in battle
-        if (BattleManager.instance.isInBattle)
-        {
-            ReEnableMenu();
-        }
-        isUsingSkill = false;
-    }
-    public void StartWaitCouroutine(float waitTime)
-    {
-        StartCoroutine(WaitCouroutine(waitTime));
-    }
-    public virtual void ReEnableMenu()
-    {
-
-    }
-    public virtual void UpdateMenu()
-    {
-
-    }
     
     public virtual void UseSkill(Battler target, int skillNumber)
     {
+        canMakeAction = false;
         Skill skill = characterStats.skills[skillNumber];
         skill.UseSkill(target, this);
+        _currentSkillWaitTime = skill.useTime;
+    }
+    public virtual void WaitOnSkillFinished(float timeToWait)
+    {
+        Invoke("Reenable", timeToWait);
     }
 
+    public virtual void Reenable()
+    {
+        canMakeAction = true;
+    }
     public virtual void BattleSetup(Vector2 newPosition)
     {
         animator.SetTrigger("BattleSetup");
@@ -202,6 +235,7 @@ public abstract class Battler : MonoBehaviour
             this.gameObject.AddComponent<Bleeding>();
         }
     }
+    
     IEnumerator TransitionToBattlePosition(Vector3 newPosition, float duration)
     {
         // disable collision
@@ -242,5 +276,18 @@ public abstract class Battler : MonoBehaviour
         }
         Debug.Log("need to add in position invoke");
             //inOverworldPosition?.Invoke();
+    }
+    
+    public void AddDamageMessage(Damage damage)
+    {
+        switch (damage.damageType)
+        {
+            case DamageType.Bleeding:
+                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.BleedingDamage);
+                break;
+            case DamageType.Physical:
+                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.PhysicalDamage);
+                break;
+        }
     }
 }

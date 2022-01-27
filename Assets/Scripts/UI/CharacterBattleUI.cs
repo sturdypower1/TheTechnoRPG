@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 public class CharacterBattleUI : MonoBehaviour
 {
-    public Battler battler;
+    public PlayerBattler battler;
 
     public event SelectedEventHandler targetSelected;
 
@@ -57,10 +57,15 @@ public class CharacterBattleUI : MonoBehaviour
         pointText.text = "Blood: " + points.ToString() + "/" + maxPoints.ToString();
     }
     
-    public void UpdateUseBar(float useTime, float maxUseTime)
+    public void StartRecoveryBarTween(float duration)
     {
-        useBar.style.width = baseUI.contentRect.width * ((useTime) / maxUseTime);
+        DOVirtual.Float(0, baseUI.contentRect.width, duration, v =>
+        {
+            useBar.style.width = v;
+        });
     }
+    
+
 
     public void EnableUI()
     {
@@ -120,7 +125,7 @@ public class CharacterBattleUI : MonoBehaviour
     }
     
     //Attack needs to first wait to be pressed to do anything
-    // after the attack button is pressed
+    //after the attack button is pressed
 
     /// <summary>
     /// use the first skill in the list of the character's skills to target an enemy

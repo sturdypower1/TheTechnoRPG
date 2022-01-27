@@ -2,16 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bleeding : MonoBehaviour
+public class Bleeding : StatusEffect
 {
     Battler battler;
     public int level = 1;
     public float timeFromLastDamageTick;
-    // Start is called before the first frame update
+    public override void ApplyStatus(Battler battler)
+    {
+        var bleed = battler.GetComponent<Bleeding>();
+        if(bleed == null)
+        {
+            bleed = battler.gameObject.AddComponent<Bleeding>();
+            bleed = this;
+            bleed.battler = battler;
+        }
+        else
+        {
+            bleed.AddBleedingLevel();
+            Destroy(this);
+        }
+    }
+    public void AddBleedingLevel()
+    {
+        level++;
+    }
     void Start()
     {
         BattleManager.instance.OnBattleEnd += RemoveBleeding_OnBattleEnd;
-        battler = GetComponent<Battler>();
     }
 
     // Update is called once per frame
@@ -30,10 +47,8 @@ public class Bleeding : MonoBehaviour
     }
     private void RemoveBleeding_OnBattleEnd(OnBattleEndEventArgs e)
     {
-        RemoveBleeding();
+        RemoveStatus();
     }
-    void RemoveBleeding()
-    {
-        Destroy(this);
-    }
+
+    
 }

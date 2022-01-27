@@ -19,13 +19,8 @@ public class BasicCutsceneSkill : Skill
     public override void UseSkill(Battler target, Battler user)
     {
         user.target = target;
-        user.StartWaitCouroutine(useTime);
-        
-        
 
-        Battler enemyBattler = target.GetComponent<Battler>();
-
-        PlayableDirector director = BattleManager.instance.director;
+        PlayableDirector director = user.skillDirector;
         director.playableAsset = playable;
 
 
@@ -50,10 +45,9 @@ public class BasicCutsceneSkill : Skill
             }
         }
 
-        BattleManager.instance.SetUserTargetTransforms(enemyBattler.BattleOffset, user.BattleOffset);
+        BattleManager.instance.SetUserTargetTransforms(target.BattleOffset, user.BattleOffset);
 
         director.Play();
-
 
 
         BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);

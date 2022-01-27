@@ -7,6 +7,7 @@ using UnityEngine;
 [System.Serializable]
 public abstract class Skill : ScriptableObject
 {
+    public event EmptyEventHandler OnSkillFinished;
     /// <summary>
     /// the chance an attack is to happen from an enemy
     /// </summary>

@@ -292,13 +292,13 @@ public class BattleMenuManager : MonoBehaviour
 
     public void DefendButton(Battler defender)
     {
-        if(defender is TechnobladeBattler)
+        /*if(defender is TechnobladeBattler)
         {
             TechnobladeBattler technoBattler = defender as TechnobladeBattler;
             //technoBattler.technoSelectorUI.SetEnabled(false);
             if (technoBattler.isInCarnageMode) return;
         }
-        defender.Defend();
+        defender.Defend();*/
     }
     /// <summary>
     /// use the first skill in the list of the character's skills to target an enemy

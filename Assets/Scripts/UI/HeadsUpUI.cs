@@ -18,13 +18,35 @@ public class HeadsUpUI : MonoBehaviour
 
     public Battler battler;
 
+    public void AddMessage(string text, MessageType messageType)
+    {
+        Label label = new Label();
+        label.text = text;
+        switch (messageType)
+        {
+            case MessageType.BleedingDamage:
+                label.AddToClassList("message_red");
+                break;
+            case MessageType.PhysicalDamage:
+                label.AddToClassList("message_white");
+                break;
+        }
+        ui.Q<VisualElement>("messages").Add(label);
+
+        float random = Random.value * 360;
+        Vector2 messageDirection = new Vector2(Mathf.Cos(random), Mathf.Sin(random));
+
+        Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection };
+        messages.Add(newMessage);
+    }
+
     private void Awake()
     {
         overHeadUITemplate = Resources.Load<VisualTreeAsset>("UIDocuments/OverHeadBattleStats");
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (ui == null)
         {
@@ -86,10 +108,18 @@ public class HeadsUpUI : MonoBehaviour
             ui.Q<VisualElement>("bleeding_icon").visible = false;
         }
     }
+
+   
 }
 public struct Message
 {
     public Label label;
     public float timePassed;
     public Vector2 direction;
+}
+public enum MessageType
+{
+    PhysicalDamage,
+    BleedingDamage,
+    Skill
 }
