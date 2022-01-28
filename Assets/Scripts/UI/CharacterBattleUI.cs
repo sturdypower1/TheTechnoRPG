@@ -65,7 +65,11 @@ public class CharacterBattleUI : MonoBehaviour
         });
     }
     
-
+    public void GoToStartingState()
+    {
+        EnableOptionMenu();
+        DisableSelection();
+    }
 
     public void EnableUI()
     {

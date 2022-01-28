@@ -6,6 +6,7 @@ public class PlayerBattler : Battler
 {
     public CharacterBattleUI battleUI;
     public float defendTime;
+    public float defenceRecovery;
     public bool isDefending;
 
     public override void BattleSetup(Vector2 newPosition)
@@ -22,14 +23,13 @@ public class PlayerBattler : Battler
     public override void WaitOnSkillFinished(float timeToWait)
     {
         base.WaitOnSkillFinished(timeToWait);
-        isDefending = false;
         battleUI.StartRecoveryBarTween(timeToWait);
     }
     public override void Reenable()
     {
         base.Reenable();
         AudioManager.playSound("menuavailable");
-        battleUI.
+        battleUI.GoToStartingState();
     }
 
     public override Damage CalculateDamageTaken(Damage damage)
@@ -45,6 +45,12 @@ public class PlayerBattler : Battler
     {
         isDefending = true;
         animator.SetBool("Defending", true);
-        StartWaitCouroutine(defendTime);
+        Invoke("WaitOnDefendFinished", defendTime);
+    }
+    public virtual void WaitOnDefendFinished()
+    {
+        isDefending = false;
+        animator.SetBool("Defending", false);
+        Invoke("Reenable", defenceRecovery);
     }
 }

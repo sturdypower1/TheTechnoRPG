@@ -29,6 +29,7 @@ public class Bleeding : StatusEffect
     void Start()
     {
         BattleManager.instance.OnBattleEnd += RemoveBleeding_OnBattleEnd;
+        battler = GetComponent<Battler>();
     }
 
     // Update is called once per frame

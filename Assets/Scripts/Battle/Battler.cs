@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -34,12 +35,7 @@ public abstract class Battler : MonoBehaviour
     [HideInInspector]
 
     public bool isDown;
-
-    /// <summary>
-    /// whether or not the character is defending
-    /// </summary>
-    public bool isDefending;
-
+  
     public AudioSource damagedSound;
 
     public CharacterStats characterStats;
@@ -79,9 +75,26 @@ public abstract class Battler : MonoBehaviour
         animator.SetTrigger("Down");
     }
    
-    public virtual void ApplyStatusEffect(StatusEffect effect)
+    public virtual void ApplyStatusEffect(StatusEffectTypes statusType)
     {
-        effect.ApplyStatus(this);
+        
+        var statusEffect = StatusEffect.EnumToStatus(statusType);
+        Debug.Log(statusEffect == typeof(Bleeding));
+        if (statusEffect != null)
+        {
+            if (GetComponent(statusEffect) == null)
+            {
+                gameObject.AddComponent(statusEffect);
+            }
+            else
+            {
+                Debug.Log("make it so it adds levels to the status effect");
+            }
+        }
+    }
+    public virtual void ApplyStatusToTarget(StatusEffectTypes statusType)
+    {
+        target.ApplyStatusEffect(statusType);
     }
     public virtual void TakeDamage(Damage damage) 
     {
@@ -109,7 +122,6 @@ public abstract class Battler : MonoBehaviour
         switch (damage.damageType)
         {
             case DamageType.Bleeding:
-                target.GetComponent<Battler>().AddBleeding(1, 10);
                 trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                 break;
             case DamageType.Physical:
@@ -152,7 +164,7 @@ public abstract class Battler : MonoBehaviour
         label.AddToClassList("message_green");
         headsUpUI.ui.Q<VisualElement>("messages").Add(label);
 
-        float random = Random.value * 360;
+        float random = UnityEngine.Random.value * 360;
         Vector2 messageDirection = new Vector2(Mathf.Cos(random), Mathf.Sin(random));
 
         Message newMessage = new Message { timePassed = 0, label = label, direction = messageDirection };

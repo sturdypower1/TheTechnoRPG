@@ -36,7 +36,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage:
     damageAmount: 5
-    damageType: 1
+    damageType: 0
+  statusType: 1
 --- !u!114 &-1328837028403015446
 MonoBehaviour:
   m_ObjectHideFlags: 1

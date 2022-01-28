@@ -39,7 +39,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="selection_menu" focusable="true" style="flex-direction: row; height: 120px; display: none; position: absolute; width: 100%; top: 0;">
                     <ui:VisualElement style="width: 50%;">
-                        <ui:Button display-tooltip-when-elided="true" style="height: 25px; width: 26px; background-image: url(&apos;project://database/Assets/Art/Icons/BackIcon.png?fileID=2800000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;);" />
+                        <ui:Button display-tooltip-when-elided="true" name="back_button" style="height: 25px; width: 26px; background-image: url(&apos;project://database/Assets/Art/Icons/BackIcon.png?fileID=2800000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;);" />
                         <ui:ScrollView name="scroll_view" style="height: auto; width: auto;" />
                     </ui:VisualElement>
                     <ui:Label text="Label" display-tooltip-when-elided="true" name="description" style="width: 50%; white-space: normal;" />

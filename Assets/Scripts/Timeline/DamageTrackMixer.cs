@@ -25,6 +25,10 @@ public class DamageTrackMixer : PlayableBehaviour
 
                     DamageBehaviour input = inputPlayable.GetBehaviour();
                     battler.DealDamage(input.damage);
+                    if(input.statusType != StatusEffectTypes.None)
+                    {
+                        battler.ApplyStatusToTarget(input.statusType);
+                    }
                     
                 }
                 wasDamaged = true;
