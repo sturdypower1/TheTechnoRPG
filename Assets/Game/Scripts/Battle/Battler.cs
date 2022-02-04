@@ -74,13 +74,13 @@ public abstract class Battler : MonoBehaviour
    
     public virtual void ApplyStatusEffect(StatusEffectTypes statusType)
     {
-        
         var statusEffect = StatusEffect.EnumToStatus(statusType);
         if (statusEffect != null)
         {
             if (GetComponent(statusEffect) == null)
             {
                 gameObject.AddComponent(statusEffect);
+                headsUpUI.SetStatus(1, statusType);
             }
             else
             {

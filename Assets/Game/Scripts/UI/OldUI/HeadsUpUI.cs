@@ -9,7 +9,11 @@ public class HeadsUpUI : MonoBehaviour
 {
     [SerializeField] private Battler battler;
     [SerializeField] private BattleMessagesUI messageUI;
-
+    [SerializeField] private StatusBar statusBar;
+    public void SetStatus(int level, StatusEffectTypes statusType)
+    {
+        statusBar.SetStatus(level, statusType);
+    }
     public void AddMessage(string text, MessageType messageType)
     {
         messageUI?.AddMessage(text, messageType);
