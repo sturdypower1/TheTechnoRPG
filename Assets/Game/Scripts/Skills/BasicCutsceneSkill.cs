@@ -50,13 +50,11 @@ public class BasicCutsceneSkill : Skill
         director.Play();
 
 
-        BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);
         director.stopped += UnpauseOnCutSceneFinish;
     }
 
     public void UnpauseOnCutSceneFinish(PlayableDirector aDirector)
     {
-        BattleManager.instance.UnPauseBattle();
         aDirector.stopped -= UnpauseOnCutSceneFinish;
     }
 }

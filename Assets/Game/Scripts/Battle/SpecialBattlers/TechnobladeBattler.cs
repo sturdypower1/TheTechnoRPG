@@ -20,7 +20,6 @@ public class TechnobladeBattler : PlayerBattler
             switch (damage.damageType)
             {
                 case DamageType.Bleeding:
-                    target.GetComponent<Battler>().AddBleeding(1, 10);
                     totalDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
                     break;
                 case DamageType.Physical:
@@ -68,7 +67,7 @@ public class TechnobladeBattler : PlayerBattler
             DownBattler();
         }
     }
-    public override Damage CalculateDamageDealt(Damage damage)
+    protected override Damage CalculateDamageDealt(Damage damage)
     {
         var trueDamage = base.CalculateDamageDealt(damage);
         trueDamage.damageAmount *= isInCarnageMode ? 2 : 1;

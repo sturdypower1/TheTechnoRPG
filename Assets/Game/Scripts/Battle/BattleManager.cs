@@ -11,6 +11,7 @@ public class BattleManager : MonoBehaviour
     public List<Battler> Players;
     public List<Battler> Enemies;
     public bool isInBattle;
+    public bool canStartBattle = true;
 
     public bool movingToPosition;
 
@@ -118,32 +119,13 @@ public class BattleManager : MonoBehaviour
 
         UIManager.instance.ResetFocus();
 
-
-        foreach (Battler player in Players)
-        {
-            CharacterStats stats = player.GetComponent<CharacterStats>();
-            Battler battler = player.GetComponent<Battler>();
-            battler.isDown = false;
-            if (stats.stats.health <= 0)
-            {
-                stats.stats.health = isPlayerVictor ? 1 : stats.stats.maxHealth;
-            }
-        }
-        foreach (Battler enemy in Enemies)
-        {
-            enemy.isDown = false;
-        }
-
         if (isPlayerVictor)
         {
-            // play old song
             battleRewardData = new BattleRewardData();
             battleRewardData.items = new List<Item>();
             //add total exp, total gold and items
-            /*foreach (GameObject enemy in Enemies)
+            foreach (Battler enemy in Enemies)
             {
-                Battler battledata = enemy.GetComponent<Battler>();
-                battledata.isInBattle = false;
                 if (enemy.GetComponent<EnemyRewardData>() != null)
                 {
                     EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
@@ -153,13 +135,11 @@ public class BattleManager : MonoBehaviour
                     // seeing if the player gets the item
                     if (enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
                 }
-                enemy.GetComponent<Animator>().SetTrigger("BattleEnd");
-            }*/
-            foreach (Battler battleData in Players)
+                enemy.BattleEnd();
+            }
+            foreach (Battler player in Players)
             {
-                battleData.isInBattle = false;
-
-                //player.GetComponent<Animator>().SetTrigger("BattleEnd");
+                player.BattleEnd();
             }
 
             InkManager.instance.DisplayVictoryData();
@@ -187,30 +167,7 @@ public class BattleManager : MonoBehaviour
     private void ResumeGameWorld()
     {
         InkManager.instance.ContinueStory();
-    }
-    public void PauseBattle(string attackName, string userName, string targetName)
-    {
-        /*Label battleText = UIManager.instance.root.Q<Label>("battle_text");
-        battleText.visible = true;
-        battleText.text = userName + " used " + attackName + " on " + targetName;
-
-        IsWaitingForSkill = true;
-        BattleMenuManager.instance.battleUI.SetEnabled(false);
-        BattleMenuManager.instance.skillSelector.SetEnabled(false);
-        BattleMenuManager.instance.enemySelector.SetEnabled(false);
-        BattleMenuManager.instance.itemSelector.SetEnabled(false);*/
-    }
-    public void UnPauseBattle()
-    {
-        /*Label battleText = UIManager.instance.root.Q<Label>("battle_text");
-        battleText.visible = false;
-
-
-        IsWaitingForSkill = false;
-        BattleMenuManager.instance.battleUI.SetEnabled(true);
-        BattleMenuManager.instance.skillSelector.SetEnabled(true);
-        BattleMenuManager.instance.enemySelector.SetEnabled(true);
-        BattleMenuManager.instance.itemSelector.SetEnabled(true);*/
+        canStartBattle = true;
     }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
@@ -220,52 +177,23 @@ public class BattleManager : MonoBehaviour
         movingToPosition = true;
         InkManager.instance.DisableTextboxUI();
         // start transitioning the background
-        int i = 0;
-        while(i < Enemies.Count)
-        {
-            Battler enemy = Enemies[i];
-            EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
-            Debug.Log("Need to implement new exp system");
-            /*
-             * 
-             * 
-             * if (enemyRewardData.destroyOnDefeat)
-            {
-                Destroy(enemy);
-                Enemies.Remove(enemy);
-            }
-            else
-            {
-                i++;
-            }*/
-        }
-        i = 0;
-        // transition back once the writer is done
         foreach (Battler player in Players)
         {
-            player.BattleEnd();
-            i++;
+            player.ReturnToOverworld();
         }
         foreach (Battler enemy in Enemies)
         {
-            enemy.BattleEnd();
+            enemy?.ReturnToOverworld();
         }
         StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
-
-        
-    }
-    public void UnpauseBattler(GameObject battler)
-    {
-        Animator animator = battler.GetComponent<Animator>();
-        // time scaled time will be set to 0, so to play animations it needs to be in unscaled time
-        animator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
     public void StartBattle()
     {
-        if(BattleMusic != null) BattleMusic.Play();
+        if (!canStartBattle) return;
+        if (BattleMusic != null) BattleMusic.Play();
 
         isInBattle = true;
-        
+        canStartBattle = false;
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
@@ -341,62 +269,6 @@ public class BattleManager : MonoBehaviour
         UIManager.instance.overworldOverlay.visible = false;
         UIManager.instance.ResetFocus();
     }
-    IEnumerator TransitionToBattlePosition(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
-    {
-        movingToPosition = true;
-        // disable collision
-        if(transformy.GetComponent<Collider2D>() != null)
-        {
-            Collider2D collider = transformy.GetComponent<Collider2D>();
-            collider.enabled = false;
-        }
-
-        Transform transform = transformy.transform;
-        Vector3 oldPosition = transform.position;
-        newPosition.z = 0;
-        float timePassed = 0;
-        while(transform.position != newPosition)
-        {
-            timePassed += Time.unscaledDeltaTime;
-            transform.position = Vector3.Lerp(oldPosition, newPosition, timePassed/ duration);
-            yield return null;
-        }
-        if (triggerEvent)
-        {
-            inBattlePositon?.Invoke();
-        }
-        movingToPosition = false;
-    }
-
-    IEnumerator TransitionToOriginalPositions(GameObject transformy, Vector3 newPosition, bool triggerEvent, float duration)
-    {
-        movingToPosition = true;
-
-        Transform transform = transformy.transform;
-        Vector3 oldPosition = transform.position;
-
-        float totalTime = 0;
-        
-        while (transform.position != newPosition)
-        {
-            totalTime += Time.unscaledDeltaTime;
-            transform.position = Vector3.Lerp(oldPosition, newPosition, totalTime/ duration);
-            yield return null;
-        }
-        // enable collision
-        if (transformy.GetComponent<Collider2D>() != null)
-        {
-            Collider2D collider = transformy.GetComponent<Collider2D>();
-            collider.enabled = true;
-        }
-        movingToPosition = false;
-        if (triggerEvent)
-        {
-            inOverworldPosition?.Invoke();
-        }
-        
-    }
-
     IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)
     {
         float timePassed = 0;
@@ -409,7 +281,7 @@ public class BattleManager : MonoBehaviour
             background.SetPropertyBlock(myMatBlock);
             yield return null;
         }
-        if (!isInBattle)
+        if (canStartBattle)
         {
             StartBattle();
         }
@@ -417,11 +289,13 @@ public class BattleManager : MonoBehaviour
 
     public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
     {
+        Debug.Log("transition this to battler class");
         Transform prefabTransform = Instantiate(prefab).transform;
         prefabTransform.position = position;
     }
     public void SetUserTargetTransforms(Transform target, Transform user)
     {
+        Debug.Log("transition this to battler class");
         targetTransform.position = target.position;
         userTransform.position = user.position;
     }

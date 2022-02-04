@@ -142,9 +142,6 @@ public class CharacterBattleUI : MonoBehaviour
 
         foreach (Battler enemyBattler in BattleManager.instance.Enemies)
         {
-            Debug.Log("make it so the ui is custom");
-            //TemplateContainer template = enemyBattler.GetSelectionTemplate();
-
             Button button = new Button();//template.Q<Button>("Base");
             button.clicked += () => AttackEnemySelectButton(enemyBattler, button);
             button.text = enemyBattler.characterStats.name;
@@ -254,7 +251,7 @@ public class CharacterBattleUI : MonoBehaviour
             //button.RegisterCallback<PointerEnterEvent>(ev => UpdateSelectionDescription(item.description));
             // if it isn't usable, don't let the player use the item
             //item.GetUseability()
-            if (true)
+            if (item.GetUseability())
             {
                 button.SetEnabled(true);
             }

@@ -38,7 +38,6 @@ public class BasicSkill : Skill
         switch (damageType)
         {
             case DamageType.Bleeding:
-                target.GetComponent<Battler>().AddBleeding(1, 10);
                 totalDamage = user.GetComponent<CharacterStats>().equipedWeapon.CalculateDamage(new Damage { damageAmount = damage, damageType = DamageType.Physical }, target, user);
                 break;
             case DamageType.Physical:
@@ -47,14 +46,11 @@ public class BasicSkill : Skill
         }
         user.GetComponent<Battler>().DealDamage(totalDamage);
 
-
-        BattleManager.instance.PauseBattle(name, user.GetComponent<CharacterStats>().stats.characterName, target.GetComponent<CharacterStats>().stats.characterName);
         BattleManager.instance.StartCoroutine(WaitToUnpauseBattle(useTime));
     }
 
     IEnumerator WaitToUnpauseBattle(float time)
     {
         yield return new WaitForSecondsRealtime(time);
-        BattleManager.instance.UnPauseBattle();
     }
 }

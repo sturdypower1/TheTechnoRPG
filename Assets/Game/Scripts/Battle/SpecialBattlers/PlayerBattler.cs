@@ -24,20 +24,36 @@ public class PlayerBattler : Battler
         base.BattleStart();
         battleUI.EnableUI();
     }
-
-    public override void WaitOnSkillFinished(float timeToWait)
+    public override void BattleEnd()
+    {
+        base.BattleEnd();
+        battleUI.DisableUI();
+    }
+    public virtual void Defend()
+    {
+        isDefending = true;
+        animator.SetBool("Defending", true);
+        Invoke("WaitOnDefendFinished", defendTime);
+    }
+    // is invoked later by defend
+    public virtual void WaitOnDefendFinished()
+    {
+        isDefending = false;
+        animator.SetBool("Defending", false);
+        Invoke("Reenable", defenceRecovery);
+    }
+    protected override void WaitOnSkillFinished(float timeToWait)
     {
         base.WaitOnSkillFinished(timeToWait);
         battleUI.StartRecoveryBarTween(timeToWait);
     }
-    public override void Reenable()
+    protected override void Reenable()
     {
         base.Reenable();
         AudioManager.playSound("menuavailable");
         battleUI.GoToStartingState();
     }
-
-    public override Damage CalculateDamageTaken(Damage damage)
+    protected override Damage CalculateDamageTaken(Damage damage)
     {
         var trueDamage = base.CalculateDamageTaken(damage);
         if (isDefending)
@@ -46,16 +62,5 @@ public class PlayerBattler : Battler
         }
         return trueDamage;
     }
-    public virtual void Defend()
-    {
-        isDefending = true;
-        animator.SetBool("Defending", true);
-        Invoke("WaitOnDefendFinished", defendTime);
-    }
-    public virtual void WaitOnDefendFinished()
-    {
-        isDefending = false;
-        animator.SetBool("Defending", false);
-        Invoke("Reenable", defenceRecovery);
-    }
+    
 }

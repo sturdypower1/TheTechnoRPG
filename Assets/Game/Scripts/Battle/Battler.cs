@@ -37,7 +37,7 @@ public abstract class Battler : MonoBehaviour
     public Vector3 oldPosition;
     [HideInInspector] public bool isDown;
     [HideInInspector] public CharacterStats characterStats;
-    [HideInInspector]public Animator animator;
+    [HideInInspector] public Animator animator;
     [HideInInspector] public PlayableDirector skillDirector;
     /// <summary>
     /// the target position 
@@ -65,13 +65,6 @@ public abstract class Battler : MonoBehaviour
             BattleOffset = this.transform;
         }
     }
-    
-    public virtual void DownBattler()
-    {
-        isDown = true;
-        animator.SetTrigger("Down");
-    }
-   
     public virtual void ApplyStatusEffect(StatusEffectTypes statusType)
     {
         var statusEffect = StatusEffect.EnumToStatus(statusType);
@@ -92,7 +85,7 @@ public abstract class Battler : MonoBehaviour
     {
         target.ApplyStatusEffect(statusType);
     }
-    public virtual void TakeDamage(Damage damage) 
+    public virtual void TakeDamage(Damage damage)
     {
         Damage trueDamage = CalculateDamageTaken(damage);
         AddDamageMessage(damage);
@@ -103,7 +96,7 @@ public abstract class Battler : MonoBehaviour
         }
         CheckIfDown();
     }
-    public virtual void DealDamage(Damage damage) 
+    public virtual void DealDamage(Damage damage)
     {
         if (target != null)
         {
@@ -111,68 +104,14 @@ public abstract class Battler : MonoBehaviour
             target.GetComponent<Battler>().TakeDamage(trueDamage);
         }
     }
-    public virtual Damage CalculateDamageDealt(Damage damage)
-    {
-        Damage trueDamage = new Damage();
-
-        switch (damage.damageType)
-        {
-            case DamageType.Bleeding:
-                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
-                break;
-            case DamageType.Physical:
-                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
-                break;
-        }
-        return trueDamage;
-    }
-    public virtual Damage CalculateDamageTaken(Damage damage)
-    {
-        Damage trueDamage = new Damage();
-        if (characterStats.equipedArmor != null)
-        {
-            trueDamage = characterStats.equipedArmor.CalculateDamage(damage); ;
-        }
-        else
-        {
-            trueDamage = damage;
-        }
-        return trueDamage;
-    }
-    
-    public virtual void CheckIfDown()
-    {
-        if (characterStats.stats.health <= 0)
-        {
-            DownBattler();
-        }
-    }
-
     public virtual void Heal(int recovery)
     {
         characterStats.stats.health += recovery;
-        if(characterStats.stats.health > characterStats.stats.maxHealth)
+        if (characterStats.stats.health > characterStats.stats.maxHealth)
         {
             characterStats.stats.health = characterStats.stats.maxHealth;
         }
         headsUpUI.AddMessage(recovery.ToString(), MessageType.Healing);
-    }
-    
-    public virtual void UseSkill(Battler target, int skillNumber)
-    {
-        canMakeAction = false;
-        Skill skill = characterStats.skills[skillNumber];
-        skill.UseSkill(target, this);
-        _currentSkillWaitTime = skill.useTime;
-    }
-    public virtual void WaitOnSkillFinished(float timeToWait)
-    {
-        Invoke("Reenable", timeToWait);
-    }
-
-    public virtual void Reenable()
-    {
-        canMakeAction = true;
     }
     public virtual void BattleSetup(Vector2 newPosition)
     {
@@ -190,10 +129,10 @@ public abstract class Battler : MonoBehaviour
             name = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name,
             normilizedtime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime
         };
-        
+
 
         battlePosition = newPosition;
-        StartCoroutine(TransitionToBattlePosition( newPosition, .5f));
+        StartCoroutine(TransitionToBattlePosition(newPosition, .5f));
     }
     public virtual void BattleStart()
     {
@@ -202,39 +141,84 @@ public abstract class Battler : MonoBehaviour
     }
     public virtual void BattleEnd()
     {
+        
+    }
+    public virtual void ReturnToOverworld()
+    {
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         sprite.sortingLayerName = "Characters";
         animator.Play(animationSaveData.name, 0, animationSaveData.normilizedtime);
         StartCoroutine(TransitionToOriginalPositions(oldPosition, .5f));
     }
-    
-    public virtual TemplateContainer GetSelectionTemplate()
+    protected virtual void DownBattler()
     {
-        return new TemplateContainer();
+        isDown = true;
+        animator.SetTrigger("Down");
     }
-    public virtual void AddBleeding(int levelGain, int Limit)
+    protected virtual Damage CalculateDamageDealt(Damage damage)
     {
-        if(GetComponent<Bleeding>() != null)
+        Damage trueDamage = new Damage();
+
+        switch (damage.damageType)
         {
-            // add bleeding to the object, if it already has it increase its level
-            Bleeding bleeding = GetComponent<Bleeding>();
-            if(bleeding.level + levelGain >= Limit)
-            {
-                // if the current level of bleeding is greater 
-                bleeding.level = bleeding.level > Limit ? bleeding.level : Limit;
-            }
-            else
-            {
-                bleeding.level += levelGain;
-            }
-            
+            case DamageType.Bleeding:
+                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
+                break;
+            case DamageType.Physical:
+                trueDamage = characterStats.equipedWeapon.CalculateDamage(new Damage { damageAmount = damage.damageAmount, damageType = DamageType.Physical }, target, this);
+                break;
+        }
+        return trueDamage;
+    }
+    protected virtual Damage CalculateDamageTaken(Damage damage)
+    {
+        Damage trueDamage = new Damage();
+        if (characterStats.equipedArmor != null)
+        {
+            trueDamage = characterStats.equipedArmor.CalculateDamage(damage); ;
         }
         else
         {
-            this.gameObject.AddComponent<Bleeding>();
+            trueDamage = damage;
         }
+        return trueDamage;
     }
     
+    protected virtual void CheckIfDown()
+    {
+        if (characterStats.stats.health <= 0)
+        {
+            DownBattler();
+        }
+    }
+    protected virtual void UseSkill(Battler target, int skillNumber)
+    {
+        canMakeAction = false;
+        Skill skill = characterStats.skills[skillNumber];
+        skill.UseSkill(target, this);
+        _currentSkillWaitTime = skill.useTime;
+    }
+    protected virtual void WaitOnSkillFinished(float timeToWait)
+    {
+        Invoke("Reenable", timeToWait);
+    }
+    protected virtual void Reenable()
+    {
+        canMakeAction = true;
+    }
+    protected void AddDamageMessage(Damage damage)
+    {
+        switch (damage.damageType)
+        {
+            case DamageType.Bleeding:
+                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.BleedingDamage);
+                break;
+            case DamageType.Physical:
+                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.PhysicalDamage);
+                break;
+        }
+    }
+
     IEnumerator TransitionToBattlePosition(Vector3 newPosition, float duration)
     {
         // disable collision
@@ -274,16 +258,5 @@ public abstract class Battler : MonoBehaviour
         }
     }
     
-    public void AddDamageMessage(Damage damage)
-    {
-        switch (damage.damageType)
-        {
-            case DamageType.Bleeding:
-                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.BleedingDamage);
-                break;
-            case DamageType.Physical:
-                headsUpUI.AddMessage(damage.damageAmount.ToString(), MessageType.PhysicalDamage);
-                break;
-        }
-    }
+    
 }
