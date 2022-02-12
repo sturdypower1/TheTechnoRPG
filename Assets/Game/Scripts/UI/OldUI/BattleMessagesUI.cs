@@ -35,4 +35,6 @@ public class BattleMessagesUI : MonoBehaviour
         message = messageObject.GetComponent<Message>();
         return message;
     }
+
+   
 }

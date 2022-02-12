@@ -252,10 +252,6 @@ public class BattleMenuManager : MonoBehaviour
         previousUI.visible = true;
 
         // makes sure that this functionality doesn't doesn't stay after exiting the skills
-        foreach (EnemySelectorUI selectorUI in BattleManager.instance.enemySelectorUI)
-        {
-            selectorUI.ui.Q<Button>("Base").clicked -= cachedHandler;
-        }
         cachedHandler = null;
     }
     /// <summary>

@@ -10,10 +10,12 @@ public class Message : MonoBehaviour
 {
     [SerializeField] private float duration = 1f;
     [SerializeField]private TMP_Text text;
-    
+
+    private Tween tween;
     private void Awake()
     {
         text = text == null ? GetComponent<TMP_Text>() : text;
+        
     }
 
     public virtual void Initialize(string newText, RectTransform spawnArea)
@@ -32,7 +34,7 @@ public class Message : MonoBehaviour
 
         transform.localPosition = startingPosition;
         var isEndingXSmaller = startingPosition.x > endingPosition.x;
-        var tween = DOVirtual.Vector3(startingPosition, endingPosition, duration, v =>
+        tween = DOVirtual.Vector3(startingPosition, endingPosition, duration, v =>
         {
             transform.localPosition = v;
         });
@@ -41,5 +43,10 @@ public class Message : MonoBehaviour
             text.alpha = v;
         });
         tween.onComplete += () => Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        tween.Kill();
     }
 }

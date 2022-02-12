@@ -22,26 +22,21 @@ public class BattleManager : MonoBehaviour
     public event EmptyEventHandler inBattlePositon;
 
     public event EmptyEventHandler inOverworldPosition;
-    /// <summary>
-    /// a list of all of the ui for selecting an enemy
-    /// </summary>
-    public List<EnemySelectorUI> enemySelectorUI = new List<EnemySelectorUI>();
-
-    //public event EmptyEventHandler settingUpBattle;
-
-    [HideInInspector]
-    public AudioSource BattleMusic;
     
     public event BattleEndEventHandler OnBattleEnd;
 
     public BattleRewardData battleRewardData;
-    [HideInInspector]
-    public SpriteRenderer BattleBackground;
+    
 
     public bool IsWaitingForSkill;
 
     public Transform userTransform;
     public Transform targetTransform;
+
+    [HideInInspector]
+    public AudioSource BattleMusic;
+    [HideInInspector]
+    public SpriteRenderer BattleBackground;
 
     private void Awake()
     {
@@ -68,11 +63,6 @@ public class BattleManager : MonoBehaviour
     {
         if (isInBattle)
         {
-            foreach(EnemySelectorUI enemySelector in enemySelectorUI)
-            {
-                enemySelector.Update();
-            }
-
             bool isPlayerVictory = true;
             foreach(Battler enemy in Enemies)
             {
@@ -167,7 +157,6 @@ public class BattleManager : MonoBehaviour
     private void ResumeGameWorld()
     {
         InkManager.instance.ContinueStory();
-        canStartBattle = true;
     }
     /// <summary>
     /// what happens when the ink story is done displaying the victory data
@@ -239,7 +228,6 @@ public class BattleManager : MonoBehaviour
         }
 
         Enemies.Clear();
-        enemySelectorUI.Clear();
 
         VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
         i = 0;
@@ -256,16 +244,9 @@ public class BattleManager : MonoBehaviour
 
             enemy.BattleSetup(tempPos);
             i++;
-            /*EnemySelectorUI enemySelector = new EnemySelectorUI { ui = enemySelectionUITemplate.CloneTree() , sprite = enemy.GetComponent<SpriteRenderer>(), enemy = enemy.GetComponent<Battler>()};
-            enemySelectorUI.Add(enemySelector);
-            enemySelectorGroup.Add(enemySelector.ui);
-
-            //making it so when it's focused, the enemy glows
-            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusEvent>(ev => enemySelector.SelectUI());
-            // making it so when it's un focused, it no longer glows
-            enemySelector.ui.Q<Button>("Base").RegisterCallback<FocusOutEvent>(ev => enemySelector.UnSelectUI());*/
         }
 
+        canStartBattle = true;
         UIManager.instance.overworldOverlay.visible = false;
         UIManager.instance.ResetFocus();
     }
@@ -285,6 +266,10 @@ public class BattleManager : MonoBehaviour
         {
             StartBattle();
         }
+        else
+        {
+            inOverworldPosition.Invoke();
+        }
     }
 
     public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
@@ -292,12 +277,6 @@ public class BattleManager : MonoBehaviour
         Debug.Log("transition this to battler class");
         Transform prefabTransform = Instantiate(prefab).transform;
         prefabTransform.position = position;
-    }
-    public void SetUserTargetTransforms(Transform target, Transform user)
-    {
-        Debug.Log("transition this to battler class");
-        targetTransform.position = target.position;
-        userTransform.position = user.position;
     }
 }
 
