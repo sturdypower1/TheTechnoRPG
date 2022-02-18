@@ -365,8 +365,10 @@ public class InkManager : MonoBehaviour
                 //ContinuingAfter = !inkStory.currentTags.Contains("EndLine");
             }
         }
-        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText && !BattleManager.instance.movingToPosition)
+        //Todo: possible fix battle transition edge case where this breaks if the battle background is transitioning
+        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText)
         {
+            Debug.Log("end of dialogue");
             if(inkStory.currentFlowName == "victory")
             {
                 DisableTextboxUI();
@@ -376,6 +378,7 @@ public class InkManager : MonoBehaviour
             }
             else if(inkStory.currentFlowName != "battle")
             {
+                Debug.Log("resuming");
                 PauseManager.instance.UnPause();
 
                 CameraController.instance.ToOverworldCamera();

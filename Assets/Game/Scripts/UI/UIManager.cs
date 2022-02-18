@@ -178,30 +178,6 @@ public class UIManager : MonoBehaviour
 
                 overworldOverlay.Q<Button>("interactive_item_check").SetEnabled(false);
                 overworldOverlay.Q<Button>("interactive_item_check").clicked += InteractButton;}
-            // for battle menu
-            {
-            VisualElement battleBackground = root.Q<VisualElement>("battle_background");
-            VisualElement battleUI = battleBackground.Q<VisualElement>("BattleUI");
-            VisualElement losingBackground = root.Q<VisualElement>("losing_screen");
-            losingBackground.Q<Button>("continue").clicked += BattleMenuManager.instance.ContinueButton;
-            losingBackground.Q<Button>("title").clicked += BattleMenuManager.instance.LossReturnToTitleButton;
-            
-            // should be technoblade
-            VisualElement technobladeBattleUI = battleUI.Q<VisualElement>("character1");
-            technobladeBattleUI.Q<Button>("fight").clicked += () => BattleMenuManager.instance.AttackButton(0);
-            technobladeBattleUI.Q<Button>("skills").clicked += () => BattleMenuManager.instance.SkillsButton(0);
-            technobladeBattleUI.Q<Button>("items").clicked += () => BattleMenuManager.instance.ItemsButton(0);
-
-            // should be steve
-            VisualElement steveBattleUI = battleUI.Q<VisualElement>("character2");
-            steveBattleUI.Q<Button>("fight").clicked += () => BattleMenuManager.instance.AttackButton(1);
-            steveBattleUI.Q<Button>("skills").clicked += () => BattleMenuManager.instance.SkillsButton(1);
-            steveBattleUI.Q<Button>("items").clicked += () => BattleMenuManager.instance.ItemsButton(1);
-
-            battleBackground.Q<Button>("selector_back_button").clicked += BattleMenuManager.instance.EnemySelectBack;
-            battleBackground.Q<Button>("skills_back_button").clicked += BattleMenuManager.instance.SkillsBackButton;
-            battleBackground.Q<Button>("items_back_button").clicked += BattleMenuManager.instance.ItemsBackButton;
-            }
             overworldSaveFileSelect = root.Q<VisualElement>("overworld_file_select");
             TemplateContainer fileContainer1 = overworldSaveFileSelect.Q<TemplateContainer>("save_file1");
             fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(1);

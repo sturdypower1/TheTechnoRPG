@@ -20,7 +20,7 @@ public class RandomEnemyBattleAI : MonoBehaviour
         int numPlayer = BattleManager.instance.Players.Count;
 
         int Target = Random.Range((int)0, numPlayer);
-        if(battler.isInBattle && BattleManager.instance.isInBattle && !BattleManager.instance.IsWaitingForSkill)
+        if(battler.isInBattle && BattleManager.instance.isInBattle)
         {
             if (!battler.isDown && battler.useTime >= battler.maxUseTime)
             {

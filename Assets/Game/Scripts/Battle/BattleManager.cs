@@ -1,50 +1,109 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using UnityEngine.UIElements;
 using UnityEngine.Playables;
-[RequireComponent(typeof(PlayableDirector))]
+using DG.Tweening;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
-    public List<Battler> Players;
-    public List<Battler> Enemies;
-    public bool isInBattle;
-    public bool canStartBattle = true;
 
-    public bool movingToPosition;
+    public event BattleEndEventHandler OnBattleEnd;
 
-    public PlayableDirector director;
+    public float battleSetupSpeed = .5f;
+    public float overworldReturnSpeed = .5f;
 
     public VisualTreeAsset enemySelectionUITemplate;
 
-    public event EmptyEventHandler inBattlePositon;
+    [HideInInspector]public BattleRewardData battleRewardData;
 
-    public event EmptyEventHandler inOverworldPosition;
-    
-    public event BattleEndEventHandler OnBattleEnd;
+    [HideInInspector]public Transform userTransform;
+    [HideInInspector]public Transform targetTransform;
 
-    public BattleRewardData battleRewardData;
-    
+    [HideInInspector]public bool isInBattle;
 
-    public bool IsWaitingForSkill;
+    [HideInInspector]public bool movingToPosition;
 
-    public Transform userTransform;
-    public Transform targetTransform;
+    [HideInInspector]public AudioSource BattleMusic;
 
-    [HideInInspector]
-    public AudioSource BattleMusic;
-    [HideInInspector]
-    public SpriteRenderer BattleBackground;
+    [HideInInspector]public SpriteRenderer BattleBackground;
+
+    [HideInInspector]public List<Battler> Players;
+    [HideInInspector]public List<Battler> Enemies;
+
+
+    public void SetupBattle(Battler[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
+    {
+        AudioManager.PauseCurrentSong();
+        BattleBackground = battleBackground;
+
+        BattleMusic = battleMusic;
+        PauseManager.instance.Pause();
+
+        var backgroundTween = DOVirtual.Float(0, 1, overworldReturnSpeed, v =>
+        {
+            SetBackgroundAlpha(v);
+        });
+        backgroundTween.onComplete += StartBattle;
+
+        Camera cam = Camera.main;
+        float positionRatio = 1280.0f / cam.pixelWidth;
+        // transition all of the characters
+
+        CameraController.instance.ToBattleCamera();
+
+        Players.Clear();
+        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject.GetComponent<Battler>());
+
+        // need to start trasition of the new camera
+        int i = 0;
+        foreach (Battler player in Players)
+        {
+            float spawnzone = cam.scaledPixelHeight * .7f;
+            float startingIncrement = cam.scaledPixelHeight * .1f;
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (spawnzone / (Players.Count + 1)) + startingIncrement), 0));
+            tempPos.z = 0;
+            player.BattleSetup(tempPos);
+            i++;
+        }
+
+        Enemies.Clear();
+
+        VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
+        i = 0;
+        foreach (Battler enemy in enemies)
+        {
+            // makes it so the sprite is above the battle backgroun
+
+            Enemies.Add(enemy);
+
+            float spawnzone = cam.scaledPixelHeight * .7f;
+            float startingIncrement = cam.scaledPixelHeight * .1f;
+            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (spawnzone / (enemies.Length + 1)) + startingIncrement), 0));
+            tempPos.z = 0;
+
+            enemy.BattleSetup(tempPos);
+            i++;
+        }
+
+        UIManager.instance.overworldOverlay.visible = false;
+        UIManager.instance.ResetFocus();
+    }
+
+    public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
+    {
+        Debug.Log("transition this to battler class");
+        Transform prefabTransform = Instantiate(prefab).transform;
+        prefabTransform.position = position;
+    }
 
     private void Awake()
     {
         if(instance == null)
         {
             instance = this;
-
-            inBattlePositon += StartBattle;
         }
         else
         {
@@ -54,9 +113,6 @@ public class BattleManager : MonoBehaviour
     private void Start()
     {
         InkManager.instance.OnVictoryDisplayFinish += FinishVictoryData_OnDisplayFinished;
-        inOverworldPosition += ResumeGameWorld;
-
-        director = GetComponent<PlayableDirector>();
     }
 
     private void Update()
@@ -158,14 +214,11 @@ public class BattleManager : MonoBehaviour
     {
         InkManager.instance.ContinueStory();
     }
-    /// <summary>
-    /// what happens when the ink story is done displaying the victory data
-    /// </summary>
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
     {
         movingToPosition = true;
         InkManager.instance.DisableTextboxUI();
-        // start transitioning the background
+
         foreach (Battler player in Players)
         {
             player.ReturnToOverworld();
@@ -174,109 +227,39 @@ public class BattleManager : MonoBehaviour
         {
             enemy?.ReturnToOverworld();
         }
-        StartCoroutine(TransitionBackgroundAlpha(1, 0, BattleBackground, .5f));
+
+        var backgroundTween = DOVirtual.Float(1, 0, overworldReturnSpeed, v =>
+        {
+            SetBackgroundAlpha(v);
+        });
+        backgroundTween.onComplete += ResumeGameWorld;
     }
-    public void StartBattle()
+
+    private void StartBattle()
     {
-        if (!canStartBattle) return;
         if (BattleMusic != null) BattleMusic.Play();
 
         isInBattle = true;
-        canStartBattle = false;
 
         Camera cam = FindObjectOfType<Camera>();
         float positionRatio = 1280.0f / cam.pixelWidth;
-        
+
         foreach (Battler battler in Players)
         {
-            battler.BattleStart();   
+            battler.BattleStart();
         }
         foreach (Battler battler in Enemies)
         {
             battler.BattleStart();
         }
     }
-    public void SetupBattle(Battler[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
+
+    private void SetBackgroundAlpha(float newAlpha)
     {
-        AudioManager.PauseCurrentSong();
-        BattleBackground = battleBackground;
-
-        BattleMusic = battleMusic;
-        PauseManager.instance.Pause();
-
-        StartCoroutine(TransitionBackgroundAlpha(0, 1, battleBackground, .5f));
-
-        Camera cam = Camera.main;
-        float positionRatio = 1280.0f / cam.pixelWidth;
-        // transition all of the characters
-
-        CameraController.instance.ToBattleCamera();
-
-        Players.Clear();
-        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject.GetComponent<Battler>());
-
-        // need to start trasition of the new camera
-        int i = 0;
-        foreach (Battler player in Players)
-        {
-            float spawnzone = cam.scaledPixelHeight * .7f;
-            float startingIncrement = cam.scaledPixelHeight * .1f;
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .15f, ((i + 1) * (spawnzone / (Players.Count + 1)) + startingIncrement), 0));
-            tempPos.z = 0;
-            player.BattleSetup(tempPos);
-            i++;
-        }
-
-        Enemies.Clear();
-
-        VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
-        i = 0;
-        foreach (Battler enemy in enemies)
-        {
-            // makes it so the sprite is above the battle backgroun
-
-            Enemies.Add(enemy);
-
-            float spawnzone = cam.scaledPixelHeight * .7f;
-            float startingIncrement = cam.scaledPixelHeight * .1f;
-            Vector3 tempPos = cam.ScreenToWorldPoint(new Vector3(cam.pixelWidth * .85f, ((i + 1) * (spawnzone / (enemies.Length + 1)) + startingIncrement), 0));
-            tempPos.z = 0;
-
-            enemy.BattleSetup(tempPos);
-            i++;
-        }
-
-        canStartBattle = true;
-        UIManager.instance.overworldOverlay.visible = false;
-        UIManager.instance.ResetFocus();
-    }
-    IEnumerator TransitionBackgroundAlpha(float a, float b, SpriteRenderer background, float duration)
-    {
-        float timePassed = 0;
-        while(timePassed < duration)
-        {
-            timePassed += Time.unscaledDeltaTime;
-            MaterialPropertyBlock myMatBlock = new MaterialPropertyBlock();
-            background.GetPropertyBlock(myMatBlock);
-            myMatBlock.SetFloat("Alpha", Mathf.Lerp(a, b, timePassed/ duration));
-            background.SetPropertyBlock(myMatBlock);
-            yield return null;
-        }
-        if (canStartBattle)
-        {
-            StartBattle();
-        }
-        else
-        {
-            inOverworldPosition.Invoke();
-        }
-    }
-
-    public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
-    {
-        Debug.Log("transition this to battler class");
-        Transform prefabTransform = Instantiate(prefab).transform;
-        prefabTransform.position = position;
+        MaterialPropertyBlock myMatBlock = new MaterialPropertyBlock();
+        BattleBackground.GetPropertyBlock(myMatBlock);
+        myMatBlock.SetFloat("Alpha", newAlpha);
+        BattleBackground.SetPropertyBlock(myMatBlock);
     }
 }
 
@@ -290,3 +273,8 @@ public struct BattleRewardData
 public delegate void EmptyEventHandler();
 
 public delegate void BattleEndEventHandler( OnBattleEndEventArgs e);
+
+public class OnBattleEndEventArgs : EventArgs
+{
+    public bool isPlayerVictor { get; set; }
+}

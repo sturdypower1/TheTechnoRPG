@@ -257,9 +257,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6530367028307287781, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: orthographic size
-      value: 2.5
+      value: 2.4107144
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4891634517925458902, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
 --- !u!1 &83297777
 GameObject:
@@ -3032,6 +3033,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battler: {fileID: 1112990736}
   messageUI: {fileID: 0}
+  statusBar: {fileID: 0}
 --- !u!1001 &728951584
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3203,8 +3205,12 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2246103621664645788, guid: 5b6186c95b9d4b940a1a3c0e88866244, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.895
+      objectReference: {fileID: 0}
+    - target: {fileID: 2246103621664645788, guid: 5b6186c95b9d4b940a1a3c0e88866244, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.15625
+      value: -0.1825
       objectReference: {fileID: 0}
     - target: {fileID: 2246103621664645788, guid: 5b6186c95b9d4b940a1a3c0e88866244, type: 3}
       propertyPath: m_LocalPosition.y
