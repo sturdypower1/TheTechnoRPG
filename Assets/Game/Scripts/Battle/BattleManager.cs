@@ -167,19 +167,12 @@ public class BattleManager : MonoBehaviour
 
         if (isPlayerVictor)
         {
-            battleRewardData = new BattleRewardData();
-            battleRewardData.items = new List<Item>();
-            //add total exp, total gold and items
+            InitializeBattleRewards();
             foreach (Battler enemy in Enemies)
             {
                 if (enemy.GetComponent<EnemyRewardData>() != null)
                 {
-                    EnemyRewardData enemyRewardData = enemy.GetComponent<EnemyRewardData>();
-                    float randomValue = UnityEngine.Random.Range(0, 1);
-                    battleRewardData.totalEXP += enemyRewardData.EXP;
-                    battleRewardData.totalGold += enemyRewardData.gold;
-                    // seeing if the player gets the item
-                    if (enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance) battleRewardData.items.Add(enemyRewardData.itemData.item);
+                    AddRewards(enemy);
                 }
                 enemy.BattleEnd();
             }
@@ -189,13 +182,9 @@ public class BattleManager : MonoBehaviour
             }
 
             InkManager.instance.DisplayVictoryData();
-
-            OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
         }
         else
         {
-            OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
-
             AudioManager.playSound("defeatsong");
             VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
             if (Directory.GetFiles(Application.persistentDataPath + "/tempsave").Length <= 0)
@@ -209,6 +198,23 @@ public class BattleManager : MonoBehaviour
 
             losingBackground.visible = true;
         }
+        OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
+    }
+    private void AddRewards(Battler battler)
+    {
+        EnemyRewardData enemyRewardData = battler.GetComponent<EnemyRewardData>();
+        float randomValue = UnityEngine.Random.Range(0, 1);
+
+        battleRewardData.totalEXP += enemyRewardData.EXP;
+        battleRewardData.totalGold += enemyRewardData.gold;
+        // seeing if the player gets the item
+        var obtainsItem = enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance;
+        if (obtainsItem) battleRewardData.items.Add(enemyRewardData.itemData.item);
+    }
+    private void InitializeBattleRewards()
+    {
+        battleRewardData = new BattleRewardData();
+        battleRewardData.items = new List<Item>();
     }
     private void ResumeGameWorld()
     {

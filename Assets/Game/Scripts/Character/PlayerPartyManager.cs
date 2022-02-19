@@ -91,9 +91,29 @@ public class PlayerPartyManager : MonoBehaviour
     {
         return players.Contains(player);
     }
-
-    public void AddExperiance(int experiance)
+    /// <summary>
+    /// returns all the levelups that occur
+    /// </summary>
+    /// <param name="experiance"></param>
+    public List<PlayerLevelUpData> AddExperiance(int experiance)
     {
-        Debug.Log("not implemented");
+        var playerLevelUpList = new List<PlayerLevelUpData>();
+        foreach(GameObject player in players)
+        {
+            var playerLevelUpController = player.GetComponent<LevelUpController>();
+            var currentPlayerLevelUpList = playerLevelUpController.AddExperience(experiance);
+            foreach(PlayerLevelUpData levelUpData in currentPlayerLevelUpList)
+            {
+                playerLevelUpList.Add(levelUpData);
+            }
+        }
+        return playerLevelUpList;
     }
+}
+
+public struct PlayerLevelUpData
+{
+    public string playerName;
+    public int level;
+    public LevelReward levelReward;
 }

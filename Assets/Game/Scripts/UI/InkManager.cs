@@ -109,7 +109,7 @@ public class InkManager : MonoBehaviour
         
     }
 
-    public void LevelUp(){
+    public void DisplayNextLevelUp(){
         //level up the character and change the data in the ink story to reflect that
         foreach(GameObject player in PlayerPartyManager.instance.players)
         {
@@ -284,7 +284,9 @@ public class InkManager : MonoBehaviour
     /// called to read the next line of text for the story
     /// </summary>
     public void ContinueStory(){
-        if(inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText)
+        var canContinue = inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText;
+        var canEnd = !isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText;
+        if (canContinue)
         {
             
             // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
@@ -362,13 +364,11 @@ public class InkManager : MonoBehaviour
                     instant = false;
                 }
                 UpdateTextBox();
-                //ContinuingAfter = !inkStory.currentTags.Contains("EndLine");
             }
         }
         //Todo: possible fix battle transition edge case where this breaks if the battle background is transitioning
-        else if (!isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText)
+        else if (canEnd)
         {
-            Debug.Log("end of dialogue");
             if(inkStory.currentFlowName == "victory")
             {
                 DisableTextboxUI();
@@ -378,7 +378,6 @@ public class InkManager : MonoBehaviour
             }
             else if(inkStory.currentFlowName != "battle")
             {
-                Debug.Log("resuming");
                 PauseManager.instance.UnPause();
 
                 CameraController.instance.ToOverworldCamera();
@@ -535,8 +534,6 @@ public class InkManager : MonoBehaviour
 
         return new CharacterPortraitData();
     }
-    
-
 }
 
 [System.Serializable]
