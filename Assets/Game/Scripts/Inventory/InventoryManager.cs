@@ -95,11 +95,17 @@ public class InventoryManager : MonoBehaviour
         items.Add(item);
         InkManager.instance.DisplayNewItem(item.name);
     }
+    public void AddItems(List<Item> items)
+    {
+        foreach(Item item in items)
+        {
+            AddItem(item);
+        }
+    }
     public void DestroyInventory()
     {
         Destroy(this.gameObject);
     }
-
 
     private void OnDestroy()
     {

@@ -17,8 +17,6 @@ public class BattleManager : MonoBehaviour
 
     public VisualTreeAsset enemySelectionUITemplate;
 
-    [HideInInspector]public BattleRewardData battleRewardData;
-
     [HideInInspector]public Transform userTransform;
     [HideInInspector]public Transform targetTransform;
 
@@ -33,6 +31,7 @@ public class BattleManager : MonoBehaviour
     [HideInInspector]public List<Battler> Players;
     [HideInInspector]public List<Battler> Enemies;
 
+    private BattleRewardData lastBattleReward;
 
     public void SetupBattle(Battler[] enemies, SpriteRenderer battleBackground, AudioSource battleMusic)
     {
@@ -52,7 +51,7 @@ public class BattleManager : MonoBehaviour
         float positionRatio = 1280.0f / cam.pixelWidth;
         // transition all of the characters
 
-        CameraController.instance.ToBattleCamera();
+        CameraController.instance.SwitchToStillCamera();
 
         Players.Clear();
         foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject.GetComponent<Battler>());
@@ -92,13 +91,17 @@ public class BattleManager : MonoBehaviour
         UIManager.instance.ResetFocus();
     }
 
-    public void InstantialBattlePrefab(GameObject prefab, Vector2 position)
+    public void InstantializeBattlePrefab(GameObject prefab, Vector2 position)
     {
         Debug.Log("transition this to battler class");
         Transform prefabTransform = Instantiate(prefab).transform;
         prefabTransform.position = position;
     }
 
+    public BattleRewardData GetLastBattleReward()
+    {
+        return lastBattleReward;
+    }
     private void Awake()
     {
         if(instance == null)
@@ -152,15 +155,10 @@ public class BattleManager : MonoBehaviour
 
         }
     }
-    /// <summary>
-    /// triggered when either all the players or enemies are down
-    /// </summary>
-    /// <param name="isPlayerVictor"></param>
-    public void EndBattle(bool isPlayerVictor)
+    private void EndBattle(bool isPlayerVictor)
     {
         AudioManager.UnpauseCurrentSong();
         if(BattleMusic != null) BattleMusic.Stop();
-
         isInBattle = false;
 
         UIManager.instance.ResetFocus();
@@ -176,10 +174,9 @@ public class BattleManager : MonoBehaviour
                 }
                 enemy.BattleEnd();
             }
-            foreach (Battler player in Players)
-            {
-                player.BattleEnd();
-            }
+            
+            PlayerPartyManager.instance.BattleEnd(lastBattleReward.totalEXP);
+            InventoryManager.instance.AddItems(lastBattleReward.items);
 
             InkManager.instance.DisplayVictoryData();
         }
@@ -205,20 +202,21 @@ public class BattleManager : MonoBehaviour
         EnemyRewardData enemyRewardData = battler.GetComponent<EnemyRewardData>();
         float randomValue = UnityEngine.Random.Range(0, 1);
 
-        battleRewardData.totalEXP += enemyRewardData.EXP;
-        battleRewardData.totalGold += enemyRewardData.gold;
+        lastBattleReward.totalEXP += enemyRewardData.EXP;
+        lastBattleReward.totalGold += enemyRewardData.gold;
         // seeing if the player gets the item
         var obtainsItem = enemyRewardData.itemData.item != null && randomValue < enemyRewardData.itemData.chance;
-        if (obtainsItem) battleRewardData.items.Add(enemyRewardData.itemData.item);
+        if (obtainsItem) lastBattleReward.items.Add(enemyRewardData.itemData.item);
     }
     private void InitializeBattleRewards()
     {
-        battleRewardData = new BattleRewardData();
-        battleRewardData.items = new List<Item>();
+        lastBattleReward = new BattleRewardData();
+        lastBattleReward.items = new List<Item>();
     }
     private void ResumeGameWorld()
     {
-        InkManager.instance.ContinueStory();
+        // will reset inputs if there is no story
+        InkManager.instance.ResumeStory_OnReturnToOverworld();
     }
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
     {

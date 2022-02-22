@@ -6,29 +6,17 @@ using UnityEngine;
 public class PlayerPartyManager : MonoBehaviour
 {
     public static PlayerPartyManager instance;
-    public List<GameObject> players= new List<GameObject>();
-    GameObject Leader;
+    
+    [HideInInspector]public List<GameObject> players= new List<GameObject>();
+    
+    private GameObject Leader;
 
-    private void Awake()
+    private List<PlayerLevelUpData> lastPlayerLevelUps;
+    
+    public List<PlayerLevelUpData> GetLastLevelUps()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        return lastPlayerLevelUps;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    /// <summary>
-    /// makes all of the player healths equal the max health they can have
-    /// </summary>
     public void HealPlayers()
     {
         foreach(GameObject player in players)
@@ -66,7 +54,6 @@ public class PlayerPartyManager : MonoBehaviour
             }
         }*/
     }
-
     public void RemovePlayer(string playerName)
     {
         if(playerName == "Technoblade" && Technoblade.instance != null)
@@ -91,11 +78,34 @@ public class PlayerPartyManager : MonoBehaviour
     {
         return players.Contains(player);
     }
+    
+    public void BattleEnd(int experience)
+    {
+        lastPlayerLevelUps = AddExperiance(experience);
+        
+        foreach(GameObject player in players)
+        {
+            var battler = player.GetComponent<Battler>();
+            battler.BattleEnd();
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
     /// <summary>
     /// returns all the levelups that occur
     /// </summary>
     /// <param name="experiance"></param>
-    public List<PlayerLevelUpData> AddExperiance(int experiance)
+    private List<PlayerLevelUpData> AddExperiance(int experiance)
     {
         var playerLevelUpList = new List<PlayerLevelUpData>();
         foreach(GameObject player in players)

@@ -59,156 +59,21 @@ public class InkManager : MonoBehaviour
     public AudioSource currentDialogueSound;
 
     public bool isSetup;
-    private void Awake() {
-        if(instance == null){
-            instance = this;
 
-            for(int i = 0; i < characterPortraits.Length; i++)
-            {
-                characterPortraits[i].audioSource = gameObject.AddComponent<AudioSource>();
-                characterPortraits[i].audioSource.clip = characterPortraits[i].audioClip;
-            }
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-    private void Start() {
-        //singleton pattern
-        
-        //set up 
-        // see if there is a save file of it first
-        inkStory = new Story(inkAsset.text);
-        //initiate functions
-        inkStory.BindExternalFunction("playSong", (string name) => {
-                AudioManager.playSong(name);
-            });
-            inkStory.BindExternalFunction("playSound", (string name) => {
-                AudioManager.playSound(name);
-            });
-            inkStory.BindExternalFunction("displayPortrait", (string characterName, string feeling) => {
-                DisplayPortriat(characterName, feeling);
-            });
-            inkStory.BindExternalFunction("setTextSound", (string name) => {
-                SetDialogueSound(name);
-            });
-            inkStory.BindExternalFunction("levelUp", () => {
-                LevelUp();
-            });
-            inkStory.BindExternalFunction("updateEXPGold", () => {
-                UpdateEXPGold();
-            });
-            inkStory.BindExternalFunction("GetNextBattleItem", () => {
-                GetNextBattleItem();
-            });
-        inkStory.BindExternalFunction("healPlayers", () =>
-        {
-            PlayerPartyManager.instance.HealPlayers();
-        });
-        
-    }
-
-    public void DisplayNextLevelUp(){
-        //level up the character and change the data in the ink story to reflect that
-        foreach(GameObject player in PlayerPartyManager.instance.players)
-        {
-            LevelUpController levelData = player.GetComponent<LevelUpController>();
-            LevelUpRewardData levelUpRewardData = levelData.LevelUpRewardData;
-
-            if (levelData.currentEXP >= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10)))
-            {
-
-                // leveled up
-                levelData.currentEXP -= ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
-                levelData.currentLVL += 1;
-                levelData.requiredEXP = ((levelData.currentLVL * 20) + ((levelData.currentLVL - 1) * 10));
-
-
-                LevelReward levelReward = levelUpRewardData.levelRewards[levelData.currentLVL - levelUpRewardData.startingLevel - 1];
-                CharacterStats characterStats = player.GetComponent<CharacterStats>();
-                characterStats.stats.attack += levelReward.attackBonus;
-                characterStats.stats.defence += levelReward.defenceBonus;
-                characterStats.stats.maxPoints += levelReward.pointsBonus;
-                characterStats.stats.maxHealth += levelReward.healthBonus;
-
-                if (levelReward.skill == null)
-                {
-                    inkStory.EvaluateFunction("updateLevelInfo", characterStats.stats.characterName, "", levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
-                }
-                else
-                {
-                    characterStats.skills.Insert(1, levelReward.skill);
-                    inkStory.EvaluateFunction("updateLevelInfo", characterStats.stats.characterName, levelReward.skill.name, levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
-                }
-                return;
-
-            }
-        }
-        // no more level ups
-        inkStory.EvaluateFunction("updateLevelInfo", "", "", 0, 0, 0, 0);
-
-    }
-    public void UpdateEXPGold(){
-        // update the EXP and Gold in the ink story
-
-        inkStory.EvaluateFunction("updateEXPandGold", BattleManager.instance.battleRewardData.totalEXP, BattleManager.instance.battleRewardData.totalGold);
-    }
-    /// <summary>
-    /// gets next item won from battle
-    /// </summary>
-    public void GetNextBattleItem(){
-        BattleRewardData battleRewardData = BattleManager.instance.battleRewardData;
-
-        if (battleRewardData.items.Count > 0)
-        {
-            inkStory.EvaluateFunction("updateItemInfo", battleRewardData.items[0].name);
-
-            InventoryManager.instance.items.Add(battleRewardData.items[0]);
-            battleRewardData.items.RemoveAt(0);
-        }
-        else
-        {
-            inkStory.EvaluateFunction("updateItemInfo", "");
-        }
-    }
-    public void SetDialogueSound(string name){
-        // mearly for the fact that it was here previously, want to change it so sound is recorded with the character portrait
-    }
-
-    public void UpdateTextBox(){
-        // update the text box
-
-        //TODO: add pause
-        Button textBoxUI = UIManager.instance.textBoxUI;
-        Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
-        if (!isSetup)
-        {
-            
-            textBoxUI.visible = true;
-            textBoxUI.Focus();
-
-            VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
-            playerChoiceUI.Clear();
-        }
-        if (instant)
-        {
-            textBoxText.text = text;
-            isFinishedPage = true;
-        }
-        else
-        {
-            textBoxText.text = "";
-
-            isFinishedPage = false;
-            StartCoroutine(TextCoroutine(textBoxText));
-        }
-
-    }
+    private Queue<PlayerLevelUpData> levelUpDataQueue;
+    private Queue<Item> rewardItemsQueue;
     /// <summary>
     /// display the victory data of the battle
     /// </summary>
+    public void ResumeStory_OnReturnToOverworld()
+    {
+        ContinueStory();
+    } 
+
     public void DisplayVictoryData(){
+        levelUpDataQueue = new Queue<PlayerLevelUpData>(PlayerPartyManager.instance.GetLastLevelUps());
+        rewardItemsQueue = new Queue<Item>(BattleManager.instance.GetLastBattleReward().items);
+
         inkStory.SwitchFlow("victory");
         inkStory.ChoosePathString("victory");
         ContinueStory();
@@ -216,7 +81,6 @@ public class InkManager : MonoBehaviour
     /// <summary>
     /// start reading the text from the ink story
     /// </summary>
-    /// <param name="startPoint">the point in the ink asset to read the text from</param>
     public void StartCutScene(CutsceneData cutsceneData){
         if (!isCurrentlyDisplaying || isDisplayingChoices)
         {
@@ -280,119 +144,7 @@ public class InkManager : MonoBehaviour
         isScrollingText = false;
         isFinishedPage = true;
     }
-    /// <summary>
-    /// called to read the next line of text for the story
-    /// </summary>
-    public void ContinueStory(){
-        var canContinue = inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText;
-        var canEnd = !isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText;
-        if (canContinue)
-        {
-            
-            // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
-            inkStory.Continue();
-            if(inkStory.currentText == "\n" || inkStory.currentText == "")
-            {
-                ContinueStory();
-            }
-            else if (inkStory.currentTags.Contains("battle"))
-            {
-                PauseManager.instance.Pause();
-                DisableTextboxUI();
-                //start the battle
-
-                EnemyBattlers battle = currentCutsceneData.battles[int.Parse(inkStory.currentText)];
-                BattleManager.instance.SetupBattle(battle.Enemies, battle.battleBackground, battle.battleMusic);
-                
-            }
-            else if (inkStory.currentTags.Contains("playable"))
-            {
-                CameraController.instance.ToBattleCamera();
-                PauseManager.instance.Pause();
-                DisableTextboxUI();
-
-                isCurrentlyPlaying = true ;
-
-                currentCutsceneData.director.playableAsset = currentCutsceneData.playables[int.Parse(inkStory.currentText)];
-
-                foreach (var output in currentCutsceneData.director.playableAsset.outputs)
-                {
-                    // identify the tracks that you want to bind
-                    if (output.streamName.StartsWith("Techno"))
-                    {
-                        // go.GetComponent<> may be necessary if the track uses a component and
-                        // not a game object
-                        currentCutsceneData.director.SetGenericBinding(output.sourceObject,  Technoblade.instance.gameObject.GetComponent(output.outputTargetType));
-                    }
-                    
-                }
-
-                currentCutsceneData.director.Play();
-            }
-            else
-            {
-                PauseManager.instance.Pause();
-                text = inkStory.currentText;
-                isCurrentlyDisplaying = true;
-                
-                if (inkStory.currentTags.Contains("soundless"))
-                {
-                    currentDialogueSound = null;
-                }
-                if (inkStory.currentTags.Contains("unskipable"))
-                {
-                    unSkipable = true;
-                }
-                else
-                {
-                    unSkipable = false;
-                }
-                if (inkStory.currentTags.Contains("instant"))
-                {
-                    isSlow = true;
-                }
-                else
-                {
-                    isSlow = false;
-                }
-                if (inkStory.currentTags.Contains("instant"))
-                {
-                    instant = true;
-                }
-                else
-                {
-                    instant = false;
-                }
-                UpdateTextBox();
-            }
-        }
-        //Todo: possible fix battle transition edge case where this breaks if the battle background is transitioning
-        else if (canEnd)
-        {
-            if(inkStory.currentFlowName == "victory")
-            {
-                DisableTextboxUI();
-                inkStory.SwitchToDefaultFlow();
-                OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
-                
-            }
-            else if(inkStory.currentFlowName != "battle")
-            {
-                PauseManager.instance.UnPause();
-
-                CameraController.instance.ToOverworldCamera();
-                // is completely finished
-                PlayerInputManager.instance.EnableInput();
-                isCurrentlyDisplaying = false;
-                  
-
-                UIManager.instance.overworldOverlay.visible = true;
-                UIManager.instance.isInteractiveEnabled = false;
-                ResetTextBox();
-                DisableTextboxUI();
-            }
-        }
-    }
+    
     /// <summary>
     /// reset all the stuff about the text box
     /// </summary>
@@ -534,6 +286,254 @@ public class InkManager : MonoBehaviour
 
         return new CharacterPortraitData();
     }
+    /// <summary>
+    /// called to read the next line of text for the story
+    /// </summary>
+    private void ContinueStory()
+    {
+        var canContinue = inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText;
+        var canEnd = !isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText;
+        if (canContinue)
+        {
+            var isBattleTrigger = inkStory.currentTags.Contains("battle");
+            var isCutsceneTrigger = inkStory.currentTags.Contains("playable");
+            // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
+            inkStory.Continue();
+            if (inkStory.currentText == "\n" || inkStory.currentText == "")
+            {
+                ContinueStory();
+            }
+            else if (isBattleTrigger)
+            {
+                PauseManager.instance.Pause();
+                DisableTextboxUI();
+                //start the battle
+
+                EnemyBattlers battle = currentCutsceneData.battles[int.Parse(inkStory.currentText)];
+                BattleManager.instance.SetupBattle(battle.Enemies, battle.battleBackground, battle.battleMusic);
+
+            }
+            else if (isCutsceneTrigger)
+            {
+                CameraController.instance.SwitchToStillCamera();
+                PauseManager.instance.Pause();
+                DisableTextboxUI();
+
+                isCurrentlyPlaying = true;
+                var cutsceneNumber = int.Parse(inkStory.currentText);
+                SetUpCutsceneDirector(cutsceneNumber);
+                
+            }
+            else
+            {
+                PauseManager.instance.Pause();
+                text = inkStory.currentText;
+                isCurrentlyDisplaying = true;
+                SetTags();
+               
+                UpdateTextBox();
+            }
+        }
+        //Todo: possible fix battle transition edge case where this breaks if the battle background is transitioning
+        else if (canEnd)
+        {
+            if (inkStory.currentFlowName == "victory")
+            {
+                DisableTextboxUI();
+                inkStory.SwitchToDefaultFlow();
+                OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
+
+            }
+            else if (inkStory.currentFlowName != "battle")
+            {
+                PauseManager.instance.UnPause();
+                CameraController.instance.SwitchToFollowCamera();
+                PlayerInputManager.instance.EnableInput();
+                isCurrentlyDisplaying = false;
+
+                UIManager.instance.overworldOverlay.visible = true;
+                UIManager.instance.isInteractiveEnabled = false;
+                ResetTextBox();
+                DisableTextboxUI();
+            }
+        }
+    }
+    private void SetUpCutsceneDirector(int cutsceneNumber)
+    {
+        currentCutsceneData.director.playableAsset = currentCutsceneData.playables[cutsceneNumber];
+        foreach (var output in currentCutsceneData.director.playableAsset.outputs)
+        {
+            if (output.streamName.StartsWith("Techno"))
+            {
+                currentCutsceneData.director.SetGenericBinding(output.sourceObject, Technoblade.instance.gameObject.GetComponent(output.outputTargetType));
+            }
+
+        }
+
+        currentCutsceneData.director.Play();
+    }
+    private void SetTags()
+    {
+        if (inkStory.currentTags.Contains("soundless"))
+        {
+            currentDialogueSound = null;
+        }
+        if (inkStory.currentTags.Contains("unskipable"))
+        {
+            unSkipable = true;
+        }
+        else
+        {
+            unSkipable = false;
+        }
+        if (inkStory.currentTags.Contains("instant"))
+        {
+            isSlow = true;
+        }
+        else
+        {
+            isSlow = false;
+        }
+        if (inkStory.currentTags.Contains("instant"))
+        {
+            instant = true;
+        }
+        else
+        {
+            instant = false;
+        }
+    }
+    
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+
+            for (int i = 0; i < characterPortraits.Length; i++)
+            {
+                characterPortraits[i].audioSource = gameObject.AddComponent<AudioSource>();
+                characterPortraits[i].audioSource.clip = characterPortraits[i].audioClip;
+            }
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+    private void Start()
+    {
+        //set up 
+        // see if there is a save file of it first
+        inkStory = new Story(inkAsset.text);
+        //initiate functions
+        inkStory.BindExternalFunction("playSong", (string name) => {
+            AudioManager.playSong(name);
+        });
+        inkStory.BindExternalFunction("playSound", (string name) => {
+            AudioManager.playSound(name);
+        });
+        inkStory.BindExternalFunction("displayPortrait", (string characterName, string feeling) => {
+            DisplayPortriat(characterName, feeling);
+        });
+        inkStory.BindExternalFunction("setTextSound", (string name) => {
+            SetDialogueSound(name);
+        });
+        inkStory.BindExternalFunction("levelUp", () => {
+            DisplayNextLevelUp();
+        });
+        inkStory.BindExternalFunction("updateEXPGold", () => {
+            UpdateEXPGold();
+        });
+        inkStory.BindExternalFunction("GetNextBattleItem", () => {
+            DisplayNextBattleItem();
+        });
+        inkStory.BindExternalFunction("healPlayers", () =>
+        {
+            PlayerPartyManager.instance.HealPlayers();
+        });
+
+    }
+
+    private void DisplayNextLevelUp()
+    {
+        if (levelUpDataQueue.Count > 0)
+        {
+            PlayerLevelUpData levelUpRewardData = levelUpDataQueue.Dequeue();
+
+            LevelReward levelReward = levelUpRewardData.levelReward;
+            if (levelReward.skill == null)
+            {
+                inkStory.EvaluateFunction("updateLevelInfo", levelUpRewardData.playerName, "", levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+            }
+            else
+            {
+                inkStory.EvaluateFunction("updateLevelInfo", levelUpRewardData.playerName, levelReward.skill.name, levelReward.attackBonus, levelReward.defenceBonus, levelReward.pointsBonus, levelReward.healthBonus);
+            }
+        }
+        else
+        {
+            // no more level ups
+            inkStory.EvaluateFunction("updateLevelInfo", "", "", 0, 0, 0, 0);
+        }
+    }
+    private void UpdateEXPGold()
+    {
+        // update the EXP and Gold in the ink story
+        BattleRewardData battleRewardData = BattleManager.instance.GetLastBattleReward();
+        inkStory.EvaluateFunction("updateEXPandGold", battleRewardData.totalEXP, battleRewardData.totalGold);
+    }
+    /// <summary>
+    /// gets next item won from battle
+    /// </summary>
+    private void DisplayNextBattleItem()
+    {
+        if (rewardItemsQueue.Count > 0)
+        {
+            Item item = rewardItemsQueue.Dequeue();
+            inkStory.EvaluateFunction("updateItemInfo", item.name);
+        }
+        else
+        {
+            inkStory.EvaluateFunction("updateItemInfo", "");
+        }
+    }
+    private void SetDialogueSound(string name)
+    {
+        // mearly for the fact that it was here previously, want to change it so sound is recorded with the character portrait
+    }
+
+    private void UpdateTextBox()
+    {
+        // update the text box
+
+        //TODO: add pause
+        Button textBoxUI = UIManager.instance.textBoxUI;
+        Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
+        if (!isSetup)
+        {
+
+            textBoxUI.visible = true;
+            textBoxUI.Focus();
+
+            VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
+            playerChoiceUI.Clear();
+        }
+        if (instant)
+        {
+            textBoxText.text = text;
+            isFinishedPage = true;
+        }
+        else
+        {
+            textBoxText.text = "";
+
+            isFinishedPage = false;
+            StartCoroutine(TextCoroutine(textBoxText));
+        }
+
+    }
+
 }
 
 [System.Serializable]
