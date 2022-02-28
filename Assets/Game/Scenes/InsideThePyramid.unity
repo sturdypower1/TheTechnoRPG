@@ -201,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 1112990736}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7499304
+      value: -1.7499566
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5144026
+      value: 0.50903666
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_RootOrder
@@ -257,11 +257,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6530367028307287781, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: orthographic size
-      value: 2.4107144
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4891634517925458902, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
+--- !u!4 &82224908 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
+  m_PrefabInstance: {fileID: 82224907}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &83297777
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,7 +452,7 @@ PrefabInstance:
       objectReference: {fileID: 268275169}
     - target: {fileID: 108725804575406548, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.3333334
+      value: 1.7777778
       objectReference: {fileID: 0}
     - target: {fileID: 108725804575406549, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -543,7 +548,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 869883348694000335, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.3333334
+      value: 1.7777778
       objectReference: {fileID: 0}
     - target: {fileID: 5503852356259150332, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_IsTrigger
@@ -4509,3 +4514,136 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
+--- !u!1 &2071614394
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2071614395}
+  - component: {fileID: 2071614398}
+  - component: {fileID: 2071614397}
+  - component: {fileID: 2071614396}
+  m_Layer: 0
+  m_Name: StoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2071614395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071614394}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 82224908}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2071614396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071614394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 706ef1adf9b8716ceb5cf7b0c6eef910, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 0aa5f8f7d80d68549848209b07528c63, type: 3}
+  m_SortingOrder: 0
+--- !u!114 &2071614397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071614394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d71acefde04fdc34fb3218e5dff38240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2071614398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071614394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9cf97f372d3e1049821e08bd53338cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkAsset: {fileID: 4900000, guid: f7e4ff60a0e749446886b3852ee8e001, type: 3}
+  characterPortraits:
+  - characterName: empty
+    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 0}
+  - characterName: Technoblade
+    audioClip: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 2211357456315834789, guid: 42790c220fd40d1468072a5077a8dfb7, type: 3}
+  - characterName: Wilbur
+    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 21300000, guid: a8b86b38cea3b3c47a2065f5493711e6, type: 3}
+    - name: surprised
+      portraits:
+      - {fileID: 21300000, guid: ca09c4796c49ebf45b21019554543e65, type: 3}
+    - name: silent
+      portraits:
+      - {fileID: 21300000, guid: dbaee2ed6f7dee749ac91b3c49a6e5ac, type: 3}
+    - name: choatic
+      portraits:
+      - {fileID: 21300000, guid: 0b8210ea47be29c4588bbc3c3e1e17f1, type: 3}
+    - name: disgusted
+      portraits:
+      - {fileID: 21300000, guid: 37c812e3304ea6b448925416fdf5db8a, type: 3}
+    - name: kindaangry
+      portraits:
+      - {fileID: 21300000, guid: 988fe857f7fc06a4da13fd76250fac41, type: 3}
+  - characterName: Steve
+    audioClip: {fileID: 0}
+    audioSource: {fileID: 0}
+    characterPortraits:
+    - name: default
+      portraits:
+      - {fileID: 21300000, guid: 1faebf29c162781419df434e2654eead, type: 3}
+    - name: fish
+      portraits:
+      - {fileID: 21300000, guid: 44ab6d94d4f665341b3dc1318c7e054e, type: 3}
+  textSpeed: 30
+  isCurrentlyDisplaying: 0
+  isCurrentlyPlaying: 0
+  currentCutsceneData:
+    director: {fileID: 0}
+    playables: []
+    battles: []
+    inkPath: 
+  currentDialogueSound: {fileID: 0}
+  isContinuable: 0
+  isDisplayingChoices: 0

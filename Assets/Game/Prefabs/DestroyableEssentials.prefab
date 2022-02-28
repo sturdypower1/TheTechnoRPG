@@ -462,8 +462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 869883348133577865}
-  overworldCamera: {fileID: 108725804575406548}
-  battleCamera: {fileID: 869883348694000335}
+  followCamera: {fileID: 108725804575406548}
+  stillCamera: {fileID: 869883348694000335}
 --- !u!114 &869883348133577869
 MonoBehaviour:
   m_ObjectHideFlags: 0

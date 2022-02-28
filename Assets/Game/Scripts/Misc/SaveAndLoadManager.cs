@@ -115,7 +115,6 @@ public class SaveAndLoadManager : MonoBehaviour
     public void LoadSaveUI(string savePointName)
     {
         InkManager.instance.isDisplayingChoices = false;
-        InkManager.instance.DisableTextboxUI();
         UIManager.instance.overworldOverlay.visible = false;
         SavePointName = savePointName;
         // pause the world

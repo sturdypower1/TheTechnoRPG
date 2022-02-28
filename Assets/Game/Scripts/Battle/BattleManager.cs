@@ -174,7 +174,7 @@ public class BattleManager : MonoBehaviour
                 }
                 enemy.BattleEnd();
             }
-            
+            Debug.Log(lastBattleReward.totalEXP);
             PlayerPartyManager.instance.BattleEnd(lastBattleReward.totalEXP);
             InventoryManager.instance.AddItems(lastBattleReward.items);
 
@@ -221,7 +221,6 @@ public class BattleManager : MonoBehaviour
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)
     {
         movingToPosition = true;
-        InkManager.instance.DisableTextboxUI();
 
         foreach (Battler player in Players)
         {

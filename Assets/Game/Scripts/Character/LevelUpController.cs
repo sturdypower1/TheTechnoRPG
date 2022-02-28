@@ -31,6 +31,7 @@ public class LevelUpController : MonoBehaviour
     /// <returns>all the level ups that occur</returns>
     public List<PlayerLevelUpData> AddExperience(int experince)
     {
+        currentEXP += experince;
         var playerLevelUpList = new List<PlayerLevelUpData>();
         var canLevelUp = currentEXP >= ((currentLVL * 20) + ((currentLVL - 1) * 10));
         while (canLevelUp)

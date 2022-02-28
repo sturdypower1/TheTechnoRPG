@@ -13,58 +13,50 @@ public class InkManager : MonoBehaviour
     /// invoked when the victory data display has been finished and the player wants to continue
     /// </summary>
     public event EventHandler OnVictoryDisplayFinish;
-
-    public void tempContinueStory(PlayableDirector playableDirector){
-        isCurrentlyPlaying = false;
-        ContinueStory();
-    }
     /// <summary>
     /// after text is finished, continue the story. Don't skip line 
     /// </summary>
-    //bool isContinuingAfter = false;
-
     public TextAsset inkAsset;
     public Story inkStory;
     public static InkManager instance;
-    public bool isDisplayingChoices;
-    public bool isScrollingText;
-
-    public Action continueAction;
-
+    
     public CharacterPortraitReference[] characterPortraits;
-
-    CinemachineVirtualCamera overoworldCinemachine;
-
-    CinemachineVirtualCamera frozenCinemachine;
-
     /// <summary>
     /// how fast the text goes
     /// </summary>
     public float textSpeed;
 
-    public string text;
-    public bool instant;
-    public bool unSkipable;
-    public bool isSlow;
-    public bool isFinishedPage;
-    public int currentChar;
+    public Action continueAction;
+
+    [HideInInspector] public bool isCurrentlyDisplaying;
+    [HideInInspector] public bool isCurrentlyPlaying;
+    [HideInInspector] public CutsceneData currentCutsceneData;
+
+    [HideInInspector] public AudioSource currentDialogueSound;
+    [HideInInspector] public bool isContinuable;
+
+    [HideInInspector] public bool isDisplayingChoices;
+    private TextboxUI textboxUI;
     
-    public bool isContinuable;
-    public bool isCurrentlyDisplaying;
-    public bool isCurrentlyPlaying;
-    [HideInInspector]
-    public CutsceneData currentCutsceneData;
+    private bool isScrollingText;
 
-    [HideInInspector]
-    public AudioSource currentDialogueSound;
-
-    public bool isSetup;
+    private string text;
+    private bool instant;
+    private bool unSkipable;
+    private bool isSlow;
+    private bool isFinishedPage;
+    private int currentChar;
+    
+    
+    private bool isSetup;
 
     private Queue<PlayerLevelUpData> levelUpDataQueue;
     private Queue<Item> rewardItemsQueue;
-    /// <summary>
-    /// display the victory data of the battle
-    /// </summary>
+    public void tempContinueStory(PlayableDirector playableDirector)
+    {
+        isCurrentlyPlaying = false;
+        ContinueStory();
+    }
     public void ResumeStory_OnReturnToOverworld()
     {
         ContinueStory();
@@ -106,88 +98,11 @@ public class InkManager : MonoBehaviour
             ContinueStory();
         }
     }
-    IEnumerator TextCoroutine(Label textBoxText)
-    {
-        isScrollingText = true;
-        bool waitingForSymbol = false;
-        foreach(Char letter in text)
-        {
-            if (!isFinishedPage)
-            {
-                textBoxText.text += letter;
-                //will automatically display rich text
-                if (letter == '<' || waitingForSymbol)
-                {
-                    waitingForSymbol = true;
-                    if(letter == '>')
-                    {
-                        waitingForSymbol = false;
-                    }
-                    continue;
-                }
-                // add stuff for character animations
-                if(letter != ' ')
-                {
-                    if(currentDialogueSound != null)
-                    {
-                        currentDialogueSound.Play();
-                    }
-                }
-                yield return new WaitForSecondsRealtime(1 / textSpeed);
-
-            }
-            else
-            {
-                break;
-            }
-        }
-        isScrollingText = false;
-        isFinishedPage = true;
-    }
     
-    /// <summary>
-    /// reset all the stuff about the text box
-    /// </summary>
-    public void ResetTextBox()
-    {
-
-    }
     /// <summary>
     /// used to make all the textbox ui invisible and non interactable
     /// </summary>
-    public void DisableTextboxUI(){
-        // unpause
-        UIManager.instance.ResetFocus();
-        UIManager.instance.textBoxUI.visible = false;
-
-        //isCurrentlyDisplaying = false;
-        isSetup = false;
-    }
-    /// <summary>
-    /// display the next character portrait
-    /// </summary>
-    /// <param name="characterName">the name of the character portrait</param>
-    /// <param name="feeling">the type of portrait that should be displayed</param>
-    public void DisplayPortriat(string characterName, string feeling)
-    {
-
-        if (GetPortraitList(characterName, feeling).portraits != null)
-        {
-            //CharacterPortraitReference portraitReference = GetPortraitList(characterName, feeling);
-            UIManager.instance.textBoxUI.Q<VisualElement>("character_base").style.backgroundImage = Background.FromSprite(GetPortraitList(characterName, feeling).portraits[0]);
-        }
-        else
-        {
-            Debug.Log("didn't find character portrait");
-        }
-        
-    }
-    /// <summary>
-    /// gets the images for the character portrait and sets the appropriate character dialogue sound
-    /// </summary>
-    /// <param name="characterName">the name of the character portrait</param>
-    /// <param name="feeling">the type of portrait that should be displayed</param>
-    /// <returns>the characater portriat</returns>
+    
     /// <summary>
     /// checks if it needs to go to the next piece of dialogue or finish the current one
     /// </summary>
@@ -251,7 +166,8 @@ public class InkManager : MonoBehaviour
         UpdateTextBox();
         //StartCoroutine(TextCoroutine(textBoxText));
     }
-    public CharacterPortraitData GetPortraitList(string characterName, string feeling)
+
+    private CharacterPortraitData GetPortraitList(string characterName, string feeling)
     {
         if(characterName != "")
         {
@@ -306,7 +222,7 @@ public class InkManager : MonoBehaviour
             else if (isBattleTrigger)
             {
                 PauseManager.instance.Pause();
-                DisableTextboxUI();
+                textboxUI.DisableUI();
                 //start the battle
 
                 EnemyBattlers battle = currentCutsceneData.battles[int.Parse(inkStory.currentText)];
@@ -317,20 +233,23 @@ public class InkManager : MonoBehaviour
             {
                 CameraController.instance.SwitchToStillCamera();
                 PauseManager.instance.Pause();
-                DisableTextboxUI();
+                textboxUI.DisableUI();
 
                 isCurrentlyPlaying = true;
                 var cutsceneNumber = int.Parse(inkStory.currentText);
                 SetUpCutsceneDirector(cutsceneNumber);
                 
             }
+            // is textbox trigger
             else
             {
                 PauseManager.instance.Pause();
+
+                SetTags();
+                textboxUI.DisplayText(inkStory.currentText, is)
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
-                SetTags();
-               
+                
                 UpdateTextBox();
             }
         }
@@ -339,7 +258,7 @@ public class InkManager : MonoBehaviour
         {
             if (inkStory.currentFlowName == "victory")
             {
-                DisableTextboxUI();
+                textboxUI.DisableUI();
                 inkStory.SwitchToDefaultFlow();
                 OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
 
@@ -353,8 +272,7 @@ public class InkManager : MonoBehaviour
 
                 UIManager.instance.overworldOverlay.visible = true;
                 UIManager.instance.isInteractiveEnabled = false;
-                ResetTextBox();
-                DisableTextboxUI();
+                textboxUI.DisableUI();
             }
         }
     }
@@ -423,7 +341,7 @@ public class InkManager : MonoBehaviour
     }
     private void Start()
     {
-        //set up 
+        textboxUI = GetComponent<TextboxUI>();
         // see if there is a save file of it first
         inkStory = new Story(inkAsset.text);
         //initiate functions
@@ -455,6 +373,25 @@ public class InkManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// display the next character portrait
+    /// </summary>
+    /// <param name="characterName">the name of the character portrait</param>
+    /// <param name="feeling">the type of portrait that should be displayed</param>
+    private void DisplayPortriat(string characterName, string feeling)
+    {
+
+        if (GetPortraitList(characterName, feeling).portraits != null)
+        {
+            //CharacterPortraitReference portraitReference = GetPortraitList(characterName, feeling);
+            UIManager.instance.textBoxUI.Q<VisualElement>("character_base").style.backgroundImage = Background.FromSprite(GetPortraitList(characterName, feeling).portraits[0]);
+        }
+        else
+        {
+            Debug.Log("didn't find character portrait");
+        }
+
+    }
     private void DisplayNextLevelUp()
     {
         if (levelUpDataQueue.Count > 0)
@@ -479,7 +416,6 @@ public class InkManager : MonoBehaviour
     }
     private void UpdateEXPGold()
     {
-        // update the EXP and Gold in the ink story
         BattleRewardData battleRewardData = BattleManager.instance.GetLastBattleReward();
         inkStory.EvaluateFunction("updateEXPandGold", battleRewardData.totalEXP, battleRewardData.totalGold);
     }
@@ -534,6 +470,44 @@ public class InkManager : MonoBehaviour
 
     }
 
+    IEnumerator TextCoroutine(Label textBoxText)
+    {
+        isScrollingText = true;
+        bool waitingForSymbol = false;
+        foreach (Char letter in text)
+        {
+            if (!isFinishedPage)
+            {
+                textBoxText.text += letter;
+                //will automatically display rich text
+                if (letter == '<' || waitingForSymbol)
+                {
+                    waitingForSymbol = true;
+                    if (letter == '>')
+                    {
+                        waitingForSymbol = false;
+                    }
+                    continue;
+                }
+                // add stuff for character animations
+                if (letter != ' ')
+                {
+                    if (currentDialogueSound != null)
+                    {
+                        currentDialogueSound.Play();
+                    }
+                }
+                yield return new WaitForSecondsRealtime(1 / textSpeed);
+
+            }
+            else
+            {
+                break;
+            }
+        }
+        isScrollingText = false;
+        isFinishedPage = true;
+    }
 }
 
 [System.Serializable]

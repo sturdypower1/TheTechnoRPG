@@ -110,6 +110,7 @@ public class PlayerPartyManager : MonoBehaviour
         var playerLevelUpList = new List<PlayerLevelUpData>();
         foreach(GameObject player in players)
         {
+            
             var playerLevelUpController = player.GetComponent<LevelUpController>();
             var currentPlayerLevelUpList = playerLevelUpController.AddExperience(experiance);
             foreach(PlayerLevelUpData levelUpData in currentPlayerLevelUpList)

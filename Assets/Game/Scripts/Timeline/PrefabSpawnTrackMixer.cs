@@ -26,7 +26,7 @@ public class PrefabSpawnTrackMixer : PlayableBehaviour
 
                     PrefabSpawnBehaviour input = inputPlayable.GetBehaviour();
                     if (BattleManager.instance != null) {
-                        BattleManager.instance.InstantialBattlePrefab(input.prefab, spawnPosition.position);
+                        BattleManager.instance.InstantializeBattlePrefab(input.prefab, spawnPosition.position);
                     }
                     
                 }
