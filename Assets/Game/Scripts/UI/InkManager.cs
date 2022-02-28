@@ -246,7 +246,7 @@ public class InkManager : MonoBehaviour
                 PauseManager.instance.Pause();
 
                 SetTags();
-                textboxUI.DisplayText(inkStory.currentText, is)
+                textboxUI.DisplayText(inkStory.currentText, instant, unSkipable, isSlow);
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
                 
