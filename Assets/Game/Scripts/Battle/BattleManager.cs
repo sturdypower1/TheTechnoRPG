@@ -174,7 +174,6 @@ public class BattleManager : MonoBehaviour
                 }
                 enemy.BattleEnd();
             }
-            Debug.Log(lastBattleReward.totalEXP);
             PlayerPartyManager.instance.BattleEnd(lastBattleReward.totalEXP);
             InventoryManager.instance.AddItems(lastBattleReward.items);
 

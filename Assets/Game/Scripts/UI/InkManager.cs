@@ -157,14 +157,8 @@ public class InkManager : MonoBehaviour
         PlayerInputManager.instance.DisableInput();
         UIManager.instance.overworldOverlay.visible = false;
 
-        isCurrentlyDisplaying = true;
-        instant = false;
-        unSkipable = false;
-        isSlow = false;
-        text = displayText;
         DisplayPortriat("empty", "default");
-        UpdateTextBox();
-        //StartCoroutine(TextCoroutine(textBoxText));
+        textboxUI.DisplayText(displayText, false, false, false);
     }
 
     private CharacterPortraitData GetPortraitList(string characterName, string feeling)
@@ -249,8 +243,6 @@ public class InkManager : MonoBehaviour
                 textboxUI.DisplayText(inkStory.currentText, instant, unSkipable, isSlow);
                 text = inkStory.currentText;
                 isCurrentlyDisplaying = true;
-                
-                UpdateTextBox();
             }
         }
         //Todo: possible fix battle transition edge case where this breaks if the battle background is transitioning
@@ -342,6 +334,7 @@ public class InkManager : MonoBehaviour
     private void Start()
     {
         textboxUI = GetComponent<TextboxUI>();
+        textboxUI.TextboxDoneDisplaying += ContinueStory;
         // see if there is a save file of it first
         inkStory = new Story(inkAsset.text);
         //initiate functions
@@ -437,76 +430,6 @@ public class InkManager : MonoBehaviour
     private void SetDialogueSound(string name)
     {
         // mearly for the fact that it was here previously, want to change it so sound is recorded with the character portrait
-    }
-
-    private void UpdateTextBox()
-    {
-        // update the text box
-
-        //TODO: add pause
-        Button textBoxUI = UIManager.instance.textBoxUI;
-        Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
-        if (!isSetup)
-        {
-
-            textBoxUI.visible = true;
-            textBoxUI.Focus();
-
-            VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
-            playerChoiceUI.Clear();
-        }
-        if (instant)
-        {
-            textBoxText.text = text;
-            isFinishedPage = true;
-        }
-        else
-        {
-            textBoxText.text = "";
-
-            isFinishedPage = false;
-            StartCoroutine(TextCoroutine(textBoxText));
-        }
-
-    }
-
-    IEnumerator TextCoroutine(Label textBoxText)
-    {
-        isScrollingText = true;
-        bool waitingForSymbol = false;
-        foreach (Char letter in text)
-        {
-            if (!isFinishedPage)
-            {
-                textBoxText.text += letter;
-                //will automatically display rich text
-                if (letter == '<' || waitingForSymbol)
-                {
-                    waitingForSymbol = true;
-                    if (letter == '>')
-                    {
-                        waitingForSymbol = false;
-                    }
-                    continue;
-                }
-                // add stuff for character animations
-                if (letter != ' ')
-                {
-                    if (currentDialogueSound != null)
-                    {
-                        currentDialogueSound.Play();
-                    }
-                }
-                yield return new WaitForSecondsRealtime(1 / textSpeed);
-
-            }
-            else
-            {
-                break;
-            }
-        }
-        isScrollingText = false;
-        isFinishedPage = true;
     }
 }
 

@@ -201,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 1112990736}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7499566
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.50903666
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_RootOrder
@@ -257,10 +257,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6530367028307287781, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: orthographic size
-      value: 0
+      value: 2.4107144
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4891634517925458902, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
+    - {fileID: 4891634517338812770, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
 --- !u!4 &82224908 stripped
 Transform:
@@ -452,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 268275169}
     - target: {fileID: 108725804575406548, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
+      value: 1.3333334
       objectReference: {fileID: 0}
     - target: {fileID: 108725804575406549, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -548,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 869883348694000335, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.7777778
+      value: 1.3333334
       objectReference: {fileID: 0}
     - target: {fileID: 5503852356259150332, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
       propertyPath: m_IsTrigger
@@ -4576,6 +4577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d71acefde04fdc34fb3218e5dff38240, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textSpeed: 30
 --- !u!114 &2071614398
 MonoBehaviour:
   m_ObjectHideFlags: 0
