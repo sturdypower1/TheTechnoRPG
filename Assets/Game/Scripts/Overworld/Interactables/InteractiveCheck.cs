@@ -12,10 +12,10 @@ public class InteractiveCheck : MonoBehaviour
         if(direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null && collision.gameObject.GetComponent<Interactable>().IsEnabled && !InkManager.instance.isCurrentlyDisplaying)
         {
             UIManager.instance.EnableInteractive();
-            if (UIManager.instance.isInteractivePressed)
+            /*if (UIManager.instance.isInteractivePressed)
             {
                 collision.gameObject.GetComponent<Interactable>().Interact();
-            }
+            }*/
         }
         
    
@@ -25,10 +25,10 @@ public class InteractiveCheck : MonoBehaviour
         if (direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null && collision.gameObject.GetComponent<Interactable>().IsEnabled && !InkManager.instance.isCurrentlyDisplaying)
         {
             UIManager.instance.EnableInteractive();
-            if (UIManager.instance.isInteractivePressed)
+            /*if (UIManager.instance.isInteractivePressed)
             {
                 collision.gameObject.GetComponent<Interactable>().Interact();
-            }
+            }*/
         }
     }
 }

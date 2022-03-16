@@ -123,7 +123,7 @@ public class InkManager : MonoBehaviour
     /// <summary>
     /// display the current choices the player has
     /// </summary>
-    /// <param name="choices">the choices the player has</param>
+    /// <param name="choices">the choices the player has</param> 
     public void DisplayChoices(Button[] choices){
         isDisplayingChoices = true;
         isCurrentlyDisplaying = true;
@@ -263,7 +263,7 @@ public class InkManager : MonoBehaviour
                 isCurrentlyDisplaying = false;
 
                 UIManager.instance.overworldOverlay.visible = true;
-                UIManager.instance.isInteractiveEnabled = false;
+                //UIManager.instance.isInteractiveEnabled = false;
                 textboxUI.DisableUI();
             }
         }
