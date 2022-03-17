@@ -15,7 +15,7 @@ public class SaveInteractive : Interactable
             //UIManager.instance.ResetFocus();
 
             // restore player hp
-            UIManager.instance.overworldOverlay.visible = false;
+            //UIManager.instance.overworldOverlay.visible = false;
             Button ringButton = new Button();
             ringButton.AddToClassList("player_choice");
             ringButton.text = "ring the bell";

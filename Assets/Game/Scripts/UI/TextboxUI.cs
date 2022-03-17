@@ -28,12 +28,15 @@ public class TextboxUI : MonoBehaviour
     }
     public void DisableUI()
     {
-        UIManager.instance.ResetFocus();
+        //UIManager.instance.ResetFocus();
         characterPortraitUI.style.backgroundImage = null;
         textboxBase.visible = false;
     }
     
-
+    public void SetDialogueAudio(AudioSource audio)
+    {
+        currentDialogueSound = audio;
+    }
     public void SetCharacterPortrait(CharacterPortraitData characterPortrait)
     {
         characterPortraitUI.style.backgroundImage = Background.FromSprite(characterPortrait.portraits[0]);
@@ -92,6 +95,7 @@ public class TextboxUI : MonoBehaviour
 
         foreach (Char letter in text)
         {
+            currentDialogueSound?.Play();
             textboxText.text += letter;
             //will automatically display rich text
             if (letter == '<' || waitingForSymbol)

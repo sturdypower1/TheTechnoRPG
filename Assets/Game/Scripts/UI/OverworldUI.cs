@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 public class OverworldUI : MonoBehaviour
 {
-    public event EmptyEventHandler OnInteractPressed;
     public event EmptyEventHandler OnPauseButtonPressed;
 
     private UIDocument UIDoc;
@@ -13,6 +12,21 @@ public class OverworldUI : MonoBehaviour
     private Button interactButton;
     private Button pauseButton;
     private bool isInteractButtonInteractable;
+    private bool wasInteractButtonInteractable;
+    private bool wasInteractButtonPressed;
+    public bool IsInteractButtonPressed()
+    {
+        return wasInteractButtonPressed;
+    }
+    public void ActivateInteractable()
+    {
+        isInteractButtonInteractable = true;
+        if (!wasInteractButtonInteractable)
+        {
+            AudioManager.playSound("menuavailable");
+            interactButton.SetEnabled(true);
+        }
+    }
     public void EnableUI()
     {
         overworldBaseUI.visible = true;
@@ -47,7 +61,7 @@ public class OverworldUI : MonoBehaviour
         //ensures that this will only be used if the button is enabled(temp fixes ui bug)
         if (!isInteractButtonInteractable) return;
 
-        OnInteractPressed?.Invoke();
+        wasInteractButtonPressed = true;
     }
     private void Awake()
     {
@@ -61,5 +75,19 @@ public class OverworldUI : MonoBehaviour
         pauseButton.clicked += PauseButton;
     }
 
-    
+    private void FixedUpdate()
+    {
+
+        if (isInteractButtonInteractable)
+        {
+            isInteractButtonInteractable = false;
+            wasInteractButtonInteractable = true;
+        }
+        else
+        {
+            wasInteractButtonPressed = false;
+            wasInteractButtonInteractable = false;
+            interactButton.SetEnabled(false);
+        }
+    }
 }

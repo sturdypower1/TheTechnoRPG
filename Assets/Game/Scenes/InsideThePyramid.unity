@@ -201,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 1112990736}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7499304
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5144026
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_RootOrder
@@ -259,34 +259,8 @@ PrefabInstance:
       propertyPath: orthographic size
       value: 2.4107144
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4891634517925458902, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
-    - {fileID: 4891634517338812770, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
---- !u!4 &82224908 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
-  m_PrefabInstance: {fileID: 82224907}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &82224909 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4891634517824410359, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
-  m_PrefabInstance: {fileID: 82224907}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &82224910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82224909}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68107e0daa0a32f4691da8394b01bdef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  overworldUI: {fileID: 1552952930}
-  inventoryUI: {fileID: 1623167699}
 --- !u!1 &83297777
 GameObject:
   m_ObjectHideFlags: 0
@@ -3624,6 +3598,125 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
+--- !u!1 &1187086660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187086662}
+  - component: {fileID: 1187086661}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1187086661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187086660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa208efc633b434b966c22b6cdc4a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguess:
+  - clip: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
+    audioSource: {fileID: 0}
+    soundName: technoblade
+    volume: 0.737
+  - clip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    soundName: default
+    volume: 0.763
+  - clip: {fileID: 8300000, guid: cb0316e40f3a9114a911998626e5495d, type: 3}
+    audioSource: {fileID: 0}
+    soundName: bell
+    volume: 0.69
+  - clip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
+    audioSource: {fileID: 0}
+    soundName: Wilbur
+    volume: 0.842
+  gameSoundss:
+  - clip: {fileID: 8300000, guid: 136fe702d03fc0e42b6c2a51c203da92, type: 3}
+    audioSource: {fileID: 0}
+    soundName: menuchange
+    volume: 0.663
+  - clip: {fileID: 8300000, guid: 1de140436e7c02f4ea68c2070a92b8e7, type: 3}
+    audioSource: {fileID: 0}
+    soundName: menuavailable
+    volume: 0.684
+  - clip: {fileID: 8300000, guid: de6ca83b61f968b41844ae3864d56d6e, type: 3}
+    audioSource: {fileID: 0}
+    soundName: swordswing
+    volume: 0.536
+  - clip: {fileID: 8300000, guid: bb4229063776b6944833f282fcabad03, type: 3}
+    audioSource: {fileID: 0}
+    soundName: defeatsong
+    volume: 0.401
+  - clip: {fileID: 8300000, guid: 32d42266090bbde49b897ac634f578f7, type: 3}
+    audioSource: {fileID: 0}
+    soundName: menuback
+    volume: 0.731
+  - clip: {fileID: 8300000, guid: 8082901f815d3bd43bc7c687f16a1492, type: 3}
+    audioSource: {fileID: 0}
+    soundName: menuselect
+    volume: 0.71
+  - clip: {fileID: 8300000, guid: d50e3a2fd982e494faa0466fa61f251c, type: 3}
+    audioSource: {fileID: 0}
+    soundName: sellouttimer
+    volume: 0.373
+  - clip: {fileID: 8300000, guid: b4c66f7103d532b4f9f3452fc0d4c171, type: 3}
+    audioSource: {fileID: 0}
+    soundName: TechnoHit
+    volume: 0.627
+  - clip: {fileID: 8300000, guid: de9e8cf3b4b3d3b458f7ae3973bd68fb, type: 3}
+    audioSource: {fileID: 0}
+    soundName: Heal
+    volume: 0.884
+  - clip: {fileID: 8300000, guid: e11d62369ae581a4899aea6b00f32ea2, type: 3}
+    audioSource: {fileID: 0}
+    soundName: rawr
+    volume: 1
+  - clip: {fileID: 8300000, guid: ba6fbccfbeaa3eb46851a411d0bf12ea, type: 3}
+    audioSource: {fileID: 0}
+    soundName: Heal
+    volume: 0.146
+  gameMusics:
+  - clip: {fileID: 8300000, guid: ea659ad0d77e23943a95da052239ba83, type: 3}
+    audioSource: {fileID: 0}
+    soundName: menuMusic
+    volume: 0.306
+  - clip: {fileID: 8300000, guid: 0551bd17eed4d2342b58479f85bffc91, type: 3}
+    audioSource: {fileID: 0}
+    soundName: CalmMountain
+    volume: 0.863
+  - clip: {fileID: 8300000, guid: 3483cd9f4cade794fb0eeae7f3f5e72c, type: 3}
+    audioSource: {fileID: 0}
+    soundName: DarkPyramid
+    volume: 0.863
+--- !u!4 &1187086662
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187086660}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.9857028, y: 0.036759853, z: -1.1065795}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 24
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1247328461 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 869883346688829069, guid: 86229446bb5d7944694d671e4e997bd5, type: 3}
@@ -4060,67 +4153,6 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
---- !u!1 &1552952927
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1552952928}
-  - component: {fileID: 1552952930}
-  - component: {fileID: 1552952929}
-  m_Layer: 0
-  m_Name: OverworldUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1552952928
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552952927}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 82224908}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1552952929
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552952927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 706ef1adf9b8716ceb5cf7b0c6eef910, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: e7f1a42d3dab62040924d0df9d4c3d45, type: 3}
-  m_SortingOrder: 0
---- !u!114 &1552952930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552952927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d77c1b86d2bdcae4ba378d7d342f2604, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1620741808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4182,67 +4214,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e8d28a112984aa438911dece85edbb2, type: 3}
---- !u!1 &1623167696
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1623167697}
-  - component: {fileID: 1623167699}
-  - component: {fileID: 1623167698}
-  m_Layer: 0
-  m_Name: InventoryUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1623167697
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623167696}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 82224908}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1623167698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623167696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 706ef1adf9b8716ceb5cf7b0c6eef910, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 87851c838658d97489e80e66dc5fd8d1, type: 3}
-  m_SortingOrder: 0
---- !u!114 &1623167699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1623167696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae26cdb2dabe66549bda3b0446aa6140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1719514901
 GameObject:
   m_ObjectHideFlags: 0
@@ -4656,137 +4627,3 @@ MonoBehaviour:
   m_MaximumFOV: 60
   m_MinimumOrthoSize: 1
   m_MaximumOrthoSize: 5000
---- !u!1 &2071614394
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2071614395}
-  - component: {fileID: 2071614398}
-  - component: {fileID: 2071614397}
-  - component: {fileID: 2071614396}
-  m_Layer: 0
-  m_Name: StoryManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2071614395
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071614394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 82224908}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2071614396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071614394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: 706ef1adf9b8716ceb5cf7b0c6eef910, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 0aa5f8f7d80d68549848209b07528c63, type: 3}
-  m_SortingOrder: 0
---- !u!114 &2071614397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071614394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71acefde04fdc34fb3218e5dff38240, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textSpeed: 30
---- !u!114 &2071614398
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071614394}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9cf97f372d3e1049821e08bd53338cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inkAsset: {fileID: 4900000, guid: f7e4ff60a0e749446886b3852ee8e001, type: 3}
-  characterPortraits:
-  - characterName: empty
-    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    audioSource: {fileID: 0}
-    characterPortraits:
-    - name: default
-      portraits:
-      - {fileID: 0}
-  - characterName: Technoblade
-    audioClip: {fileID: 8300000, guid: e50e8bab97f7627479f42d837bf3ee44, type: 3}
-    audioSource: {fileID: 0}
-    characterPortraits:
-    - name: default
-      portraits:
-      - {fileID: 2211357456315834789, guid: 42790c220fd40d1468072a5077a8dfb7, type: 3}
-  - characterName: Wilbur
-    audioClip: {fileID: 8300000, guid: b242458ea87ee4d44990eadcc5f7a0c3, type: 3}
-    audioSource: {fileID: 0}
-    characterPortraits:
-    - name: default
-      portraits:
-      - {fileID: 21300000, guid: a8b86b38cea3b3c47a2065f5493711e6, type: 3}
-    - name: surprised
-      portraits:
-      - {fileID: 21300000, guid: ca09c4796c49ebf45b21019554543e65, type: 3}
-    - name: silent
-      portraits:
-      - {fileID: 21300000, guid: dbaee2ed6f7dee749ac91b3c49a6e5ac, type: 3}
-    - name: choatic
-      portraits:
-      - {fileID: 21300000, guid: 0b8210ea47be29c4588bbc3c3e1e17f1, type: 3}
-    - name: disgusted
-      portraits:
-      - {fileID: 21300000, guid: 37c812e3304ea6b448925416fdf5db8a, type: 3}
-    - name: kindaangry
-      portraits:
-      - {fileID: 21300000, guid: 988fe857f7fc06a4da13fd76250fac41, type: 3}
-  - characterName: Steve
-    audioClip: {fileID: 0}
-    audioSource: {fileID: 0}
-    characterPortraits:
-    - name: default
-      portraits:
-      - {fileID: 21300000, guid: 1faebf29c162781419df434e2654eead, type: 3}
-    - name: fish
-      portraits:
-      - {fileID: 21300000, guid: 44ab6d94d4f665341b3dc1318c7e054e, type: 3}
-  textSpeed: 30
-  isCurrentlyDisplaying: 0
-  isCurrentlyPlaying: 0
-  currentCutsceneData:
-    director: {fileID: 0}
-    playables: []
-    battles: []
-    inkPath: 
-  currentDialogueSound: {fileID: 0}
-  isContinuable: 0
-  isDisplayingChoices: 0

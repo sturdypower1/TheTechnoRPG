@@ -13,6 +13,7 @@ public class SpriteStretch : MonoBehaviour
     private void Update()
     {
         Camera camera = Camera.main;
+        if (camera == null) return;
         float Height = camera.orthographicSize * 2;
         float Width = camera.aspect * Height;
 

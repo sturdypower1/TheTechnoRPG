@@ -11,11 +11,11 @@ public class InteractiveCheck : MonoBehaviour
     {
         if(direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null && collision.gameObject.GetComponent<Interactable>().IsEnabled && !InkManager.instance.isCurrentlyDisplaying)
         {
-            UIManager.instance.EnableInteractive();
-            /*if (UIManager.instance.isInteractivePressed)
+            MainGameManager.instance.TryEnableInteractable();
+            if (MainGameManager.instance.IsInteractButtonPressed())
             {
                 collision.gameObject.GetComponent<Interactable>().Interact();
-            }*/
+            }
         }
         
    
@@ -24,11 +24,11 @@ public class InteractiveCheck : MonoBehaviour
     {
         if (direction == movement.Direction && collision.gameObject.GetComponent<Interactable>() != null && collision.gameObject.GetComponent<Interactable>().IsEnabled && !InkManager.instance.isCurrentlyDisplaying)
         {
-            UIManager.instance.EnableInteractive();
-            /*if (UIManager.instance.isInteractivePressed)
+            MainGameManager.instance.TryEnableInteractable();
+            if (MainGameManager.instance.IsInteractButtonPressed())
             {
                 collision.gameObject.GetComponent<Interactable>().Interact();
-            }*/
+            }
         }
     }
 }

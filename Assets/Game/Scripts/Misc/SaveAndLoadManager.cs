@@ -58,7 +58,7 @@ public class SaveAndLoadManager : MonoBehaviour
         LoadGame(0);
         
         OnReLoadSave?.Invoke();
-        UIManager.instance.overworldOverlay.visible = true;
+        //UIManager.instance.overworldOverlay.visible = true;
         PauseManager.instance.UnPause();
     }
     // Update is called once per frame
@@ -115,17 +115,17 @@ public class SaveAndLoadManager : MonoBehaviour
     public void LoadSaveUI(string savePointName)
     {
         InkManager.instance.isDisplayingChoices = false;
-        UIManager.instance.overworldOverlay.visible = false;
+        //UIManager.instance.overworldOverlay.visible = false;
         SavePointName = savePointName;
         // pause the world
 
         PauseManager.instance.Pause();
 
-        VisualElement root = UIManager.instance.root;
-        VisualElement fileSelectUI = root.Q<VisualElement>("overworld_file_select");
+        //VisualElement root = UIManager.instance.root;
+        //VisualElement fileSelectUI = root.Q<VisualElement>("overworld_file_select");
 
-        UpdateSaveFileUI(fileSelectUI, true);
-        fileSelectUI.visible = true;
+        //UpdateSaveFileUI(fileSelectUI, true);
+        //fileSelectUI.visible = true;
     }
 
     /// <summary>

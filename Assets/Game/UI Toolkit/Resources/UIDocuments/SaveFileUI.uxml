@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="SaveFile" src="project://database/Assets/Game/UI%20Toolkit/Resources/UIDocuments/SaveFile.uxml?fileID=9197481963319205126&amp;guid=775dbcbc6a270e74384e8cebd8e4ef71&amp;type=3#SaveFile" />
+    <ui:VisualElement name="file_select" style="position: absolute; width: 100%; height: 100%; visibility: hidden; background-color: rgb(60, 60, 60); align-items: flex-start;">
+        <ui:Button display-tooltip-when-elided="true" name="load_back_button" class="back_button" style="background-image: url(&apos;project://database/Assets/Game/Art/Icons/BackIcon.png?fileID=21300000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;); height: 86px; width: 92px;" />
+        <ui:Instance template="SaveFile" name="save_file1" style="flex-grow: 1; width: 100%; align-items: center;" />
+        <ui:Instance template="SaveFile" name="save_file2" style="flex-grow: 1; width: 100%; align-items: center;" />
+    </ui:VisualElement>
+</ui:UXML>

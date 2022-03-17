@@ -70,7 +70,7 @@ public class BattleManager : MonoBehaviour
 
         Enemies.Clear();
 
-        VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
+        //VisualElement enemySelectorGroup = UIManager.instance.root.Q<VisualElement>("EnemySelector");
         i = 0;
         foreach (Battler enemy in enemies)
         {
@@ -87,8 +87,8 @@ public class BattleManager : MonoBehaviour
             i++;
         }
 
-        UIManager.instance.overworldOverlay.visible = false;
-        UIManager.instance.ResetFocus();
+        //UIManager.instance.overworldOverlay.visible = false;
+        //UIManager.instance.ResetFocus();
     }
 
     public void InstantializeBattlePrefab(GameObject prefab, Vector2 position)
@@ -161,7 +161,7 @@ public class BattleManager : MonoBehaviour
         if(BattleMusic != null) BattleMusic.Stop();
         isInBattle = false;
 
-        UIManager.instance.ResetFocus();
+        //UIManager.instance.ResetFocus();
 
         if (isPlayerVictor)
         {
@@ -182,17 +182,17 @@ public class BattleManager : MonoBehaviour
         else
         {
             AudioManager.playSound("defeatsong");
-            VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
+            //VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
             if (Directory.GetFiles(Application.persistentDataPath + "/tempsave").Length <= 0)
             {
-                losingBackground.Q<Button>("continue").SetEnabled(false);
+                //losingBackground.Q<Button>("continue").SetEnabled(false);
             }
             else
             {
-                losingBackground.Q<Button>("continue").SetEnabled(true);
+                //losingBackground.Q<Button>("continue").SetEnabled(true);
             }
 
-            losingBackground.visible = true;
+            //losingBackground.visible = true;
         }
         OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
     }

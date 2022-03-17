@@ -61,7 +61,7 @@ public class SceneLoadingManager : MonoBehaviour
     // Start is called before the first frame update
     public void LoadScene(SceneLoadingData sceneData)
     {
-        BlackScreen = UIManager.instance.root.Q<VisualElement>("black_screen");
+        //BlackScreen = UIManager.instance.root.Q<VisualElement>("black_screen");
         BlackScreen.visible = true;
         PauseManager.instance.Pause();
         StartCoroutine(LoadSceneCouroutine(sceneData));

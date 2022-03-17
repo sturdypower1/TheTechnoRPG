@@ -15,12 +15,12 @@ public class MainMenuUI : MonoBehaviour
     private VisualElement _menuBackground;
     public void Activate()
     {
-
+        _menuBackground.visible = true;
     }
 
     public void Deactivate()
     {
-
+        _menuBackground.visible = false;
     }
 
 
@@ -35,7 +35,7 @@ public class MainMenuUI : MonoBehaviour
     private void continueButton()
     {
         AudioManager.playSound("menuselect");
-        OnCreditsButtonPressed?.Invoke();
+        OnContinueButtonPressed?.Invoke();
         // load ui using the save and load system
         //SaveAndLoadManager.instance.UpdateSaveFileUI(fileSelectBackground);
 
@@ -46,17 +46,34 @@ public class MainMenuUI : MonoBehaviour
     private void OptionsButton()
     {
         AudioManager.playSound("menuselect");
-
+        OnSettingsButtonPressed?.Invoke();
         
     }
 
     private void CreditsButton()
     {
         AudioManager.playSound("menuchange");
+        Deactivate();
+        OnCreditsButtonPressed?.Invoke();
     }
     private void ExitButton()
     {
         Application.Quit();
     }
 
+    private void Awake()
+    {
+        _UIDoc = GetComponent<UIDocument>();
+        var root = _UIDoc.rootVisualElement;
+
+        _menuBackground = root.Q<VisualElement>("title_background");
+
+        _menuBackground.Q<Button>("Start").clicked += StartButton;
+        _menuBackground.Q<Button>("Continue").clicked += continueButton;
+        _menuBackground.Q<Button>("Options").clicked += OptionsButton;
+        _menuBackground.Q<Button>("Credits").clicked += CreditsButton;
+        _menuBackground.Q<Button>("Exit").clicked += ExitButton;
+
+        
+    }
 }

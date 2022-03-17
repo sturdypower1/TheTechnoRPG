@@ -9,6 +9,7 @@ using System.IO;
 
 public class UIManager : MonoBehaviour
 {
+    /*
     /// <summary>
     /// the currently selected item or skill
     /// </summary>
@@ -74,114 +75,112 @@ public class UIManager : MonoBehaviour
     {
         
         // setting up the ui
-            root = UIDoc.rootVisualElement;
-            nullFocus = root.Q<VisualElement>("null_focus");
-            // for the title screen
-            {
-            titleBackground = root.Q<VisualElement>("title_background");
-            creditsBackground = root.Q<VisualElement>("credits_background");
-            fileSelectBackground = root.Q<VisualElement>("file_select");
+        root = UIDoc.rootVisualElement;
+        nullFocus = root.Q<VisualElement>("null_focus");
+        // for the title screen
+        {
+        titleBackground = root.Q<VisualElement>("title_background");
+        creditsBackground = root.Q<VisualElement>("credits_background");
+        fileSelectBackground = root.Q<VisualElement>("file_select");
 
-            titleBackground.Q<Button>("Start").clicked += StartButton;
-            titleBackground.Q<Button>("Continue").clicked += continueButton;
-            titleBackground.Q<Button>("Options").clicked += OptionsButton;
-            titleBackground.Q<Button>("Credits").clicked += CreditsButton;
-            titleBackground.Q<Button>("Exit").clicked += ExitButton;
+        titleBackground.Q<Button>("Start").clicked += StartButton;
+        titleBackground.Q<Button>("Continue").clicked += continueButton;
+        titleBackground.Q<Button>("Options").clicked += OptionsButton;
+        titleBackground.Q<Button>("Credits").clicked += CreditsButton;
+        titleBackground.Q<Button>("Exit").clicked += ExitButton;
 
-            creditsBackground.Q<Button>("credits_back_button").clicked += CreditsBackButton;
+        creditsBackground.Q<Button>("credits_back_button").clicked += CreditsBackButton;
 
-            fileSelectBackground.Q<TemplateContainer>("save_file1").Q<Button>("background").clicked += () => ContinueGameButton(1);
-            fileSelectBackground.Q<TemplateContainer>("save_file2").Q<Button>("background").clicked += () => ContinueGameButton(2);
+        fileSelectBackground.Q<TemplateContainer>("save_file1").Q<Button>("background").clicked += () => ContinueGameButton(1);
+        fileSelectBackground.Q<TemplateContainer>("save_file2").Q<Button>("background").clicked += () => ContinueGameButton(2);
 
-            fileSelectBackground.Q<Button>("load_back_button").clicked += LoadSaveFileBackButton;
+        fileSelectBackground.Q<Button>("load_back_button").clicked += LoadSaveFileBackButton;
+        }
+        //for the credits menu, links all the items to the links
+        {
+            Button technoYoutubeButton = root.Q<Button>("techno_youtube");
+            Button technoTwitterButton = root.Q<Button>("techno_twitter");
+
+            Button tommyYoutubeButton = root.Q<Button>("tommy_youtube");
+            Button tommyTwitterButton = root.Q<Button>("tommy_twitter");
+            Button tommyTwitchButton = root.Q<Button>("tommy_twitch");
+
+            Button wilburYoutubeButton = root.Q<Button>("wilbur_youtube");
+            Button wilburTwitterButton = root.Q<Button>("wilbur_twitter");
+            Button wilburTwitchButton = root.Q<Button>("wilbur_twitch");
+            technoYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTechno(websites.youtube));
+            technoTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTechno(websites.twitter));
+
+            tommyYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.youtube));
+            tommyTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.twitter));
+            tommyTwitchButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.twitch));
+
+            wilburYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.youtube));
+            wilburTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.twitter));
+            wilburTwitchButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.twitch));
             }
-            //for the credits menu, links all the items to the links
-            {
-                Button technoYoutubeButton = root.Q<Button>("techno_youtube");
-                Button technoTwitterButton = root.Q<Button>("techno_twitter");
+        // for the settings menu
+        {
+            /*settingsBackground = root.Q<VisualElement>("settings_background");
 
-                Button tommyYoutubeButton = root.Q<Button>("tommy_youtube");
-                Button tommyTwitterButton = root.Q<Button>("tommy_twitter");
-                Button tommyTwitchButton = root.Q<Button>("tommy_twitch");
+            settingsBackButton = settingsBackground.Q<Button>("settings_back_button");
 
-                Button wilburYoutubeButton = root.Q<Button>("wilbur_youtube");
-                Button wilburTwitterButton = root.Q<Button>("wilbur_twitter");
-                Button wilburTwitchButton = root.Q<Button>("wilbur_twitch");
-                technoYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTechno(websites.youtube));
-                technoTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTechno(websites.twitter));
+            Button volumeButton = settingsBackground.Q<Button>("volume_button");
+            volumeButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("volume_controls")));
+            Button bindingsButton = settingsBackground.Q<Button>("bindings_button");
+            bindingsButton.SetEnabled(false);
+            bindingsButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("bindings_controls")));
+            Button othersButton = settingsBackground.Q<Button>("others_button");
+            othersButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("other_controls")));
+            settingsBackground.Q<Slider>("volume_slider").RegisterValueChangedCallback(ev => ChangeVolume(ev.newValue));
+            settingsBackground.Q<Button>("title_return_button").clicked += SettingsReturnToTitleButton;
+            }
+        // for pause menu
+        
+            /*pauseBackground = root.Q<VisualElement>("pause_background");
 
-                tommyYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.youtube));
-                tommyTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.twitter));
-                tommyTwitchButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToTommy(websites.twitch));
-
-                wilburYoutubeButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.youtube));
-                wilburTwitterButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.twitter));
-                wilburTwitchButton.RegisterCallback<ClickEvent>(ev => LinkSender.sendToWilbur(websites.twitch));
-                }
-            // for the settings menu
-            {
-                settingsBackground = root.Q<VisualElement>("settings_background");
-
-                settingsBackButton = settingsBackground.Q<Button>("settings_back_button");
-
-                Button volumeButton = settingsBackground.Q<Button>("volume_button");
-                volumeButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("volume_controls")));
-                Button bindingsButton = settingsBackground.Q<Button>("bindings_button");
-                bindingsButton.SetEnabled(false);
-                bindingsButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("bindings_controls")));
-                Button othersButton = settingsBackground.Q<Button>("others_button");
-                othersButton.RegisterCallback<FocusEvent>(ev => ActivateSettingsTab(settingsBackground.Q<VisualElement>("other_controls")));
-                settingsBackground.Q<Slider>("volume_slider").RegisterValueChangedCallback(ev => ChangeVolume(ev.newValue));
-                settingsBackground.Q<Button>("title_return_button").clicked += SettingsReturnToTitleButton;
-                }
-            // for pause menu
-            {
-                /*pauseBackground = root.Q<VisualElement>("pause_background");
-
-                pauseBackground.Q<Button>("pause_back_button").clicked += PauseBackButton;
+            pauseBackground.Q<Button>("pause_back_button").clicked += PauseBackButton;
                 
-                pauseBackground.Q<Button>("Equipment").clicked += EquipmentButton;
-                pauseBackground.Q<Button>("Item").clicked += PauseItemsButton;
-                pauseBackground.Q<Button>("Skills").clicked += PauseSkillsButton;
-                pauseBackground.Q<Button>("Settings").clicked += PauseSettingsButton;
+            pauseBackground.Q<Button>("Equipment").clicked += EquipmentButton;
+            pauseBackground.Q<Button>("Item").clicked += PauseItemsButton;
+            pauseBackground.Q<Button>("Skills").clicked += PauseSkillsButton;
+            pauseBackground.Q<Button>("Settings").clicked += PauseSettingsButton;
 
-                itemsQuickMenu = pauseBackground.Q<VisualElement>("items_quickmenu");
-                itemsQuickMenu.Q<Button>("use").clicked += ItemUse;
-                itemsQuickMenu.Q<Button>("drop").clicked += ItemDrop;
-                itemsQuickMenu.Q<Button>("cancel").clicked += ItemCancel;
+            itemsQuickMenu = pauseBackground.Q<VisualElement>("items_quickmenu");
+            itemsQuickMenu.Q<Button>("use").clicked += ItemUse;
+            itemsQuickMenu.Q<Button>("drop").clicked += ItemDrop;
+            itemsQuickMenu.Q<Button>("cancel").clicked += ItemCancel;
 
-                equipmentInfo = pauseBackground.Q<VisualElement>("equipment_info");
-                itemInfo = pauseBackground.Q<VisualElement>("item_selection");
-                skillInfo = pauseBackground.Q<VisualElement>("skill_selection");
+            equipmentInfo = pauseBackground.Q<VisualElement>("equipment_info");
+            itemInfo = pauseBackground.Q<VisualElement>("item_selection");
+            skillInfo = pauseBackground.Q<VisualElement>("skill_selection");
 
-                equipmentQuickMenu = pauseBackground.Q<VisualElement>("equipment_quickmenu");
-                equipmentQuickMenu.Q<Button>("cancel").clicked += EquipmentCancel;
+            equipmentQuickMenu = pauseBackground.Q<VisualElement>("equipment_quickmenu");
+            equipmentQuickMenu.Q<Button>("cancel").clicked += EquipmentCancel;
 
-                skillsQuickMenu = pauseBackground.Q<VisualElement>("skills_quickmenu");
-                //skillsQuickMenu.Q<Button>("switch").clicked += SkillSwitchButton;
-                //skillsQuickMenu.Q<Button>("cancel").clicked += SkillCancel;
+            skillsQuickMenu = pauseBackground.Q<VisualElement>("skills_quickmenu");
+            //skillsQuickMenu.Q<Button>("switch").clicked += SkillSwitchButton;
+            //skillsQuickMenu.Q<Button>("cancel").clicked += SkillCancel;
 
-                Button currentWeapon = equipmentInfo.Q<Button>("current_weapon");
-                currentWeapon.clicked += () => CurrentEquipmentButton(currentWeapon, Equipment.Weapon);
-                equipmentInfo.Q<Button>("current_armor").clicked += () => CurrentEquipmentButton(currentWeapon, Equipment.Armor);*/
-                }
-            overworldSaveFileSelect = root.Q<VisualElement>("overworld_file_select");
-            TemplateContainer fileContainer1 = overworldSaveFileSelect.Q<TemplateContainer>("save_file1");
-            fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(1);
-            fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer1.Q<Button>("background"), 1);
-            
-             //interactiveButton = overworldOverlay.Q<Button>("interactive_item_check");
-
-        TemplateContainer fileContainer2 = overworldSaveFileSelect.Q<TemplateContainer>("save_file2");
-            fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(2);
-            fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer2.Q<Button>("background"), 2);
-            overworldSaveFileSelect.Q<Button>("save_back_button").clicked += SaveBackButton;
-
-            if(!isStartingOnTitle){
-                titleBackground.visible = false;
+            Button currentWeapon = equipmentInfo.Q<Button>("current_weapon");
+            currentWeapon.clicked += () => CurrentEquipmentButton(currentWeapon, Equipment.Weapon);
+            equipmentInfo.Q<Button>("current_armor").clicked += () => CurrentEquipmentButton(currentWeapon, Equipment.Armor);
             }
+        overworldSaveFileSelect = root.Q<VisualElement>("overworld_file_select");
+        TemplateContainer fileContainer1 = overworldSaveFileSelect.Q<TemplateContainer>("save_file1");
+        fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(1);
+        fileContainer1.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer1.Q<Button>("background"), 1);
             
+            //interactiveButton = overworldOverlay.Q<Button>("interactive_item_check");
 
+    TemplateContainer fileContainer2 = overworldSaveFileSelect.Q<TemplateContainer>("save_file2");
+        fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.SaveGame(2);
+        fileContainer2.Q<Button>("background").clicked += () =>  SaveAndLoadManager.instance.UpdateSaveFile(fileContainer2.Q<Button>("background"), 2);
+        overworldSaveFileSelect.Q<Button>("save_back_button").clicked += SaveBackButton;
+
+        if(!isStartingOnTitle){
+            titleBackground.visible = false;
+        }
     }
 
     // Update is called once per frame
@@ -206,7 +205,7 @@ public class UIManager : MonoBehaviour
             wasInteractiveEnabled = false;
             isInteractivePressed = false;
             interactiveButton.SetEnabled(false);
-        }*/
+        }
     }
 
     /// <summary>
@@ -254,7 +253,7 @@ public class UIManager : MonoBehaviour
         /*if (!InkManager.instance.isCurrentlyDisplaying&& isInteractiveEnabled)
         {
             isInteractivePressed = true;
-        }*/
+        }
     }
     /// <summary>
     /// allows the interactable button to be enabled
@@ -262,7 +261,7 @@ public class UIManager : MonoBehaviour
     public void EnableInteractive(){
         /*isInteractiveEnabled = true;
         
-        interactiveButton.SetEnabled(true);*/
+        interactiveButton.SetEnabled(true);
     }
     /// <summary>
     /// activate the pause menu, setting all the character values
@@ -874,7 +873,7 @@ public class UIManager : MonoBehaviour
         healthBar.style.width = healthBarBase.contentRect.width * (technoStats.stats.health / technoStats.stats.maxHealth);
         healthBarText.text = "HP: " + technoStats.stats.health.ToString() + "/" + technoStats.stats.maxHealth.ToString();
     }
-
+    */
 }
 public class StartGameEventArgs: EventArgs{
     public int saveFileNumber{get; set;}

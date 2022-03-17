@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement name="overworld_overlay" focusable="true" style="position: absolute; width: 100%; height: 100%; visibility: hidden;">
+    <ui:VisualElement name="overworld_overlay" focusable="true" style="position: absolute; width: 100%; height: 100%; visibility: visible;">
         <ui:Button text="Interact&#10;" display-tooltip-when-elided="true" name="interactive_item_check" enable-rich-text="true" focusable="false" class="interactive_button" style="position: absolute; top: 606px; left: 21px; width: 156px; height: 55px;" />
         <ui:Button text="Pause" display-tooltip-when-elided="true" name="pause_button" tooltip="pause the game" focusable="false" class="pause_button" style="position: absolute; top: 19px; left: 22px; height: 55px; width: 156px;" />
     </ui:VisualElement>

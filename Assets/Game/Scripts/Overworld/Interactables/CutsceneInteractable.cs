@@ -11,7 +11,7 @@ public class CutsceneInteractable : Interactable
         if (!InkManager.instance.isCurrentlyDisplaying)
         {
             
-            UIManager.instance.ResetFocus();
+            //UIManager.instance.ResetFocus();
             InkManager.instance.StartCutScene(cutsceneData);
         }
         

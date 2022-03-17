@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
         //singleton pattern
         if(instance == null){
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -29,8 +30,6 @@ public class AudioManager : MonoBehaviour
     }
 
     public static void changeVolume(float newVolume){
-        //volume = newVolume;
-
         foreach(SoundData sound in gameSounds)
         {
             sound.audioSource.volume = newVolume;

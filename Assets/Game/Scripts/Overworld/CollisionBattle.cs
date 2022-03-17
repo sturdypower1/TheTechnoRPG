@@ -10,7 +10,7 @@ public class CollisionBattle : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            BattleManager.instance.SetupBattle(enemyBattlers.Enemies, enemyBattlers.battleBackground, enemyBattlers.battleMusic);
+            MainGameManager.instance.StartBattle(enemyBattlers.Enemies, enemyBattlers.battleBackground, enemyBattlers.battleMusic);
         }
     }
 

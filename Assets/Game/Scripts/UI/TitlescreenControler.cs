@@ -1,48 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.IO;
 using UnityEngine.UIElements;
 
 public class TitlescreenControler : MonoBehaviour
 {
 
     [SerializeField]
-    private MainMenuUI _mainMenuUI;
+    private MainMenuUI mainMenuUI;
     [SerializeField]
-    private CreditsUI _creditsUI;
+    private CreditsUI creditsUI;
     [SerializeField]
-    private SettingsUI _settingsUI;
+    private SettingsUI settingsUI;
     [SerializeField]
-    private SaveAndLoadUI _saveAndLoadUI;
+    private FileLoadManager loadManager;
     private void Start()
     {
-        _mainMenuUI.OnStartButtonPressed += StartGame_OnStartButtonPressed;
-        _mainMenuUI.OnSettingsButtonPressed += OpenSettings_OnSettingsButtonPressed;
-        _mainMenuUI.OnCreditsButtonPressed += OpenCredits_OnCreditsButtonPressed;
-        _mainMenuUI.OnContinueButtonPressed += OpenLoadUI_OnContinuePressed;
+        mainMenuUI.OnStartButtonPressed += StartGame_OnStartButtonPressed;
+        mainMenuUI.OnSettingsButtonPressed += OpenSettings_OnSettingsButtonPressed;
+        mainMenuUI.OnCreditsButtonPressed += OpenCredits_OnCreditsButtonPressed;
+        mainMenuUI.OnContinueButtonPressed += OpenLoadUI_OnContinuePressed;
 
+        loadManager.OnBackPressed += OpenMainMenu_OnFileSelectBack;
 
+        settingsUI.OnBackPressed += OpenMainMenu_OnCreditsBackPressed;
+
+        creditsUI.OnBackPressed += OpenMainMenu_OnCreditsBackPressed;
     }
-    
+    private void OpenMainMenu_OnFileSelectBack()
+    {
+        mainMenuUI.Activate();
+    }
     private void StartGame_OnStartButtonPressed()
     {
-        _mainMenuUI.Deactivate();
+        mainMenuUI.Deactivate();
         // load in the game in a default state
+
+        SceneManager.LoadSceneAsync("BeforeThePyramid");
+        foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
+        {
+            File.Delete(file);
+        }
     }
     private void OpenLoadUI_OnContinuePressed()
     {
-        _mainMenuUI.Deactivate();
-        _saveAndLoadUI.Activate();
+        mainMenuUI.Deactivate();
+        loadManager.Activate();
     }
     private void OpenSettings_OnSettingsButtonPressed()
     {
-        _mainMenuUI.Deactivate();
-        _settingsUI.Activate();
+        mainMenuUI.Deactivate();
+        settingsUI.Activate();
     }
     private void OpenCredits_OnCreditsButtonPressed()
     {
-        _mainMenuUI.Deactivate();
-        _creditsUI.Activate();
+        mainMenuUI.Deactivate();
+        creditsUI.Enable();
     }
     
+    private void OpenMainMenu_OnCreditsBackPressed()
+    {
+        mainMenuUI.Activate();
+    }
 }

@@ -9,6 +9,8 @@ using UnityEngine.Playables;
 using UnityEngine.Timeline;
 public class InkManager : MonoBehaviour
 {
+    public event EmptyEventHandler OnFinishedDisplaying;
+    public event EmptyEventHandler OnCutsceneStarting;
     /// <summary>
     /// invoked when the victory data display has been finished and the player wants to continue
     /// </summary>
@@ -79,8 +81,6 @@ public class InkManager : MonoBehaviour
             DisplayPortriat("empty", "default");
             currentCutsceneData = cutsceneData;
             isDisplayingChoices = false;
-            PlayerInputManager.instance.DisableInput();
-            UIManager.instance.overworldOverlay.visible = false;
 
             // ensures that if it was added, it won't be done twice
             if (currentCutsceneData.director == null)
@@ -92,9 +92,10 @@ public class InkManager : MonoBehaviour
                 currentCutsceneData.director.stopped -= tempContinueStory;
                 currentCutsceneData.director.stopped += tempContinueStory;
             }
-            
 
             inkStory.ChoosePathString(cutsceneData.inkPath);
+
+            OnCutsceneStarting?.Invoke();
             ContinueStory();
         }
     }
@@ -111,12 +112,13 @@ public class InkManager : MonoBehaviour
         {
             if (isFinishedPage)
             {
-                UIManager.instance.ResetFocus();
+                //
+                //UIManager.instance.ResetFocus();
                 ContinueStory();
             }
             else if(!unSkipable){
                 isFinishedPage = true;
-                UIManager.instance.textBoxUI.Q<Label>("TextBoxText").text = text;
+                //UIManager.instance.textBoxUI.Q<Label>("TextBoxText").text = text;
             }
         }
     }
@@ -125,15 +127,15 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="choices">the choices the player has</param> 
     public void DisplayChoices(Button[] choices){
-        isDisplayingChoices = true;
+        /*isDisplayingChoices = true;
         isCurrentlyDisplaying = true;
-        Label textBoxText = UIManager.instance.textBoxUI.Q<Label>("TextBoxText");
+        //Label textBoxText = UIManager.instance.textBoxUI.Q<Label>("TextBoxText");
         textBoxText.text = "";
 
         // updating the portrait
         DisplayPortriat("Technoblade", "default");
   
-        Button textBoxUI = UIManager.instance.textBoxUI;
+        //Button textBoxUI = UIManager.instance.textBoxUI;
         textBoxUI.visible = true;
         PlayerInputManager.instance.DisableInput();
         VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
@@ -144,12 +146,12 @@ public class InkManager : MonoBehaviour
             choice.focusable = true;
             choice.Focus();
             
-        }
+        }*/
     }
 
     public void DisplayNewItem(string ItemName)
     {
-        PauseManager.instance.Pause();
+        /*PauseManager.instance.Pause();
         Button textBoxUI = UIManager.instance.textBoxUI;
         Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
         string displayText = "Technoblade obtained <color=red>" + ItemName + "</color>.";
@@ -158,7 +160,7 @@ public class InkManager : MonoBehaviour
         UIManager.instance.overworldOverlay.visible = false;
 
         DisplayPortriat("empty", "default");
-        textboxUI.DisplayText(displayText, false, false, false);
+        textboxUI.DisplayText(displayText, false, false, false);*/
     }
 
     private CharacterPortraitData GetPortraitList(string characterName, string feeling)
@@ -171,7 +173,7 @@ public class InkManager : MonoBehaviour
             {
                 if (characterPortraitref.characterName == characterName)
                 {
-                    currentDialogueSound = characterPortraitref.audioSource;
+                    textboxUI.SetDialogueAudio(characterPortraitref.audioSource);
                     foreach (CharacterPortraitData characterPortraitData in characterPortraitref.characterPortraits)
                     {
                         if (characterPortraitData.name == feeling)
@@ -257,14 +259,9 @@ public class InkManager : MonoBehaviour
             }
             else if (inkStory.currentFlowName != "battle")
             {
-                PauseManager.instance.UnPause();
-                CameraController.instance.SwitchToFollowCamera();
-                PlayerInputManager.instance.EnableInput();
                 isCurrentlyDisplaying = false;
-
-                UIManager.instance.overworldOverlay.visible = true;
-                //UIManager.instance.isInteractiveEnabled = false;
                 textboxUI.DisableUI();
+                OnFinishedDisplaying?.Invoke();
             }
         }
     }
@@ -286,7 +283,7 @@ public class InkManager : MonoBehaviour
     {
         if (inkStory.currentTags.Contains("soundless"))
         {
-            currentDialogueSound = null;
+            textboxUI.SetDialogueAudio(null);
         }
         if (inkStory.currentTags.Contains("unskipable"))
         {
@@ -376,8 +373,7 @@ public class InkManager : MonoBehaviour
 
         if (GetPortraitList(characterName, feeling).portraits != null)
         {
-            //CharacterPortraitReference portraitReference = GetPortraitList(characterName, feeling);
-            UIManager.instance.textBoxUI.Q<VisualElement>("character_base").style.backgroundImage = Background.FromSprite(GetPortraitList(characterName, feeling).portraits[0]);
+            textboxUI.SetCharacterPortrait(GetPortraitList(characterName, feeling));
         }
         else
         {

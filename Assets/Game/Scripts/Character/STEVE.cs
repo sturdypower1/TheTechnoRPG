@@ -128,7 +128,7 @@ public class STEVE : MonoBehaviour
     {
         PlayerPartyManager.instance.RemovePlayer("Technoblade");
         SaveAndLoadManager.instance.OnStartSave -= Save;
-        UIManager.instance.OnTitleReturn -= DestroySteve;
+        //UIManager.instance.OnTitleReturn -= DestroySteve;
         SaveAndLoadManager.instance.OnReLoadSave -= Load;
     }
 }

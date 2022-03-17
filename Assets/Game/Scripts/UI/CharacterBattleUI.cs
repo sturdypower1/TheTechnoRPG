@@ -152,7 +152,7 @@ public class CharacterBattleUI : MonoBehaviour
     {
         AudioManager.playSound("menuchange");
         // reseting focus so you can't select the button again
-        UIManager.instance.ResetFocus();
+        //UIManager.instance.ResetFocus();
 
         targetSelected?.Invoke(new OnSelectedEventArgs { target = enemy, skillNumber = 0 });
         // clearing the enemies since they aren't needed anymore
@@ -164,7 +164,7 @@ public class CharacterBattleUI : MonoBehaviour
         AudioManager.playSound("menuchange");
         EnableSelection();
         DisableOptionMenu();
-        UIManager.instance.ResetFocus();
+        //UIManager.instance.ResetFocus();
         CharacterStats stats = battler.characterStats;
         int i = 1;
         while (i < stats.skills.Count)
