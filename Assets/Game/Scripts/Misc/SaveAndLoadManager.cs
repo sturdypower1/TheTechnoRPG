@@ -12,7 +12,7 @@ public class SaveAndLoadManager : MonoBehaviour
     public static SaveAndLoadManager instance;
     // Start is called before the first frame update
 
-    public event SaveEventHandler OnStartSave;
+    //public event SaveEventHandler OnStartSave;
     public event EmptyEventHandler OnLoadSave;
     public event EmptyEventHandler OnReLoadSave;
 
@@ -24,7 +24,7 @@ public class SaveAndLoadManager : MonoBehaviour
         if(instance == null){
             instance = this;
             // ensure is empty when you start the game
-            foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
+            /*foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
             {
                 File.Delete(file);
             }
@@ -34,7 +34,7 @@ public class SaveAndLoadManager : MonoBehaviour
                 {
                     File.Delete(file);
                 }
-            }
+            }*/
         }
         else
         {
@@ -72,7 +72,7 @@ public class SaveAndLoadManager : MonoBehaviour
     /// <param name="saveFileNubmer"></param>
     public void SaveGame(int saveFileNubmer){
         CreateSaveFiles();
-        OnStartSave?.Invoke(saveFileNubmer);
+        //OnStartSave?.Invoke(saveFileNubmer);
         // To do save everything
         //SaveAtmosphere();
         SaveCurrentScene();
@@ -120,12 +120,6 @@ public class SaveAndLoadManager : MonoBehaviour
         // pause the world
 
         PauseManager.instance.Pause();
-
-        //VisualElement root = UIManager.instance.root;
-        //VisualElement fileSelectUI = root.Q<VisualElement>("overworld_file_select");
-
-        //UpdateSaveFileUI(fileSelectUI, true);
-        //fileSelectUI.visible = true;
     }
 
     /// <summary>
@@ -152,6 +146,8 @@ public class SaveAndLoadManager : MonoBehaviour
             Button currentFile = fileContainer.Q<Button>("background");
             if (File.Exists(Application.persistentDataPath + "/save" + i.ToString() + "/SavePointData") || (isSaving))
             {
+                Debug.Log("updating file");
+
                 currentFile.SetEnabled(true);
                 Label currentTime = currentFile.Q<Label>("time");
 

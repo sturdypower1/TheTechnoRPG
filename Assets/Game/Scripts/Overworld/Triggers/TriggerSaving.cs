@@ -13,7 +13,7 @@ public class TriggerSaving : MonoBehaviour
     {
         triggerCutscene = GetComponent<TriggerCutscene>();
         Load();
-        SaveAndLoadManager.instance.OnStartSave += Save;
+        FileSaveManager.instance.OnStartSave += Save;
     }
 
     public void Save(int saveFileNumber)
@@ -36,6 +36,6 @@ public class TriggerSaving : MonoBehaviour
 
     private void OnDestroy()
     {
-        SaveAndLoadManager.instance.OnStartSave -= Save;
+        FileSaveManager.instance.OnStartSave -= Save;
     }
 }

@@ -12,22 +12,20 @@ public class SaveInteractive : Interactable
     {
         if (!InkManager.instance.isCurrentlyDisplaying)
         {
-            //UIManager.instance.ResetFocus();
+            MainGameManager.instance.DisableOverworldOverlay();
 
-            // restore player hp
-            //UIManager.instance.overworldOverlay.visible = false;
             Button ringButton = new Button();
             ringButton.AddToClassList("player_choice");
             ringButton.text = "ring the bell";
-            //ringButton.focusable = true;
+            ringButton.focusable = true;
             // when the ring button is pressed, display a cutscene to ring the bell
             ringButton.clicked += () => { InkManager.instance.StartCutScene(ringBellCutscene); };
 
             Button saveButton = new Button();
             saveButton.AddToClassList("player_choice");
             saveButton.text = "save progress";
-            //saveButton.focusable = true;
-            saveButton.clicked += () => SaveAndLoadManager.instance.LoadSaveUI(savePointName);
+            saveButton.focusable = true;
+            saveButton.clicked += () => { InkManager.instance.ForceDisable(); MainGameManager.instance.ActivateSave(savePointName); };
 
             InkManager.instance.DisplayChoices(new Button[]{ ringButton, saveButton});
         }

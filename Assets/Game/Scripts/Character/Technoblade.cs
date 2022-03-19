@@ -32,7 +32,7 @@ public class Technoblade : MonoBehaviour
     {
         isSetup = true;
         PlayerPartyManager.instance.AddPlayer("Technoblade");
-        SaveAndLoadManager.instance.OnStartSave += Save;
+        FileSaveManager.instance.OnStartSave += Save;
         SaveAndLoadManager.instance.OnReLoadSave += Load;
 
         MainGameManager.instance.OnTitleReturn += DestroyTechno;
@@ -137,7 +137,7 @@ public class Technoblade : MonoBehaviour
         if (!isSetup) return;
         // makes sure that all subribed events are unsubscribed
         PlayerPartyManager.instance.RemovePlayer("Technoblade");
-        SaveAndLoadManager.instance.OnStartSave -= Save;
+        FileSaveManager.instance.OnStartSave -= Save;
         //UIManager.instance.OnTitleReturn -= DestroyTechno;
         SaveAndLoadManager.instance.OnReLoadSave -= Load;
     }

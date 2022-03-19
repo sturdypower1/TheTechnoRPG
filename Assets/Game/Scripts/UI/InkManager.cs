@@ -63,7 +63,10 @@ public class InkManager : MonoBehaviour
     {
         ContinueStory();
     } 
-
+    public void ForceDisable()
+    {
+        textboxUI.DisableUI();
+    }
     public void DisplayVictoryData(){
         levelUpDataQueue = new Queue<PlayerLevelUpData>(PlayerPartyManager.instance.GetLastLevelUps());
         rewardItemsQueue = new Queue<Item>(BattleManager.instance.GetLastBattleReward().items);
@@ -127,26 +130,14 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="choices">the choices the player has</param> 
     public void DisplayChoices(Button[] choices){
-        /*isDisplayingChoices = true;
+        isDisplayingChoices = true;
         isCurrentlyDisplaying = true;
-        //Label textBoxText = UIManager.instance.textBoxUI.Q<Label>("TextBoxText");
-        textBoxText.text = "";
 
-        // updating the portrait
         DisplayPortriat("Technoblade", "default");
-  
-        //Button textBoxUI = UIManager.instance.textBoxUI;
-        textBoxUI.visible = true;
+
+        textboxUI.EnableUI();
+        textboxUI.DisplayChoices(choices);
         PlayerInputManager.instance.DisableInput();
-        VisualElement playerChoiceUI = textBoxUI.Q<VisualElement>("player_choices");
-        playerChoiceUI.Clear();
-        foreach (Button choice in choices)
-        {
-            playerChoiceUI.Add(choice);
-            choice.focusable = true;
-            choice.Focus();
-            
-        }*/
     }
 
     public void DisplayNewItem(string ItemName)

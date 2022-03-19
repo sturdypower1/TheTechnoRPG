@@ -32,6 +32,19 @@ public class TextboxUI : MonoBehaviour
         characterPortraitUI.style.backgroundImage = null;
         textboxBase.visible = false;
     }
+    public void DisplayChoices(Button[] choices)
+    {
+        textboxText.text = "";
+        VisualElement playerChoiceUI = textboxBase.Q<VisualElement>("player_choices");
+        playerChoiceUI.Clear();
+        foreach (Button choice in choices)
+        {
+            choice.clicked += ClearChoices;
+            playerChoiceUI.Add(choice);
+            choice.focusable = true;
+            choice.Focus();
+        }
+    }
     
     public void SetDialogueAudio(AudioSource audio)
     {
@@ -56,6 +69,11 @@ public class TextboxUI : MonoBehaviour
         {
             textCouritine = StartCoroutine(TextCoroutine(text, isSlow));
         }
+    }
+    private void ClearChoices()
+    {
+        VisualElement playerChoiceUI = textboxBase.Q<VisualElement>("player_choices");
+        playerChoiceUI.Clear();
     }
     private void TextboxButton()
     {

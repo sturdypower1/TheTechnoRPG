@@ -13,7 +13,7 @@ public class InteractiveSaving : MonoBehaviour
     {
         interactable = GetComponent<Interactable>();
         Load();
-        SaveAndLoadManager.instance.OnStartSave += Save;
+        FileSaveManager.instance.OnStartSave += Save;
     }
 
     public void Save(int saveFileNumber)
@@ -36,7 +36,7 @@ public class InteractiveSaving : MonoBehaviour
 
     private void OnDestroy()
     {
-        SaveAndLoadManager.instance.OnStartSave -= Save;
+        FileSaveManager.instance.OnStartSave -= Save;
     }
 }
 [System.Serializable]

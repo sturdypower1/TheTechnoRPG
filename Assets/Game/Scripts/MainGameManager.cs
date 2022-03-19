@@ -28,7 +28,14 @@ public class MainGameManager : MonoBehaviour
     {
         return overworldUI.IsInteractButtonPressed();
     }
-    
+    public void ActivateSave(string savePointName)
+    {
+        fileSaveManager.Activate(savePointName);
+    }
+    public void DisableOverworldOverlay()
+    {
+        overworldUI.DisableUI();
+    }
     private void OnPausePressed_OpenInventory()
     {
         inventoryUI.EnableUI();

@@ -8,12 +8,12 @@ public abstract class ISaveable : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        SaveAndLoadManager.instance.OnStartSave += Save;
+        FileSaveManager.instance.OnStartSave += Save;
         Load();
     }
     public virtual void OnDestroy()
     {
-        SaveAndLoadManager.instance.OnStartSave -= Save;
+        FileSaveManager.instance.OnStartSave -= Save;
     }
 
     public abstract void Save(int saveFileNumber);
