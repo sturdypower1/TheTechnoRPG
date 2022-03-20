@@ -41,7 +41,7 @@ public class SceneLoadingManager : MonoBehaviour
         {
             yield return null;
         }
-        foreach (GameObject player in PlayerPartyManager.instance.players)
+        foreach (PlayerController player in PlayerPartyManager.instance.players)
         {
             
             player.transform.position = spawnPosition;

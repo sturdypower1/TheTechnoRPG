@@ -3,21 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
-public class Technoblade : MonoBehaviour
+public class Technoblade : PlayerController
 {
     public static Technoblade instance;
 
-    public CharacterStats stats;
-    [HideInInspector]
-    public Battler battler;
-
-    public Animator animator;
-
-    bool isSetup =false;
-    
-
-    public LevelUpController levelUpController;
-
+    private bool isSetup =false;
 
     private void Awake() {
         if(instance == null || instance == this){
@@ -36,9 +26,6 @@ public class Technoblade : MonoBehaviour
         SaveAndLoadManager.instance.OnReLoadSave += Load;
 
         MainGameManager.instance.OnTitleReturn += DestroyTechno;
-        
-        //UIManager.instance.OnTitleReturn += DestroyTechno;
-
         
         levelUpController = this.gameObject.GetComponent<LevelUpController>();
         animator = this.gameObject.GetComponent<Animator>();

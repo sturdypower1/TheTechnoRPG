@@ -4,19 +4,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.IO;
 
-public class STEVE : MonoBehaviour
+public class STEVE : PlayerController
 {
     public static STEVE instance;
     public bool isInTeam = true;
-
-    public CharacterStats stats;
-    [HideInInspector]
-    public Battler battler;
-    [HideInInspector]
-    public Animator animator;
-
-    [HideInInspector]
-    public LevelUpController levelUpController;
     
     // Start is called before the first frame update
     private void Awake()

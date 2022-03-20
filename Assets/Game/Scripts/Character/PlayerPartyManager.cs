@@ -7,9 +7,9 @@ public class PlayerPartyManager : MonoBehaviour
 {
     public static PlayerPartyManager instance;
     
-    [HideInInspector]public List<GameObject> players= new List<GameObject>();
+    [HideInInspector]public List<PlayerController> players= new List<PlayerController>();
     
-    private GameObject Leader;
+    private PlayerController Leader;
 
     private List<PlayerLevelUpData> lastPlayerLevelUps;
     
@@ -19,9 +19,9 @@ public class PlayerPartyManager : MonoBehaviour
     }
     public void HealPlayers()
     {
-        foreach(GameObject player in players)
+        foreach(PlayerController player in players)
         {
-            CharacterStats characterStats = player.GetComponent<CharacterStats>();
+            CharacterStats characterStats = player.stats;
 
             characterStats.stats.health = characterStats.stats.maxHealth;
         }
@@ -32,13 +32,13 @@ public class PlayerPartyManager : MonoBehaviour
 
         if(playerName == "Technoblade")
         {
-            Leader = Technoblade.instance.gameObject;
-            players.Insert(0, Technoblade.instance.gameObject);
+            Leader = Technoblade.instance;
+            players.Insert(0, Technoblade.instance);
             currentPlayer = Technoblade.instance.gameObject;
         }
         if(playerName == "Steve" && STEVE.instance != null)
         {
-            players.Insert((players.Count == 0 ? 0 : 1) , STEVE.instance.gameObject);
+            players.Insert((players.Count == 0 ? 0 : 1) , STEVE.instance);
             AIDestinationSetter aiSetter = STEVE.instance.gameObject.GetComponent<AIDestinationSetter>();
             aiSetter.target = Technoblade.instance.gameObject.transform;
             currentPlayer = STEVE.instance.gameObject;
@@ -58,23 +58,23 @@ public class PlayerPartyManager : MonoBehaviour
     {
         if(playerName == "Technoblade" && Technoblade.instance != null)
         {
-            if (players.Contains(Technoblade.instance.gameObject))
+            if (players.Contains(Technoblade.instance))
             {
-                players.Remove(Technoblade.instance.gameObject);
+                players.Remove(Technoblade.instance);
             }
         }
         if(playerName == "Steve" && STEVE.instance != null)
         {
-            if (players.Contains(STEVE.instance.gameObject))
+            if (players.Contains(STEVE.instance))
             {
-                players.Remove(STEVE.instance.gameObject);
+                players.Remove(STEVE.instance);
                 
                 
             }
         }
     }
 
-    public bool HasPlayer(GameObject player)
+    public bool HasPlayer(PlayerController player)
     {
         return players.Contains(player);
     }
@@ -83,13 +83,20 @@ public class PlayerPartyManager : MonoBehaviour
     {
         lastPlayerLevelUps = AddExperiance(experience);
         
-        foreach(GameObject player in players)
+        foreach(PlayerController player in players)
         {
-            var battler = player.GetComponent<Battler>();
+            var battler = player.battler;
             battler.BattleEnd();
         }
     }
 
+    public void EnablePlayerInventoryUI()
+    {
+        foreach(PlayerController player in players)
+        {
+            player.EnableInventoryUI();
+        }
+    }
     private void Awake()
     {
         if (instance == null)
@@ -108,10 +115,9 @@ public class PlayerPartyManager : MonoBehaviour
     private List<PlayerLevelUpData> AddExperiance(int experiance)
     {
         var playerLevelUpList = new List<PlayerLevelUpData>();
-        foreach(GameObject player in players)
+        foreach(PlayerController player in players)
         {
-            
-            var playerLevelUpController = player.GetComponent<LevelUpController>();
+            var playerLevelUpController = player.levelUpController;
             var currentPlayerLevelUpList = playerLevelUpController.AddExperience(experiance);
             foreach(PlayerLevelUpData levelUpData in currentPlayerLevelUpList)
             {
@@ -120,6 +126,8 @@ public class PlayerPartyManager : MonoBehaviour
         }
         return playerLevelUpList;
     }
+
+    
 }
 
 public struct PlayerLevelUpData

@@ -54,7 +54,7 @@ public class BattleManager : MonoBehaviour
         CameraController.instance.SwitchToStillCamera();
 
         Players.Clear();
-        foreach (GameObject gameObject in PlayerPartyManager.instance.players) Players.Add(gameObject.GetComponent<Battler>());
+        foreach (PlayerController player in PlayerPartyManager.instance.players) Players.Add(player.battler);
 
         // need to start trasition of the new camera
         int i = 0;

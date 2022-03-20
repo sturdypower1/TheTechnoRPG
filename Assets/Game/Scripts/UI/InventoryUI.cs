@@ -26,6 +26,7 @@ public class InventoryUI : MonoBehaviour
 
     public void EnableUI()
     {
+        PlayerPartyManager.instance.EnablePlayerInventoryUI();
         inventoryBackground.visible = true;
         equipmentSelectionButton.Focus();
     }

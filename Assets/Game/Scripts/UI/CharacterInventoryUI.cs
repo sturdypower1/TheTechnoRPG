@@ -1,18 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UIElements;
+[RequireComponent(typeof(UIDocument))]
 public class CharacterInventoryUI : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private UIDocument _UIDoc;
+    private VisualElement _background;
+
+    public void EnableUI()
     {
-        
+        _background.visible = true;
+       
+        UpdateUI();
+    }
+    public void DisableUI()
+    {
+        _background.visible = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateUI()
     {
-        
+
+    }
+    private void Start()
+    {
+        _UIDoc = GetComponent<UIDocument>();
+        var root = _UIDoc.rootVisualElement;
+        _background = root.Q<VisualElement>("background");
     }
 }
