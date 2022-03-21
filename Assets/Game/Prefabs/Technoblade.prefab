@@ -607,7 +607,7 @@ MonoBehaviour:
   stats: {fileID: 1222542915304947601}
   battler: {fileID: 9210509367474330029}
   animator: {fileID: 4332425643559129223}
-  inventoryUI: {fileID: 2850526736757247105}
+  inventoryUI: {fileID: 0}
 --- !u!50 &1240235151
 Rigidbody2D:
   serializedVersion: 4
@@ -1095,7 +1095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7464336953907264310}
   - component: {fileID: 3116441040959589329}
-  - component: {fileID: 2850526736757247105}
+  - component: {fileID: 4752647261889465353}
   m_Layer: 0
   m_Name: TechnoInventoryUI
   m_TagString: Untagged
@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 9bf277907a03ebc4c9911b9a7da90062, type: 3}
   m_SortingOrder: 0
---- !u!114 &2850526736757247105
+--- !u!114 &4752647261889465353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1143,7 +1143,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6334146407937328593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd21cd73c687fbf4897547d28582b20b, type: 3}
+  m_Script: {fileID: 11500000, guid: bcc3dd6888837254aa5263a10d7d581e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3422973453387998048

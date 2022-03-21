@@ -20,6 +20,7 @@ public class Technoblade : PlayerController
     }
     private void Start()
     {
+        inventoryUI.SetPlayerController(this);
         isSetup = true;
         PlayerPartyManager.instance.AddPlayer("Technoblade");
         FileSaveManager.instance.OnStartSave += Save;

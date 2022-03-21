@@ -111,7 +111,10 @@ public abstract class Battler : MonoBehaviour
         {
             characterStats.stats.health = characterStats.stats.maxHealth;
         }
-        headsUpUI.AddMessage(recovery.ToString(), MessageType.Healing);
+        if (BattleManager.instance.isInBattle)
+        {
+            headsUpUI.AddMessage(recovery.ToString(), MessageType.Healing);
+        }
     }
     public virtual void BattleSetup(Vector2 newPosition)
     {

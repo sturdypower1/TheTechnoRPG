@@ -89,7 +89,13 @@ public class PlayerPartyManager : MonoBehaviour
             battler.BattleEnd();
         }
     }
-
+    public void DisablePlayerInventoryUI()
+    {
+        foreach (PlayerController player in players)
+        {
+            player.DisableInventoryUI();
+        }
+    }
     public void EnablePlayerInventoryUI()
     {
         foreach(PlayerController player in players)
@@ -97,6 +103,7 @@ public class PlayerPartyManager : MonoBehaviour
             player.EnableInventoryUI();
         }
     }
+    
     private void Awake()
     {
         if (instance == null)

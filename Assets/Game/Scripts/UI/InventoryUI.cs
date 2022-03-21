@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,6 +17,7 @@ public class InventoryUI : MonoBehaviour
 
     private Button equipmentSelectionButton;
 
+    private VisualElement characterSelection;
     private VisualElement skillInfo;
     private VisualElement equipmentInfo;
     private VisualElement itemInfo;
@@ -24,6 +26,8 @@ public class InventoryUI : MonoBehaviour
     private VisualElement equipmentQuickMenu;
     private VisualElement itemsQuickMenu;
 
+    private PlayerController _currentCharacter;
+    private Action OnCharacterSelectedAction;
     public void EnableUI()
     {
         PlayerPartyManager.instance.EnablePlayerInventoryUI();
@@ -34,6 +38,7 @@ public class InventoryUI : MonoBehaviour
     public void DisableUI()
     {
         inventoryBackground.visible = false;
+        PlayerPartyManager.instance.DisablePlayerInventoryUI();
     }
     private void Awake()
     {
@@ -63,6 +68,7 @@ public class InventoryUI : MonoBehaviour
         equipmentInfo = inventoryBackground.Q<VisualElement>("equipment_info");
         itemInfo = inventoryBackground.Q<VisualElement>("item_selection");
         skillInfo = inventoryBackground.Q<VisualElement>("skill_selection");
+        characterSelection = inventoryBackground.Q<VisualElement>("character_selection");
 
         equipmentQuickMenu = inventoryBackground.Q<VisualElement>("equipment_quickmenu");
         equipmentQuickMenu.Q<Button>("cancel").clicked += EquipmentCancel;
@@ -90,19 +96,26 @@ public class InventoryUI : MonoBehaviour
     }
     public void SkillsButton()
     {
+        AudioManager.playSound("menuselect");
+        RestartInventoryMenu();
+        OnCharacterSelectedAction = OpenSkillsTab;
+        SelecteCharacter();
+    }
+    private void OpenSkillsTab()
+    {
         RestartInventoryMenu();
         skillInfo.visible = true;
         VisualElement currentSkills = skillInfo.Q<VisualElement>("current_skills");
         ScrollView skillList = skillInfo.Q<ScrollView>("skill_list");
         Label skillDesc = skillInfo.Q<Label>("skill_desc");
 
-        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+        CharacterStats stats = _currentCharacter.stats;
 
         AudioManager.playSound("menuselect");
         skillList.Clear();
         currentSkills.visible = true;
         int i = 1;
-        foreach (Skill skill in technoStats.skills)
+        foreach (Skill skill in stats.skills)
         {
             Button skillButton = new Button();
             skillButton.AddToClassList("item_button");
@@ -125,7 +138,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         // sets the description to the first skill
-        string descToDisplay = technoStats.skills[0].description;
+        string descToDisplay = stats.skills[0].description;
         if (descToDisplay == "")
         {
             skillDesc.text = "No description";
@@ -135,12 +148,48 @@ public class InventoryUI : MonoBehaviour
             skillDesc.text = descToDisplay;
         }
     }
+    private void SelecteCharacter()
+    {
+        var players = PlayerPartyManager.instance.players;
+        if(players.Count == 1)
+        {
+            CharacaterSelected(players[0]);
+            return;
+        }
+
+        characterSelection.visible = true;
+        var playerList = characterSelection.Q<ScrollView>("character_list");
+        playerList.Clear();
+        foreach (PlayerController player in players)
+        {
+            var playerButton = new Button();
+            playerButton.focusable = true;
+            playerButton.text = player.stats.stats.characterName;
+            playerButton.AddToClassList("item_button");
+            playerButton.clicked += () => CharacaterSelected(player);
+            playerList.Add(playerButton);
+        }
+        
+    }
+    private void CharacaterSelected(PlayerController player)
+    {
+        _currentCharacter = player;
+        characterSelection.visible = false;
+        OnCharacterSelectedAction?.Invoke();
+    }
     private void CurrentSkillButton(int currentSkillNumber)
     {
         currentItem = currentSkillNumber;
         AudioManager.playSound("menuselect");
     }
     private void EquipmentButton()
+    {
+        AudioManager.playSound("menuselect");
+        RestartInventoryMenu();
+        OnCharacterSelectedAction = OpenEquipmentTab;
+        SelecteCharacter();
+    }
+    private void OpenEquipmentTab()
     {
         RestartInventoryMenu();
         AudioManager.playSound("menuselect");
@@ -154,13 +203,13 @@ public class InventoryUI : MonoBehaviour
         Label equipmentDesc = equipmentInfo.Q<Label>("equipment_text");
 
         var inventory = InventoryManager.instance;
-        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+        CharacterStats stats = _currentCharacter.stats;
 
         currentEquipment.visible = true;
         equipmentInfo.visible = true;
 
-        currentWeaponLabel.text = "Weapon: " + technoStats.equipedWeapon.name;
-        currentArmorLabel.text = "Armor: " + technoStats.equipedArmor.name;
+        currentWeaponLabel.text = "Weapon: " + stats.equipedWeapon.name;
+        currentArmorLabel.text = "Armor: " + stats.equipedArmor.name;
         //currentCharmLabel.text = "Charm: " + characterStatsList[currentCharacter].equipedCharm.name;
 
         equipmentInfo.Q<Button>("current_weapon").Focus();
@@ -187,8 +236,14 @@ public class InventoryUI : MonoBehaviour
     }
     private void ItemsButton()
     {
+        AudioManager.playSound("menuselect");
         RestartInventoryMenu();
-        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
+        OnCharacterSelectedAction = OpenItemsTab;
+        SelecteCharacter();
+    }
+    private void OpenItemsTab()
+    {
+        CharacterStats stats = _currentCharacter.stats;
 
         itemInfo.visible = true;
         ScrollView itemList = itemInfo.Q<ScrollView>("item_list");
@@ -262,9 +317,8 @@ public class InventoryUI : MonoBehaviour
 
     private void ItemUse()
     {
-        InventoryManager.instance.items[currentItem - 1].UseItem(Technoblade.instance.gameObject);
-        // update character ui
-        UpdateCharacterInfo();
+        InventoryManager.instance.items[currentItem - 1].UseItem(_currentCharacter.gameObject);
+        _currentCharacter.UpdateInventoryUI();
 
         itemsQuickMenu.visible = false;
         itemInfo.visible = false;
@@ -333,6 +387,7 @@ public class InventoryUI : MonoBehaviour
         skillInfo.visible = false;
         equipmentInfo.visible = false;
         itemInfo.visible = false;
+        characterSelection.visible = false;
         equipmentInfo.Q<VisualElement>("current_equipment").visible = false;
         equipmentInfo.Q<VisualElement>("other_equipment").visible = false;
         skillsQuickMenu.visible = false;
@@ -348,9 +403,9 @@ public class InventoryUI : MonoBehaviour
         var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
         var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
 
-        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
-        Armor unEquipedArmor = technoStats.equipedArmor;
-        technoStats.equipedArmor = inventory.armors[newArmorNumber];
+        CharacterStats stats = _currentCharacter.stats;
+        Armor unEquipedArmor = stats.equipedArmor;
+        stats.equipedArmor = inventory.armors[newArmorNumber];
         // move the unequiped item to the weaponinventory
         inventory.armors.RemoveAt(newArmorNumber);
         inventory.armors.Insert(0, unEquipedArmor);
@@ -358,7 +413,7 @@ public class InventoryUI : MonoBehaviour
         // update equipment info
         // also update character stats!!!!!!!
         //equipmentDesc.text = characterStats.equipedWeapon.description.ToString();
-        equipmentInfo.Q<Button>("current_armor").text = "Armor: " + technoStats.equipedArmor.name.ToString();
+        equipmentInfo.Q<Button>("current_armor").text = "Armor: " + stats.equipedArmor.name.ToString();
 
         AudioManager.playSound("menuselect");
         currentEquipment.visible = true;
@@ -407,9 +462,9 @@ public class InventoryUI : MonoBehaviour
         var otherEquipmentBase = equipmentInfo.Q<VisualElement>("other_equipment");
         var currentEquipment = equipmentInfo.Q<VisualElement>("current_equipment");
 
-        CharacterStats technoStats = Technoblade.instance.gameObject.GetComponent<CharacterStats>();
-        Weapon unEquipedWeapon = technoStats.equipedWeapon;
-        technoStats.equipedWeapon = inventory.weapons[newWeaponNumber];
+        CharacterStats stats = _currentCharacter.stats;
+        Weapon unEquipedWeapon = stats.equipedWeapon;
+        stats.equipedWeapon = inventory.weapons[newWeaponNumber];
         // move the unequiped item to the weaponinventory
         inventory.weapons.RemoveAt(newWeaponNumber);
         inventory.weapons.Insert(0, unEquipedWeapon);
@@ -417,14 +472,10 @@ public class InventoryUI : MonoBehaviour
         // update equipment info
         // also update character stats!!!!!!!
         //equipmentDesc.text = characterStats.equipedWeapon.description.ToString();
-        equipmentInfo.Q<Button>("current_weapon").text = "Weapon: " + technoStats.equipedWeapon.name.ToString();
+        equipmentInfo.Q<Button>("current_weapon").text = "Weapon: " + stats.equipedWeapon.name.ToString();
 
         AudioManager.playSound("menuselect");
         currentEquipment.visible = true;
         otherEquipmentBase.visible = false;
-    }
-    private void UpdateCharacterInfo()
-    {
-
     }
 }

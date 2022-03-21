@@ -28,6 +28,8 @@ public class STEVE : PlayerController
         //SaveAndLoadManager.instance.OnStartSave += Save;
         //SaveAndLoadManager.instance.OnReLoadSave += Load;
 
+        inventoryUI.SetPlayerController(this);
+
         levelUpController = this.gameObject.GetComponent<LevelUpController>();
         animator = this.gameObject.GetComponent<Animator>();
         battler = this.gameObject.GetComponent<Battler>();
