@@ -607,7 +607,7 @@ MonoBehaviour:
   stats: {fileID: 1222542915304947601}
   battler: {fileID: 9210509367474330029}
   animator: {fileID: 4332425643559129223}
-  inventoryUI: {fileID: 0}
+  inventoryUI: {fileID: 4752647261889465353}
 --- !u!50 &1240235151
 Rigidbody2D:
   serializedVersion: 4

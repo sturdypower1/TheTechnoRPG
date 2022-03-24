@@ -201,11 +201,11 @@ PrefabInstance:
       objectReference: {fileID: 1112990736}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.7499304
+      value: -1.75
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517618666081, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5144026
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4891634517824410358, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: m_RootOrder
@@ -257,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6530367028307287781, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
       propertyPath: orthographic size
-      value: 2.4107144
+      value: 2.1302083
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bc3bd20a9238614ea231bad779bdaaa, type: 3}
@@ -802,10 +802,6 @@ PrefabInstance:
       propertyPath: battler
       value: 
       objectReference: {fileID: 1836396309}
-    - target: {fileID: 2366481724411064598, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-      propertyPath: inventoryUI
-      value: 
-      objectReference: {fileID: 1602947669}
     - target: {fileID: 4332425643559129216, guid: ef7a3692079831046b617225a8eb0325, type: 3}
       propertyPath: m_Name
       value: Technoblade
@@ -4159,17 +4155,6 @@ PlayableDirector:
   m_SceneBindings: []
   m_ExposedReferences:
     m_References: []
---- !u!114 &1602947669 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4752647261889465353, guid: ef7a3692079831046b617225a8eb0325, type: 3}
-  m_PrefabInstance: {fileID: 268275168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcc3dd6888837254aa5263a10d7d581e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1620741808
 PrefabInstance:
   m_ObjectHideFlags: 0
