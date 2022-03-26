@@ -32,6 +32,10 @@ public class ShopUI : MonoBehaviour
             itemName.text = item.item.name;
             var itemPrice = itemBackground.Q<Label>("item_price");
             itemPrice.text = item.cost.ToString();
+            if(item.cost > InventoryManager.instance.gold)
+            {
+                itemTemplateCopy.SetEnabled(false);
+            }
 
             _itemList.Add(itemTemplateCopy);
         }
