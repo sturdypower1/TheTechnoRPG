@@ -142,10 +142,13 @@ public class CharacterBattleUI : MonoBehaviour
 
         foreach (Battler enemyBattler in BattleManager.instance.Enemies)
         {
-            Button button = new Button();//template.Q<Button>("Base");
-            button.clicked += () => AttackEnemySelectButton(enemyBattler, button);
-            button.text = enemyBattler.characterStats.name;
-            selectionScroll.Add(button);
+            if (!enemyBattler.isDown)
+            {
+                Button button = new Button();//template.Q<Button>("Base");
+                button.clicked += () => AttackEnemySelectButton(enemyBattler, button);
+                button.text = enemyBattler.characterStats.name;
+                selectionScroll.Add(button);
+            }
         }
     }
     private void AttackEnemySelectButton(Battler enemy, Button selectButton)

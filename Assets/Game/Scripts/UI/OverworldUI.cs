@@ -13,10 +13,11 @@ public class OverworldUI : MonoBehaviour
     private Button pauseButton;
     private bool isInteractButtonInteractable;
     private bool wasInteractButtonInteractable;
+    private bool isInteractButtonPressed;
     private bool wasInteractButtonPressed;
     public bool IsInteractButtonPressed()
     {
-        return wasInteractButtonPressed;
+        return isInteractButtonPressed;
     }
     public void ActivateInteractable()
     {
@@ -59,9 +60,9 @@ public class OverworldUI : MonoBehaviour
     private void InteractButton()
     {
         //ensures that this will only be used if the button is enabled(temp fixes ui bug)
-        if (!isInteractButtonInteractable) return;
+        if (!wasInteractButtonInteractable) return;
 
-        wasInteractButtonPressed = true;
+        isInteractButtonPressed = true;
     }
     private void Awake()
     {
@@ -89,5 +90,16 @@ public class OverworldUI : MonoBehaviour
             wasInteractButtonInteractable = false;
             interactButton.SetEnabled(false);
         }
+
+        if (wasInteractButtonPressed)
+        {
+            wasInteractButtonPressed = false;
+            isInteractButtonPressed = false;
+        }
+        if (isInteractButtonPressed)
+        {
+            wasInteractButtonPressed = true;
+        }
+       
     }
 }

@@ -67,17 +67,19 @@ public abstract class Battler : MonoBehaviour
     }
     public virtual void ApplyStatusEffect(StatusEffectTypes statusType)
     {
-        var statusEffect = StatusEffect.EnumToStatus(statusType);
+        Type statusEffect = StatusEffect.EnumToStatus(statusType);
         if (statusEffect != null)
         {
             if (GetComponent(statusEffect) == null)
             {
                 gameObject.AddComponent(statusEffect);
                 headsUpUI.SetStatus(1, statusType);
+                gameObject.GetComponent<StatusEffect>().OnLevelChange += OnStatusLevelChange_UpdateUI;
             }
             else
             {
-                Debug.Log("make it so it adds levels to the status effect");
+                StatusEffect currentEffect = GetComponent(statusEffect) as StatusEffect;
+                currentEffect.TryApplyNextLevel();
             }
         }
     }
@@ -118,7 +120,10 @@ public abstract class Battler : MonoBehaviour
     }
     public virtual void BattleSetup(Vector2 newPosition)
     {
+
         animator.SetTrigger("BattleSetup");
+        Debug.Log(characterStats.name + ": animator not set up");
+        
 
         // makes it so the sprite is above the battle background
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
@@ -155,6 +160,8 @@ public abstract class Battler : MonoBehaviour
     }
     protected virtual void DownBattler()
     {
+        headsUpUI.DisableUI();
+
         isDown = true;
         animator.SetTrigger("Down");
     }
@@ -186,7 +193,6 @@ public abstract class Battler : MonoBehaviour
         }
         return trueDamage;
     }
-    
     protected virtual void CheckIfDown()
     {
         if (characterStats.stats.health <= 0)
@@ -222,6 +228,10 @@ public abstract class Battler : MonoBehaviour
         }
     }
 
+    private void OnStatusLevelChange_UpdateUI(StatusEffect statusEffect, int newLevel)
+    {
+        headsUpUI.SetStatus(newLevel, StatusEffect.StatusToEnum(statusEffect));
+    }
     IEnumerator TransitionToBattlePosition(Vector3 newPosition, float duration)
     {
         // disable collision

@@ -5,8 +5,11 @@ using UnityEngine;
 public class Bleeding : StatusEffect
 {
     Battler battler;
-    public int level = 1;
     public float timeFromLastDamageTick;
+    public override void TryApplyNextLevel()
+    {
+        AddBleedingLevel();
+    }
     public override void ApplyStatus(Battler battler)
     {
         var bleed = battler.GetComponent<Bleeding>();
@@ -24,7 +27,7 @@ public class Bleeding : StatusEffect
     }
     public void AddBleedingLevel()
     {
-        level++;
+        AddLevel();
     }
     void Start()
     {
@@ -40,6 +43,7 @@ public class Bleeding : StatusEffect
         if (timeFromLastDamageTick >= 2)
         {
             battler.TakeDamage(new Damage { damageAmount = level, damageType = DamageType.Bleeding });
+            Technoblade.instance.AddBlood(level);
             timeFromLastDamageTick = 0;
         }
         
@@ -49,5 +53,4 @@ public class Bleeding : StatusEffect
         RemoveStatus();
     }
 
-    
 }

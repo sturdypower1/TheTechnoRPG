@@ -6,13 +6,19 @@ public class ShopController : MonoBehaviour
 {
     [SerializeField] private ShopItem[] shopItems;
     [SerializeField] private ShopUI shopUI;
-
+    [SerializeField] private Cinemachine.CinemachineVirtualCamera shopCamera;
     public void Activate()
     {
+        shopCamera.Priority = 11;
+
+        UpdateGold();
         shopUI.EnableUI();
+        shopUI.EnableItemList(shopItems);
+        MainGameManager.instance.DisableOverworldOverlay();
     }
     public void Deactivate()
     {
+        shopCamera.Priority = 1;
         shopUI.DisableUI();
     }
 
@@ -21,9 +27,33 @@ public class ShopController : MonoBehaviour
         shopUI.EnableItemList(shopItems);
     }
 
+    private void PurchaseItem_OnPurchasePressed(ShopItem shopItem)
+    {
+
+        TryPurchaseItem(shopItem);
+    }
+    private void UpdateGold()
+    {
+        shopUI.SetGold(InventoryManager.instance.gold);
+    }
+    private void TryPurchaseItem(ShopItem shopItem)
+    {
+        if(InventoryManager.instance.gold >= shopItem.cost)
+        {
+            InventoryManager.instance.gold -= shopItem.cost;
+            InventoryManager.instance.AddItem(shopItem.item);
+            UpdateGold();
+        }
+    }
+    private void ResumeGameworld_OnBackPressed()
+    {
+        Deactivate();
+        MainGameManager.instance.ResumeGameworld();
+    }
     private void Start()
     {
-        shopUI.OnBuyPressed += ShowItems_OnBuyPressed;
+        shopUI.OnBackPressed += ResumeGameworld_OnBackPressed;
+        shopUI.OnItemPurchaseButton += PurchaseItem_OnPurchasePressed;
     }
 }
 [System.Serializable]

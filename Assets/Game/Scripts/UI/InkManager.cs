@@ -142,16 +142,11 @@ public class InkManager : MonoBehaviour
 
     public void DisplayNewItem(string ItemName)
     {
-        /*PauseManager.instance.Pause();
-        Button textBoxUI = UIManager.instance.textBoxUI;
-        Label textBoxText = textBoxUI.Q<Label>("TextBoxText");
-        string displayText = "Technoblade obtained <color=red>" + ItemName + "</color>.";
-        isDisplayingChoices = false;
-        PlayerInputManager.instance.DisableInput();
-        UIManager.instance.overworldOverlay.visible = false;
+        MainGameManager.instance.StopGameworld();
 
-        DisplayPortriat("empty", "default");
-        textboxUI.DisplayText(displayText, false, false, false);*/
+        isDisplayingChoices = false;
+        var displayText = "Technoblade obtained <color=red>" + ItemName + "</color>.";
+        textboxUI.DisplayText(displayText, false, false, false);
     }
 
     private CharacterPortraitData GetPortraitList(string characterName, string feeling)
@@ -198,10 +193,11 @@ public class InkManager : MonoBehaviour
         var canEnd = !isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText;
         if (canContinue)
         {
+            inkStory.Continue();
             var isBattleTrigger = inkStory.currentTags.Contains("battle");
             var isCutsceneTrigger = inkStory.currentTags.Contains("playable");
-            // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing
-            inkStory.Continue();
+
+            // sometimes you can click the text box when it's not visible. This helps prevent the story from randomly continuing            
             if (inkStory.currentText == "\n" || inkStory.currentText == "")
             {
                 ContinueStory();
@@ -223,6 +219,7 @@ public class InkManager : MonoBehaviour
                 textboxUI.DisableUI();
 
                 isCurrentlyPlaying = true;
+                Debug.Log(inkStory.currentText);
                 var cutsceneNumber = int.Parse(inkStory.currentText);
                 SetUpCutsceneDirector(cutsceneNumber);
                 

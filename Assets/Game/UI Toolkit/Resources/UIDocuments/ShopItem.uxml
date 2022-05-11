@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="background" style="height: 57px; width: 331px; flex-direction: row;">
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Label text="Name" display-tooltip-when-elided="true" name="item_name" />
+            <ui:Label text="0 Gold" display-tooltip-when-elided="true" name="item_price" />
+        </ui:VisualElement>
+        <ui:Button text="Info" display-tooltip-when-elided="true" name="Info" style="flex-shrink: 1; flex-grow: 1;" />
+        <ui:Button text="Buy" display-tooltip-when-elided="true" name="item_buy" style="flex-shrink: 1; flex-grow: 1;" />
+    </ui:VisualElement>
+</ui:UXML>

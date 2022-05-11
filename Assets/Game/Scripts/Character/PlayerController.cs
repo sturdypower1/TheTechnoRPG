@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 public class PlayerController : MonoBehaviour
 {
     public LevelUpController levelUpController;
@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public Battler battler;
     public Animator animator;
     public CharacterInventoryUI inventoryUI;
+    
     private void Start()
     {
         Debug.Log("adding controller");

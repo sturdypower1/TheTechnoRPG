@@ -36,6 +36,18 @@ public class MainGameManager : MonoBehaviour
     {
         overworldUI.DisableUI();
     }
+    public void ResumeGameworld()
+    {
+        PauseManager.instance.UnPause();
+        PlayerInputManager.instance.EnableInput();
+        overworldUI.EnableUI();
+    }
+    public void StopGameworld()
+    {
+        DisableOverworldOverlay();
+        PlayerInputManager.instance.DisableInput();
+        PauseManager.instance.Pause();
+    }
     private void OnPausePressed_OpenInventory()
     {
         inventoryUI.EnableUI();

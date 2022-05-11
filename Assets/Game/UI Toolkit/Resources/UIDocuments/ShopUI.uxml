@@ -1,0 +1,15 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="background" style="width: 60%; height: 100%; background-color: rgba(87, 87, 87, 0.54); visibility: hidden; flex-direction: column;">
+        <ui:VisualElement style="flex-direction: row;">
+            <ui:Button text="&#10;" display-tooltip-when-elided="true" name="back_button" style="width: 100px; height: 100px; background-image: url(&apos;project://database/Assets/Game/Art/Icons/BackIcon.png?fileID=2800000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;); background-color: rgba(188, 188, 188, 0); border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0;" />
+            <ui:Label text="gold: 0" display-tooltip-when-elided="true" name="gold" />
+        </ui:VisualElement>
+        <ui:GroupBox style="flex-direction: row; flex-grow: 1;">
+            <ui:ScrollView name="item_list" style="width: 50%; height: 100%;" />
+            <ui:VisualElement name="Item_description_background" style="flex-grow: 1;">
+                <ui:VisualElement name="description_picture" />
+                <ui:Label display-tooltip-when-elided="true" name="description_text" style="white-space: normal;" />
+            </ui:VisualElement>
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>

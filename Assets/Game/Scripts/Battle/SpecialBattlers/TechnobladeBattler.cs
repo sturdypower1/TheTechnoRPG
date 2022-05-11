@@ -46,6 +46,7 @@ public class TechnobladeBattler : PlayerBattler
         if(!isInCarnageMode)
         {
             characterStats.stats.health -= trueDamage.damageAmount;
+            characterStats.stats.health = characterStats.stats.health < 0 ? 0 : characterStats.stats.health;
             battleUI.UpdateHealth(characterStats.stats.health, characterStats.stats.maxHealth);
             //VFX
 
