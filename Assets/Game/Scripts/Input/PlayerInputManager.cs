@@ -15,6 +15,10 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
         if (instance == null || instance == this)
         {
             instance = this;
+
+            InputActions = new ActionMap();
+            InputActions.Overworld.SetCallbacks(this);
+            InputActions.Enable();
         }
         else
         {
@@ -51,23 +55,6 @@ public class PlayerInputManager : MonoBehaviour, ActionMap.IOverworldActions
     public void OnSprint(InputAction.CallbackContext context)
     {
         movement.activateSprint(context.ReadValue<float>() > 0);
-    }
-
-    private void Start()
-    {
-        
-        // setting up the input to use the callbacks here
-        InputActions = new ActionMap();
-        InputActions.Overworld.SetCallbacks(this);
-        InputActions.Enable();
-    }
-
-    // Start is called before the first frame update
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
     /// <summary>
     /// activate overworld input

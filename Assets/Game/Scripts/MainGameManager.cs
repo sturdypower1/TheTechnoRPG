@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class MainGameManager : MonoBehaviour
@@ -11,6 +12,7 @@ public class MainGameManager : MonoBehaviour
 
     [SerializeField] private OverworldUI overworldUI;
     [SerializeField] private InventoryUI inventoryUI;
+    [SerializeField] private LoseUI loseUI;
     [SerializeField] private SettingsUI settingsUI;
     [SerializeField] private FileSaveManager fileSaveManager;
     [SerializeField] private BattleManager battleManager;
@@ -58,17 +60,15 @@ public class MainGameManager : MonoBehaviour
     }
     private void OnInventoryBackPressed_EnableOverowrldOverlay()
     {
-        PauseManager.instance.UnPause();
-        PlayerInputManager.instance.EnableInput();
-        overworldUI.EnableUI();
+        ResumeGameworld();
     }
     private void OnSettingsBackPressed_ReopenInventory()
     {
         inventoryUI.EnableUI();
     }
-    private void OnSaveBackPressed_EnableOveworldOverlay()
+    private void OnSaveBackPressed_ResumeGameworld()
     {
-        overworldUI.EnableUI();
+        ResumeGameworld();
     }
     private void ResumeGameWorld_OnFinishedDisplaying()
     {
@@ -84,6 +84,29 @@ public class MainGameManager : MonoBehaviour
     }
     private void ReturnToTitle_OnTitleButtonPressed()
     {
+        ReturnToTitle();
+    }
+    private void SetupLoseUI_OnPlayerLoss(OnBattleEndEventArgs e)
+    {
+        if (!e.isPlayerVictor)
+        {
+            AudioManager.playSound("defeatsong");
+            PlayerPartyManager.instance.BattleLose();
+            loseUI.EnableUI();
+            LoadTempWorld();
+        }
+    }
+    private void LoadTempWorld()
+    {
+        SceneManager.LoadScene("Temp");
+    }
+    private void ReturnToTitle_OnReturnToTitleButtonPressed()
+    {
+        AudioManager.stopSound("defeatsong");
+        ReturnToTitle();
+    }
+    private void ReturnToTitle()
+    {
         OnTitleReturn?.Invoke();
         SceneManager.LoadScene("TitleScreen");
         Destroy(this.gameObject);
@@ -96,12 +119,16 @@ public class MainGameManager : MonoBehaviour
         settingsUI.OnBackPressed += OnSettingsBackPressed_ReopenInventory;
         settingsUI.OnTitleButtonPressed += ReturnToTitle_OnTitleButtonPressed;
 
-        fileSaveManager.OnBackPressed += OnSaveBackPressed_EnableOveworldOverlay;
+        fileSaveManager.OnBackPressed += OnSaveBackPressed_ResumeGameworld;
 
         storyManager.OnCutsceneStarting += PauseOveworld_OnCutsceneStart;
         storyManager.OnFinishedDisplaying += ResumeGameWorld_OnFinishedDisplaying;
 
+        battleManager.OnBattleEnd += SetupLoseUI_OnPlayerLoss;
 
+        loseUI.OnReturnToTitleButtonPressed += ReturnToTitle_OnReturnToTitleButtonPressed;
+
+        PauseManager.instance.UnPause();
     }
 
     private void Awake()

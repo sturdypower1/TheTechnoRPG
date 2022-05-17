@@ -5,9 +5,14 @@ using UnityEngine.UIElements;
 
 public class BasicBattler : Battler
 {
+    [SerializeField]private bool destroyAfterBattle = true;
     public override void ReturnToOverworld()
     {
         base.ReturnToOverworld();
-        Destroy(gameObject);
+        if (destroyAfterBattle)
+        {
+            Destroy(gameObject);
+        }
+        
     }
 }

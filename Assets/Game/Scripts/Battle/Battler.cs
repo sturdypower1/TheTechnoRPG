@@ -122,7 +122,6 @@ public abstract class Battler : MonoBehaviour
     {
 
         animator.SetTrigger("BattleSetup");
-        Debug.Log(characterStats.name + ": animator not set up");
         
 
         // makes it so the sprite is above the battle background
@@ -251,7 +250,7 @@ public abstract class Battler : MonoBehaviour
             yield return null;
         }
     }
-    IEnumerator TransitionToOriginalPositions(Vector3 newPosition, float duration)
+    protected IEnumerator TransitionToOriginalPositions(Vector3 newPosition, float duration)
     {
         Vector3 oldPosition = transform.position;
 

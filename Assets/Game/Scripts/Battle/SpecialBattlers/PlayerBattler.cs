@@ -42,6 +42,12 @@ public class PlayerBattler : Battler
         animator.SetBool("Defending", false);
         Invoke("Reenable", defenceRecovery);
     }
+    public virtual void PlayerLose()
+    {
+        battleUI.DisableUI();
+        headsUpUI.DisableUI();
+        StartCoroutine(TransitionToOriginalPositions(oldPosition, .5f));
+    }
     protected override void WaitOnSkillFinished(float timeToWait)
     {
         base.WaitOnSkillFinished(timeToWait);

@@ -5,7 +5,7 @@
     <Style src="project://database/Assets/Game/UI%20Toolkit/Resources/StyleSheet/pauseMenuStyleSheet.uss?fileID=7433441132597879392&amp;guid=d333700f0e6fda36995a20cd0a534145&amp;type=3#pauseMenuStyleSheet" />
     <Style src="project://database/Assets/Game/UI%20Toolkit/Resources/StyleSheet/OverworldStlyeSheet.uss?fileID=7433441132597879392&amp;guid=765cefa0663c65d44bf41406090613ea&amp;type=3#OverworldStlyeSheet" />
     <Style src="project://database/Assets/Game/UI%20Toolkit/Resources/StyleSheet/battleDetails.uss?fileID=7433441132597879392&amp;guid=e72b245270880874bbe4af570013a503&amp;type=3#battleDetails" />
-    <ui:VisualElement name="title_background" style="align-items: center; justify-content: flex-start; top: auto; width: 100%; height: 100%; background-color: rgb(120, 120, 120); visibility: visible;">
+    <ui:VisualElement name="title_background" style="align-items: center; justify-content: flex-start; top: auto; width: 100%; height: 100%; background-color: rgb(120, 120, 120); visibility: hidden;">
         <ui:VisualElement name="Title" style="width: 620px; height: 50px; background-color: rgb(0, 0, 0); align-items: center; justify-content: center; font-size: 100px; -unity-font: resource(&apos;Fonts &amp; Materials/elf-boy-classic-font/Elfboyclassic-PKZgZ&apos;); margin-top: 0; -unity-text-align: middle-left; padding-top: 10px; padding-bottom: 10px;">
             <ui:Label text="The TechnoRPG" display-tooltip-when-elided="true" style="align-items: center; justify-content: center; font-size: 40px;" />
         </ui:VisualElement>
@@ -60,10 +60,6 @@
         <ui:Button text="&#10;" display-tooltip-when-elided="true" name="save_back_button" class="back_button" style="width: 106px; background-image: url(&apos;project://database/Assets/Game/Art/Icons/BackIcon.png?fileID=21300000&amp;guid=85a203300b6a9244ca9f39e017f78661&amp;type=3#BackIcon&apos;); height: 97px;" />
         <ui:Instance template="SaveFile" name="save_file2" style="position: relative; flex-grow: 1; align-items: center;" />
         <ui:Instance template="SaveFile" name="save_file1" style="align-items: center; justify-content: space-between; flex-grow: 1;" />
-    </ui:VisualElement>
-    <ui:VisualElement name="losing_screen" style="position: absolute; width: 100%; height: 100%; align-items: center; visibility: hidden;">
-        <ui:Button text="Technoblade Never Dies" display-tooltip-when-elided="true" name="continue" focusable="true" class="player_loss_button" style="color: rgb(171, 0, 0);" />
-        <ui:Button text="To TitleScreen" display-tooltip-when-elided="true" name="title" focusable="true" class="player_loss_button" />
     </ui:VisualElement>
     <ui:VisualElement name="null_focus" tooltip="removes focus on objects that shouldn&apos;t have focus" focusable="true" style="width: 0; height: 0;" />
     <ui:VisualElement name="black_screen" style="position: absolute; width: 100%; height: 100%; background-color: rgb(0, 0, 0); opacity: 0; visibility: hidden;" />

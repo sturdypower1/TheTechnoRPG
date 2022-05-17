@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Game/Scenes/InsideThePyramid.unity
     guid: 9fa18572d3f999246b60c3fc3880eb2d
+  - enabled: 1
+    path: Assets/Game/Scenes/Temp.unity
+    guid: 33a8be60bd15dd046a64a0e66022268d
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 2e11e9cebdfaf394eb8a3c6bf2834c29, type: 2}

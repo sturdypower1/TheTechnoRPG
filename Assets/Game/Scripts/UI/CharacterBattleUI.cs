@@ -167,7 +167,7 @@ public class CharacterBattleUI : MonoBehaviour
         AudioManager.playSound("menuchange");
         EnableSelection();
         DisableOptionMenu();
-        //UIManager.instance.ResetFocus();
+
         CharacterStats stats = battler.characterStats;
         int i = 1;
         while (i < stats.skills.Count)

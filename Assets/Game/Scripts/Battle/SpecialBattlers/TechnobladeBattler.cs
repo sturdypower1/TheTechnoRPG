@@ -68,6 +68,16 @@ public class TechnobladeBattler : PlayerBattler
             DownBattler();
         }
     }
+    public override void ReturnToOverworld()
+    {
+        DeactivateCarnageMode();
+        base.ReturnToOverworld();
+    }
+    protected override void DownBattler()
+    {
+        DeactivateCarnageMode();
+        base.DownBattler();
+    }
     protected override Damage CalculateDamageDealt(Damage damage)
     {
         var trueDamage = base.CalculateDamageDealt(damage);

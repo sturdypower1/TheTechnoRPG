@@ -89,6 +89,14 @@ public class PlayerPartyManager : MonoBehaviour
             battler.BattleEnd();
         }
     }
+    public void BattleLose()
+    {
+        foreach (PlayerController player in players)
+        {
+            var battler = player.battler as PlayerBattler;
+            battler.PlayerLose();
+        }
+    }
     public void DisablePlayerInventoryUI()
     {
         foreach (PlayerController player in players)

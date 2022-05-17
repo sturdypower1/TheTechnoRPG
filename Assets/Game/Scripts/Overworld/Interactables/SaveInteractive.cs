@@ -12,8 +12,6 @@ public class SaveInteractive : Interactable
     {
         if (!InkManager.instance.isCurrentlyDisplaying)
         {
-            MainGameManager.instance.DisableOverworldOverlay();
-
             Button ringButton = new Button();
             ringButton.AddToClassList("player_choice");
             ringButton.text = "ring the bell";

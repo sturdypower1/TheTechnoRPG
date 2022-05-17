@@ -138,7 +138,8 @@ public class BattleManager : MonoBehaviour
                 return;
 
             }
-            else { }
+            else {
+            }
             bool isPlayerLoss = true;
             foreach (Battler player in Players)
             {
@@ -161,8 +162,6 @@ public class BattleManager : MonoBehaviour
         if(BattleMusic != null) BattleMusic.Stop();
         isInBattle = false;
 
-        //UIManager.instance.ResetFocus();
-
         if (isPlayerVictor)
         {
             InitializeBattleRewards();
@@ -181,18 +180,7 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            AudioManager.playSound("defeatsong");
-            //VisualElement losingBackground = UIManager.instance.root.Q<VisualElement>("losing_screen");
-            if (Directory.GetFiles(Application.persistentDataPath + "/tempsave").Length <= 0)
-            {
-                //losingBackground.Q<Button>("continue").SetEnabled(false);
-            }
-            else
-            {
-                //losingBackground.Q<Button>("continue").SetEnabled(true);
-            }
-
-            //losingBackground.visible = true;
+            
         }
         OnBattleEnd?.Invoke(new OnBattleEndEventArgs { isPlayerVictor = isPlayerVictor });
     }
@@ -215,6 +203,7 @@ public class BattleManager : MonoBehaviour
     private void ResumeGameWorld()
     {
         // will reset inputs if there is no story
+        movingToPosition = false;
         InkManager.instance.ResumeStory_OnReturnToOverworld();
     }
     private void FinishVictoryData_OnDisplayFinished(object sender, System.EventArgs e)

@@ -25,6 +25,7 @@ public class FileSaveManager : MonoBehaviour
     }
     private void BackPressed()
     {
+        Deactivate();
         OnBackPressed?.Invoke();
     }
     private void Save_OnSaveFilePressed(int saveFileNumber)

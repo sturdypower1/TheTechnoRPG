@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="losing_screen" style="position: absolute; width: 100%; height: 100%; align-items: center; visibility: hidden;">
+        <ui:Button text="Technoblade Never Dies" display-tooltip-when-elided="true" name="continue" focusable="true" class="player_loss_button" style="color: rgb(171, 0, 0);" />
+        <ui:Button text="To TitleScreen" display-tooltip-when-elided="true" name="title" focusable="true" class="player_loss_button" />
+    </ui:VisualElement>
+</ui:UXML>

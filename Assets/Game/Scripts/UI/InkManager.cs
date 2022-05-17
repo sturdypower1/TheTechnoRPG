@@ -61,10 +61,12 @@ public class InkManager : MonoBehaviour
     }
     public void ResumeStory_OnReturnToOverworld()
     {
+        Debug.Log("resuming story");
         ContinueStory();
     } 
     public void ForceDisable()
     {
+        isCurrentlyDisplaying = false;
         textboxUI.DisableUI();
     }
     public void DisplayVictoryData(){
@@ -130,6 +132,7 @@ public class InkManager : MonoBehaviour
     /// </summary>
     /// <param name="choices">the choices the player has</param> 
     public void DisplayChoices(Button[] choices){
+        MainGameManager.instance.DisableOverworldOverlay();
         isDisplayingChoices = true;
         isCurrentlyDisplaying = true;
 
@@ -191,6 +194,12 @@ public class InkManager : MonoBehaviour
     {
         var canContinue = inkStory.canContinue && !isDisplayingChoices && !isCurrentlyPlaying && !BattleManager.instance.movingToPosition && !isScrollingText;
         var canEnd = !isDisplayingChoices && !isCurrentlyPlaying && !isScrollingText;
+        /*Debug.Log("can continue: " + canContinue);
+        Debug.Log("ink continue: " + inkStory.canContinue);
+        Debug.Log("isdisplaying choices :" + isDisplayingChoices);
+        Debug.Log("iscurrently playing: " + isCurrentlyPlaying);
+        Debug.Log("moving position: " + BattleManager.instance.movingToPosition);*/
+
         if (canContinue)
         {
             inkStory.Continue();
@@ -219,7 +228,6 @@ public class InkManager : MonoBehaviour
                 textboxUI.DisableUI();
 
                 isCurrentlyPlaying = true;
-                Debug.Log(inkStory.currentText);
                 var cutsceneNumber = int.Parse(inkStory.currentText);
                 SetUpCutsceneDirector(cutsceneNumber);
                 
@@ -243,7 +251,6 @@ public class InkManager : MonoBehaviour
                 textboxUI.DisableUI();
                 inkStory.SwitchToDefaultFlow();
                 OnVictoryDisplayFinish?.Invoke(this, EventArgs.Empty);
-
             }
             else if (inkStory.currentFlowName != "battle")
             {
