@@ -257,6 +257,10 @@ public class SaveAndLoadManager : MonoBehaviour
         
         SceneManager.LoadSceneAsync(subScenesData.sceneName);
     }
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
     /// <summary>
     /// ensures that all the folders that need to exist to save do in fact exist
     /// </summary>

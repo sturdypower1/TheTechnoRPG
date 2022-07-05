@@ -107,14 +107,12 @@ public class MainGameManager : MonoBehaviour
     }
     private void LoadWorld(string sceneName)
     {
-        SaveAndLoadManager.instance.
-        SaveAndLoadManager.instance.
-        SceneManager.LoadScene();
+        SaveAndLoadManager.instance.LoadScene(sceneName);
     }
-    private void OnTechnoNeverDies_RevivePlayerAndReload(string )
+    private void OnTechnoNeverDies_RevivePlayerAndReload(string sceneName)
     {
         PlayerPartyManager.instance.ReviveParty();
-        LoadWorld
+        LoadWorld(sceneName);
     }
     
     private void ReturnToTitle()
