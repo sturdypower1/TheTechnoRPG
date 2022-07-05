@@ -12,7 +12,13 @@ public class PlayerPartyManager : MonoBehaviour
     private PlayerController Leader;
 
     private List<PlayerLevelUpData> lastPlayerLevelUps;
-    
+    public void ReviveParty()
+    {
+        foreach (PlayerController player in players)
+        {
+            player.Revive();
+        }
+    }
     public List<PlayerLevelUpData> GetLastLevelUps()
     {
         return lastPlayerLevelUps;
@@ -141,8 +147,6 @@ public class PlayerPartyManager : MonoBehaviour
         }
         return playerLevelUpList;
     }
-
-    
 }
 
 public struct PlayerLevelUpData

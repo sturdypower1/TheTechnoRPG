@@ -23,6 +23,7 @@ public class SaveAndLoadManager : MonoBehaviour
         //singleton pattern
         if(instance == null){
             instance = this;
+            instance = this;
             // ensure is empty when you start the game
             /*foreach (string file in Directory.GetFiles(Application.persistentDataPath + "/tempsave"))
             {
@@ -72,9 +73,6 @@ public class SaveAndLoadManager : MonoBehaviour
     /// <param name="saveFileNubmer"></param>
     public void SaveGame(int saveFileNubmer){
         CreateSaveFiles();
-        //OnStartSave?.Invoke(saveFileNubmer);
-        // To do save everything
-        //SaveAtmosphere();
         SaveCurrentScene();
         //saving the save name and game time
         string savePointPath = Application.persistentDataPath + "/tempsave" + "/SavePointData";

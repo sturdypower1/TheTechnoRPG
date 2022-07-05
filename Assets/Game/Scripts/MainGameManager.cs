@@ -105,6 +105,18 @@ public class MainGameManager : MonoBehaviour
         AudioManager.stopSound("defeatsong");
         ReturnToTitle();
     }
+    private void LoadWorld(string sceneName)
+    {
+        SaveAndLoadManager.instance.
+        SaveAndLoadManager.instance.
+        SceneManager.LoadScene();
+    }
+    private void OnTechnoNeverDies_RevivePlayerAndReload(string )
+    {
+        PlayerPartyManager.instance.ReviveParty();
+        LoadWorld
+    }
+    
     private void ReturnToTitle()
     {
         OnTitleReturn?.Invoke();

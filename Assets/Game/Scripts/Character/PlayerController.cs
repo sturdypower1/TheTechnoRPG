@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("adding controller");
         inventoryUI.SetPlayerController(this);
     }
+    public void Revive()
+    {
+
+    }
     public void EnableInventoryUI()
     {
         inventoryUI.EnableUI();
